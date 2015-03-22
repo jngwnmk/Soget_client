@@ -57,10 +57,21 @@ public class BookmarkAdapter extends BaseAdapter{
             bookmarkWrapper = (BookmarkWrapper)row.getTag();
 
         }
-        bookmarkWrapper.getTitle().setText(((Bookmark)getItem(position)).getTitle());
-        Picasso.with(mContext).load(((Bookmark)getItem(position)).getImg_url())
+        //Set title
+        Bookmark item = (Bookmark)getItem(position);
+        bookmarkWrapper.getTitle().setText(item.getTitle());
+
+        //Set Thumbnail Image
+        Picasso.with(mContext).load(item.getImg_url())
                 .resizeDimen(R.dimen.list_archive_image_size, R.dimen.list_archive_image_size)
                 .centerInside().into(bookmarkWrapper.getThumbnail());
+
+        //Set Tags
+        bookmarkWrapper.getTags().setText(item.getTags().toString());
+        //Set num of get
+        bookmarkWrapper.getGet_nums().setText(item.getFollowers().size()+mContext.getString(R.string.archive_row_num_get));
+        //set num of comment
+        bookmarkWrapper.getComment_nums().setText(item.getComments().size()+mContext.getString(R.string.archive_row_num_comment));
         return row;
     }
 

@@ -27,4 +27,17 @@
     <string name="forget_pwd">비밀번호를 잊어버리셨나요?</string>
 
     <string name="myget_title">MY GET</string>
+    <string name="setting_btn">SETTING</string>
+    <string name="add_btn">ADD</string>
+    <string name="archive_row_num_get"> Gets</string>
+    <string name="archive_row_num_comment"> Comments</string>
+
+    <string name="add_bookmark_url_hint">URL</string>
+    <string name="add_bookmark_tag_hint">TAG</string>
+    <string name="add_bookmark_confirm">확인</string>
+
+    <string-array name="privacy_array">
+        <item>공개</item>
+        <item>비공개</item>
+    </string-array>
 </resources>

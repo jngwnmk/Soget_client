@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="20dp">
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/privacy_spinner"
+        android:layout_gravity="center_horizontal"
+
+        android:prompt="@color/blur_grey" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_bookmark_url"
+        android:hint="@string/add_bookmark_url_hint"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/grey"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/edit_text_shape"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:lines="1"
+        android:maxLines="1"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_bookmark_tag"
+        android:hint="@string/add_bookmark_tag_hint"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/grey"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/edit_text_shape"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:lines="1"
+        android:maxLines="1"
+       />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_bookmark_confirm"
+        android:id="@+id/add_bookmark_btn"
+        android:textColor="@color/main_color"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/edit_text_shape"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>

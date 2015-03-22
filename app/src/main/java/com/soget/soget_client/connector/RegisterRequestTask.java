@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.soget.soget_client.callback.OnTaskCompleted;
+import com.soget.soget_client.common.RESTAPIManager;
 import com.soget.soget_client.model.User;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -26,15 +27,10 @@ public class RegisterRequestTask extends AsyncTask<Void, Void, User> {
     @Override
     protected User doInBackground(Void... params){
         try{
-          /*  HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity requestEntity = new HttpEntity(user.toString(),requestHeaders);*/
-
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
-            User registered_user = restTemplate.postForObject(SogetAPI.user_url+"register", user, User.class);
+            User registered_user = restTemplate.postForObject(RESTAPIManager.user_url+"register", user, User.class);
             return registered_user;
         } catch (Exception e){
             Log.e("RegisterRequestTask", e.getMessage(), e);
