@@ -30,6 +30,7 @@ public class ArchiveFragment extends Fragment {
     private BookmarkAdapter bookmarkAdapter =null;
     private ProgressDialog pDialog;
 
+    //Github Push Test
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.archive_layout,container, false);
@@ -38,7 +39,8 @@ public class ArchiveFragment extends Fragment {
         bookmarkListView.setAdapter(bookmarkAdapter);
 
         pDialog = new ProgressDialog(this.getActivity());
-        pDialog.setMessage("Loading...");
+        pDialog.setMessage("Loading....");
+        System.out.println("Test");
         pDialog.show();
         OnTaskCompleted onTaskCompleted;
         onTaskCompleted = new OnTaskCompleted(){
