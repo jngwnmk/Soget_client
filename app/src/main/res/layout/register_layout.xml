@@ -1,0 +1,124 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context=".MainActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/main_color"
+        android:id="@+id/title_bar">
+        <TextView
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:text="@string/register_label"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/user_name_label"
+        android:text="@string/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/user_name_edit" />
+
+    <TextView
+        android:id="@+id/user_id_label"
+        android:text="@string/user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/user_id_edit"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/user_email_label"
+        android:text="@string/user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_id_edit"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/user_pwd_label"
+        android:text="@string/user_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/user_pwd_edit"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/user_name_hint"
+        android:ems="20"
+        android:id="@+id/user_name_edit"
+        android:layout_below="@+id/title_bar"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/user_pwd_label"
+        android:layout_toEndOf="@+id/user_name_label" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/user_id_hint"
+        android:id="@+id/user_id_edit"
+        android:layout_below="@+id/user_name_edit"
+        android:layout_toRightOf="@+id/user_pwd_label"
+        android:layout_alignRight="@+id/user_name_edit"
+        android:layout_alignEnd="@+id/user_name_edit" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="@string/user_email_hint"
+
+        android:id="@+id/user_email_edit"
+        android:layout_below="@+id/user_id_edit"
+        android:layout_toRightOf="@+id/user_pwd_label"
+        android:layout_alignRight="@+id/user_name_edit"
+        android:layout_alignEnd="@+id/user_name_edit" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/user_pwd_hint"
+        android:id="@+id/user_pwd_edit"
+        android:layout_below="@+id/user_email_edit"
+        android:layout_toRightOf="@+id/user_pwd_label"
+        android:layout_alignRight="@+id/user_name_edit"
+        android:layout_alignEnd="@+id/user_name_edit" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register_btn"
+        android:id="@+id/register_btn"
+        android:layout_below="@+id/user_pwd_edit"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_condition"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/register_btn"
+        />
+
+
+
+</RelativeLayout>
