@@ -48,7 +48,7 @@ public class MyArchiveRequestTask extends AsyncTask<Void, Void, ArrayList<Bookma
             return bookmarks;
 
         } catch (Exception e){
-            Log.e("RegisterRequestTask", e.getMessage(), e);
+            Log.e("MyArchiveRequestTask", e.getMessage(), e);
         }
         return null;
     }

@@ -13,6 +13,9 @@ public class RESTAPIManager {
     public final static String auth_url = base_url+"oauth/token";
     public final static String user_url = base_url+"user/";
     public final static String bookmark_url = base_url+"bookmark/";
+    public final static String friends_url = user_url+"friends/";
+    public final static String friends_sent_url = friends_url+"sent/";
+    public final static String friends_receive_url = friends_url+"receive/";
 
     private static RESTAPIManager restapiManager = new RESTAPIManager();
     private RESTAPIManager(){}
