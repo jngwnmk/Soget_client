@@ -5,7 +5,7 @@
     <string name="content_label">The Content is</string>
     <string name="content_value">[content]</string>
     <string name="action_refresh">Refresh</string>
-
+    <string name="blank"></string>
     <!-- Intro 화면 Strings -->
     <string name="logo">SOCIAL GET</string>
     <string name="login_btn">로그인</string>
@@ -45,5 +45,12 @@
     <string name="waiting_btn">대기중</string>
     <string name="friend_title">FRIENDS</string>
     <string name="search_btn">SEARCH</string>
+
+    <string name="close_btn">CLOSE</string>
+
+    <string name="complete_btn">완료</string>
+    <string name="comment_hint">댓글을 남겨주세요</string>
+
+    <string name="home_title">HOME</string>
 
 </resources>

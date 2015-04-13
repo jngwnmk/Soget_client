@@ -4,11 +4,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -18,6 +20,7 @@ import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.connector.MyArchiveRequestTask;
 import com.soget.soget_client.connector.WebExtractor;
 import com.soget.soget_client.model.Bookmark;
+import com.soget.soget_client.view.Activity.WebViewActivity;
 import com.soget.soget_client.view.Adapter.BookmarkAdapter;
 
 import java.util.ArrayList;
@@ -59,7 +62,21 @@ public class ArchiveFragment extends Fragment {
         bookmarkListView = (ListView)rootView.findViewById(R.id.archive_list);
         bookmarkAdapter = new BookmarkAdapter(inflater.getContext(),bookmarks);
         bookmarkListView.setAdapter(bookmarkAdapter);
+        bookmarkListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String url = bookmarks.get(position).getUrl();
+                //우선은 웹브라우저에서 여는 것으로 하고, 나중에 Webview의 필요성이 있으면 변경
+                //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                //startActivity(intent);
+                Intent intent = new Intent(getActivity(),WebViewActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString(WebViewActivity.WEBVIEWURL,url);
+                intent.putExtras(extras);
+                startActivity(intent);
 
+            }
+        });
         pDialog = new ProgressDialog(this.getActivity());
         pDialog.setMessage("Loading....");
         pDialog.show();

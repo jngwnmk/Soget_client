@@ -34,7 +34,7 @@ public class FriendSentListRequestTask extends FriendRequestTask{
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             ResponseEntity<User[]> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
-            response = restTemplate.exchange(RESTAPIManager.friends_sent_url + "/" + user_id, HttpMethod.GET, new HttpEntity(headers), User[].class);
+            response = restTemplate.exchange(RESTAPIManager.friends_sent_url +  user_id, HttpMethod.GET, new HttpEntity(headers), User[].class);
             friends = new ArrayList<User>();
             friends.addAll(Arrays.asList(response.getBody()));
             return friends;

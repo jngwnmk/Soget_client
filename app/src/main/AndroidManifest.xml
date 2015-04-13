@@ -23,6 +23,9 @@
         <activity android:name=".view.Activity.RegisterActivity" android:label="Soget_client" android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".view.Activity.LoginActivity" android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".view.Activity.MainActivity"  android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".view.Activity.WebViewActivity"  android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".view.Activity.CommentActivity"  android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
     </application>
 
 </manifest>

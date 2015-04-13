@@ -1,6 +1,7 @@
 package com.soget.soget_client.view.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.soget.soget_client.R;
 import com.soget.soget_client.model.Bookmark;
+import com.soget.soget_client.view.Activity.CommentActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -67,11 +69,23 @@ public class BookmarkAdapter extends BaseAdapter{
                 .centerInside().into(bookmarkWrapper.getThumbnail());
 
         //Set Tags
-        bookmarkWrapper.getTags().setText(item.getTags().toString());
+        if(item.getTags().size()!=0){
+            bookmarkWrapper.getTags().setText(item.getTags().toString());
+        } else {
+            bookmarkWrapper.getTags().setText(mContext.getResources().getString(R.string.blank));
+        }
+
         //Set num of get
         bookmarkWrapper.getGet_nums().setText(item.getFollowers().size()+mContext.getString(R.string.archive_row_num_get));
         //set num of comment
         bookmarkWrapper.getComment_nums().setText(item.getComments().size()+mContext.getString(R.string.archive_row_num_comment));
+        bookmarkWrapper.getComment_nums().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
         return row;
     }
 
