@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -24,7 +25,7 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
 
     private View mRoot;
     private TabHost mTabHost;
-    private int mCurrentTab;
+    private int mCurrentTab=0;
 
     @Override
     public void onAttach(Activity activity) {
@@ -53,17 +54,19 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
 
     private void setupTabs() {
         mTabHost.setup(); // you must call this before adding your tabs!
-        mTabHost.addTab(newTab(TAB_HOME, 1, R.id.tab_1));
-        mTabHost.addTab(newTab(TAB_ARCHIVE, 2, R.id.tab_2));
-        mTabHost.addTab(newTab(TAB_FRIEND, 3, R.id.tab_3));
+        mTabHost.addTab(newTab(TAB_HOME, R.drawable.discover_1, R.id.tab_1));
+        mTabHost.addTab(newTab(TAB_ARCHIVE, R.drawable.archive_0, R.id.tab_2));
+        mTabHost.addTab(newTab(TAB_FRIEND, R.drawable.friends_0, R.id.tab_3));
     }
 
-    private TabHost.TabSpec newTab(String tag, int labelId, int tabContentId) {
+    private TabHost.TabSpec newTab(String tag, int tabImgSrc, int tabContentId) {
         Log.d(TAG, "buildTab(): tag=" + tag);
 
         View indicator = LayoutInflater.from(getActivity()).inflate(R.layout.tab_view,(ViewGroup) mRoot.findViewById(android.R.id.tabs), false);
-        TextView tab_title = (TextView) indicator.findViewById(R.id.tabs_text);
-        tab_title.setText(labelId+"");
+        ImageView tab_img = (ImageView) indicator.findViewById(R.id.tabs_image);
+        tab_img.setImageResource(tabImgSrc);
+//        TextView tab_title = (TextView) indicator.findViewById(R.id.tabs_text);
+//        tab_title.setText(labelId+"");
 
         TabHost.TabSpec tabSpec = mTabHost.newTabSpec(tag);
         tabSpec.setIndicator(indicator);
@@ -77,19 +80,35 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
         if (TAB_HOME.equals(tabId)) {
             updateTab(tabId, R.id.tab_1);
             mCurrentTab = 0;
+            updateTabView(R.drawable.discover_1,0);
+            updateTabView(R.drawable.archive_0,1);
+            updateTabView(R.drawable.friends_0,2);
+
             return;
         }
         if (TAB_ARCHIVE.equals(tabId)) {
             updateTab(tabId, R.id.tab_2);
             mCurrentTab = 1;
+            updateTabView(R.drawable.discover_0,0);
+            updateTabView(R.drawable.archive_1,1);
+            updateTabView(R.drawable.friends_0,2);
             return;
         }
 
         if (TAB_FRIEND.equals(tabId)) {
             updateTab(tabId, R.id.tab_3);
+            updateTabView(R.drawable.discover_0,0);
+            updateTabView(R.drawable.archive_0,1);
+            updateTabView(R.drawable.friends_1,2);
             mCurrentTab = 2;
             return;
         }
+    }
+
+    private void updateTabView(int tabImgSrc,int index){
+        ImageView iv = (ImageView) mTabHost.getTabWidget().getChildAt(index).findViewById(R.id.tabs_image);
+        iv.setImageDrawable(getResources().getDrawable(tabImgSrc));
+
     }
 
     private void updateTab(String tabId, int placeholder) {

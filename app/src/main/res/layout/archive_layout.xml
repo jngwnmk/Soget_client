@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_color"
+        android:background="@drawable/header"
         >
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/setting_btn"
-            android:text="@string/setting_btn"
+            android:src="@drawable/setting"
             android:background="@color/transparent"
+            android:layout_gravity="center"
+            android:paddingLeft="20dp"
             />
-        <TextView
+        <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="@string/myget_title"
-            android:textSize="27sp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/archive"
             android:layout_weight="1"
-            android:gravity="center"/>
-        <Button
+            android:layout_gravity="center"/>
+
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/add_get_btn"
-            android:text="@string/add_btn"
-            android:background="@color/transparent"></Button>
+            android:src="@drawable/add"
+            android:background="@color/transparent"
+            android:layout_gravity="center"
+            android:paddingRight="20dp"/>
 
     </LinearLayout>
    <ListView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:id="@+id/archive_list"></ListView>
+       android:id="@+id/archive_list"
+       android:divider="@color/blur_grey"
+       android:dividerHeight="1dp"></ListView>
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,19 +18,18 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * Created by wonmook on 2015-03-21.
+ * Created by saadati on 10/4/14.
  */
-public class BookmarkAdapter extends BaseAdapter{
+public class DiscoverAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater inflater;
     private ArrayList<Bookmark> bookmarks;
 
-    public BookmarkAdapter(Context context, ArrayList<Bookmark> bookmarks){
+    public DiscoverAdapter(Context context, ArrayList<Bookmark> bookmarks){
         this.mContext = context;
         this.bookmarks = bookmarks;
         this.inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
     @Override
@@ -48,45 +48,39 @@ public class BookmarkAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup viewGroup) {
         View row = convertView;
-        BookmarkWrapper bookmarkWrapper =null;
-        if(bookmarkWrapper==null){
-            row = inflater.inflate(R.layout.archivce_list_row, null);
-            bookmarkWrapper = new BookmarkWrapper(row);
-            row.setTag(bookmarkWrapper);
+        DiscoverkWrapper discoverkWrapper =null;
+        if(discoverkWrapper==null){
+            row = inflater.inflate(R.layout.home_list_row, null);
+            discoverkWrapper = new DiscoverkWrapper(row);
+            row.setTag(discoverkWrapper);
         } else {
-            bookmarkWrapper = (BookmarkWrapper)row.getTag();
+            discoverkWrapper = (DiscoverkWrapper)row.getTag();
 
         }
         //Set title
         Bookmark item = (Bookmark)getItem(position);
-        bookmarkWrapper.getTitle().setText(item.getTitle());
+        discoverkWrapper.getTitle().setText(item.getTitle());
 
         //Set Thumbnail Image
         Picasso.with(mContext).load(item.getImg_url())//.into(bookmarkWrapper.getThumbnail());
-                .resizeDimen(R.dimen.list_archive_image_size_w, R.dimen.list_archive_image_size_h)
-                .into(bookmarkWrapper.getThumbnail());
+                .resizeDimen(R.dimen.list_discover_image_size_w, R.dimen.list_discover_image_size_h)
+                .into(discoverkWrapper.getCoverImg());
 
         //Set Tags
         if(item.getTags().size()!=0){
-            bookmarkWrapper.getTags().setText(item.getTags().toString());
+            discoverkWrapper.getTags().setText(item.getTags().toString());
         } else {
-            bookmarkWrapper.getTags().setText(mContext.getResources().getString(R.string.blank));
+            discoverkWrapper.getTags().setText(mContext.getResources().getString(R.string.blank));
         }
 
-        //Set privacy
-        if(item.isPrivacy()){
-            bookmarkWrapper.getPrivacy().setImageResource(R.drawable.archive_locked);
-        } else {
-            bookmarkWrapper.getPrivacy().setImageResource(R.drawable.archive_unlocked);
-        }
 
         //Set num of get
-        bookmarkWrapper.getGet_nums().setText(item.getFollowers().size()+" "+mContext.getString(R.string.archive_row_num_get));
+        discoverkWrapper.getGet_nums().setText(item.getFollowers().size()+" "+mContext.getString(R.string.archive_row_num_get));
         //set num of comment
-        bookmarkWrapper.getComment_nums().setText(item.getComments().size()+" "+mContext.getString(R.string.archive_row_num_comment));
-        bookmarkWrapper.getComment_nums().setOnClickListener(new View.OnClickListener() {
+        discoverkWrapper.getComment_nums().setText(item.getComments().size()+" "+mContext.getString(R.string.archive_row_num_comment));
+        discoverkWrapper.getComment_nums().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CommentActivity.class);
@@ -96,61 +90,60 @@ public class BookmarkAdapter extends BaseAdapter{
         return row;
     }
 
-
-    private class BookmarkWrapper{
+    private class DiscoverkWrapper{
         private View base;
-        private ImageView thumbnail;
+        private ImageView coverImg;
         private TextView tags;
         private TextView title;
         private TextView get_nums;
         private TextView comment_nums;
-        private ImageView privacy;
+        private TextView desc;
 
-        public BookmarkWrapper(View base){
+        public DiscoverkWrapper(View base){
             this.base = base;
         }
 
-        public ImageView getThumbnail() {
-            if(thumbnail==null){
-                thumbnail = (ImageView)base.findViewById(R.id.get_thumbnail);
+        public ImageView getCoverImg() {
+            if(coverImg==null){
+                coverImg = (ImageView)base.findViewById(R.id.discover_cover_img);
             }
-            return thumbnail;
+            return coverImg;
         }
 
         public TextView getTags() {
             if(tags==null){
-                tags = (TextView)base.findViewById(R.id.tag_list);
+                tags = (TextView)base.findViewById(R.id.discover_tags);
             }
             return tags;
         }
 
         public TextView getTitle() {
             if(title==null){
-                title = (TextView)base.findViewById(R.id.title);
+                title = (TextView)base.findViewById(R.id.discover_title);
             }
             return title;
         }
 
         public TextView getGet_nums() {
             if(get_nums==null){
-                get_nums = (TextView)base.findViewById(R.id.get_nums);
+                get_nums = (TextView)base.findViewById(R.id.discover_get);
             }
             return get_nums;
         }
 
         public TextView getComment_nums() {
             if(comment_nums==null){
-                comment_nums = (TextView)base.findViewById(R.id.comment_nums);
+                comment_nums = (TextView)base.findViewById(R.id.discover_comment);
             }
             return comment_nums;
         }
 
-        public ImageView getPrivacy(){
-            if(privacy==null){
-                privacy = (ImageView)base.findViewById(R.id.lock_unlock_img);
+
+        public TextView getDesc(){
+            if(desc==null){
+                desc = (TextView)base.findViewById(R.id.discover_desc);
             }
-            return privacy;
+            return desc;
         }
     }
-
 }

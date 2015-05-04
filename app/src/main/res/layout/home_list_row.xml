@@ -25,17 +25,22 @@
             android:orientation="vertical"
             >
             <TextView
+                android:id="@+id/discover_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="지수진"
                 android:textColor="@color/main_color"/>
             <TextView
+                android:id="@+id/discover_tags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/archive_clip"
+                android:drawablePadding="3dp"
                 android:text="요리, 레시피"
                 android:textColor="@color/grey"/>
          </LinearLayout>
          <TextView
+             android:id="@+id/discover_date"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="4d"
@@ -45,21 +50,24 @@
      <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="0dp"
-         android:layout_weight="3">
+         android:layout_weight="3"
+         >
          <ImageView
+             android:id="@+id/discover_cover_img"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content"
+             android:layout_height="230dp"
              android:background="@color/transparent"/>
      </LinearLayout>
 
      <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="0dp"
-         android:layout_weight="2"
+         android:layout_weight="2.69"
          android:orientation="vertical"
          android:padding="20dp"
          >
           <TextView
+             android:id="@+id/discover_title"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:textColor="@color/black"
@@ -73,18 +81,22 @@
               android:orientation="horizontal"
               android:layout_marginTop="5dp">
               <TextView
+                  android:id="@+id/discover_get"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textColor="@color/blur_grey"
-                  android:text="00 GETS"/>
+                  android:text="@string/archive_row_num_get"/>
               <TextView
+                  android:id="@+id/discover_comment"
+                  android:layout_marginLeft="15dp"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textColor="@color/blur_grey"
-                  android:text="3 Comments"/>
+                  android:text="@string/archive_row_num_comment"/>
 
           </LinearLayout>
          <TextView
+             android:id="@+id/discover_desc"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="프랑스 철학자 베르나르 스타글에 는 디자인 내친구의 하나의 테스트 입니다. 그렇습니다. 테스트 입니다. 테스르 타러이마ㅓㅇ리마ㅓㅇ리ㅏ멍리ㅏ멍리ㅏ머이라머이라ㅓ"
@@ -94,29 +106,5 @@
              android:textSize="18sp"/>
      </LinearLayout>
 
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="0dp"
-         android:layout_weight="1"
-         android:orientation="horizontal"
-
-         >
-         <Button
-             android:layout_width="0dp"
-             android:layout_weight="1"
-             android:background="@drawable/add_btn_shape"
-             android:layout_height="match_parent"
-             android:textColor="@color/black"
-             android:text="Get"
-             android:textSize="25sp"></Button>
-         <Button
-             android:layout_width="0dp"
-             android:layout_weight="1"
-             android:background="@drawable/add_btn_shape"
-             android:layout_height="match_parent"
-             android:textColor="@color/black"
-             android:text="Close"
-             android:textSize="25sp"/>
-         </LinearLayout>
-     </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

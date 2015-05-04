@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.soget.soget_client.R;
@@ -34,14 +35,14 @@ public class ArchiveFragment extends Fragment {
     private ListView bookmarkListView = null;
     private BookmarkAdapter bookmarkAdapter =null;
     private ProgressDialog pDialog;
-    private Button settingBtn = null;
-    private Button addBtn = null;
+    private ImageButton settingBtn = null;
+    private ImageButton addBtn = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.archive_layout,container, false);
-        settingBtn = (Button)rootView.findViewById(R.id.setting_btn);
-        addBtn = (Button)rootView.findViewById(R.id.add_get_btn);
+        settingBtn = (ImageButton)rootView.findViewById(R.id.setting_btn);
+        addBtn = (ImageButton)rootView.findViewById(R.id.add_get_btn);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

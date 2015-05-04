@@ -5,23 +5,25 @@
     <string name="content_label">The Content is</string>
     <string name="content_value">[content]</string>
     <string name="action_refresh">Refresh</string>
-    <string name="blank"></string>
+    <string name="blank"> </string>
     <!-- Intro 화면 Strings -->
     <string name="logo">SOCIAL GET</string>
     <string name="login_btn">로그인</string>
 
     <!--가입하기 화면 strings -->
+    <string name="invitation_code_hint">초대번호</string>
     <string name="register_label">가입하기</string>
     <string name="user_name">이름</string>
-    <string name="user_name_hint">홍길동</string>
+    <string name="user_name_hint">이름</string>
     <string name="user_id">아이디</string>
-    <string name="user_id_hint">nolda</string>
+    <string name="user_id_hint">아이디</string>
     <string name="user_email">이메일</string>
-    <string name="user_email_hint">callyoudaddy@hwalbin.dang</string>
+    <string name="user_email_hint">이메일</string>
     <string name="user_pwd">비밀번호</string>
-    <string name="user_pwd_hint">6자 이상으로 입력해주세요.</string>
+    <string name="user_pwd_hint">비밀번호(6자 이상)</string>
     <string name="register_btn">가입하기</string>
-    <string name="register_condition">"가입하기"버튼을 누르는 것과 동시에 동의하신 것으로\n 간주됩니다. 이용약관 and 개인정보 처리방침</string>
+    <string name="register_condition">버튼을 누름과 동시에 동의하신 것으로 간주됩니다.</string>
+    <string name="register_condition_1">이용약관 and 개인정보 처리방침</string>
 
     <!--로그인 화면 strings -->
     <string name="forget_pwd">비밀번호를 잊어버리셨나요?</string>
@@ -30,7 +32,7 @@
     <string name="myget_title">MY GET</string>
     <string name="setting_btn">SETTING</string>
     <string name="add_btn">ADD</string>
-    <string name="archive_row_num_get"> Gets</string>
+    <string name="archive_row_num_get"> MarkIn\'s</string>
     <string name="archive_row_num_comment"> Comments</string>
     <string name="add_bookmark_url_hint">URL</string>
     <string name="add_bookmark_tag_hint">TAG</string>
