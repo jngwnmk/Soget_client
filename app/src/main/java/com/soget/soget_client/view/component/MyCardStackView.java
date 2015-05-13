@@ -9,7 +9,7 @@ import android.util.Log;
  */
 public class MyCardStackView extends AbstractCardsStackView {
     public static final String TAG = "MyCardsStackView";
-
+    private CardStackMoveListener cardStackMoveListener = null;
     public MyCardStackView(Context context) {
         super(context);
     }
@@ -22,6 +22,14 @@ public class MyCardStackView extends AbstractCardsStackView {
         super(context, attrs, defStyle);
     }
 
+    public CardStackMoveListener getCardStackMoveListener() {
+        return cardStackMoveListener;
+    }
+
+    public void setCardStackMoveListener(CardStackMoveListener cardStackMoveListener) {
+        this.cardStackMoveListener = cardStackMoveListener;
+    }
+
     @Override
     public void onStackGettingEmpty() {
         Log.d(TAG, "Stack getting empty");
@@ -31,23 +39,27 @@ public class MyCardStackView extends AbstractCardsStackView {
     public void onSwipedLeft() {
         Log.d(TAG, "Swiped Left");
         super.onSwipedLeft();
+
     }
 
     @Override
     public void onSwipedRight() {
         Log.d(TAG, "Swiped Right");
         super.onSwipedRight();
+
     }
 
     @Override
     public void onSwipedUp() {
         Log.d(TAG, "Swiped Up");
         super.onSwipedUp();
+        cardStackMoveListener.cardDelete();
     }
 
     @Override
     public void onSwipedDown() {
         Log.d(TAG, "Swiped Down");
         super.onSwipedDown();
+        cardStackMoveListener.cardAdd();
     }
 }

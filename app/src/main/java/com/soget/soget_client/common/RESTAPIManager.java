@@ -9,10 +9,12 @@ import org.springframework.http.HttpHeaders;
  */
 public class RESTAPIManager {
 
-    public final static String base_url = "http://54.178.195.202/";
+    public final static String base_url = "http://52.68.175.130/";
     public final static String auth_url = base_url+"oauth/token";
     public final static String user_url = base_url+"user/";
     public final static String bookmark_url = base_url+"bookmark/";
+    public final static String trashcan_url = bookmark_url+"trashcan/";
+    public final static String discover_url = bookmark_url+"home/friends/";//{user_id}/{date}/{page_no}
     public final static String friends_url = user_url+"friends/";
     public final static String friends_sent_url = friends_url+"sent/";
     public final static String friends_receive_url = friends_url+"receive/";

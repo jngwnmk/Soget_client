@@ -17,18 +17,17 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Created by wonmook on 15. 5. 13..
+ * Created by wonmook on 2015-03-22.
  */
-public class AddBookmarkRequestTask extends AsyncTask<Void, Void, Bookmark> {
+public class MakeBookmarkRequestTask extends AsyncTask<Void, Void, Bookmark> {
     private OnTaskCompleted listener;
     private String token ;
     private String user_id;
-    private String bookmark_id;
+    private Bookmark new_bookmark;
     ResponseEntity<Bookmark> response;
-    public AddBookmarkRequestTask(OnTaskCompleted listener, String user_id,String bookmark_id, String token){
+    public MakeBookmarkRequestTask(OnTaskCompleted listener, Bookmark bookmark, String token){
         this.listener = listener;
-        this.user_id = user_id;
-        this.bookmark_id = bookmark_id;
+        this.new_bookmark = bookmark;
         this.token = token;
     }
 
@@ -42,11 +41,12 @@ public class AddBookmarkRequestTask extends AsyncTask<Void, Void, Bookmark> {
 
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
             headers.setContentType(MediaType.APPLICATION_JSON);
-            response = restTemplate.exchange(RESTAPIManager.bookmark_url+user_id+"/"+bookmark_id, HttpMethod.PUT, new HttpEntity(headers), Bookmark.class);
+            System.out.println("bookmark:"+new_bookmark.toString());
+            response = restTemplate.exchange(RESTAPIManager.bookmark_url, HttpMethod.POST, new HttpEntity(new_bookmark,headers), Bookmark.class);
             return response.getBody();
 
         } catch (Exception e){
-            Log.e("AddBookmarkRequestTask", e.getMessage(), e);
+            Log.e("MakeBookmarkRequestTask", e.getMessage(), e);
         }
         return null;
     }

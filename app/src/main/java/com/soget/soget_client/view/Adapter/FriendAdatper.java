@@ -56,26 +56,36 @@ public class FriendAdatper extends BaseAdapter{
 
         }
         //Set title
-
         Friend friend = (Friend)getItem(position);
-        friendWrapper.getFriendName().setText(friend.getUserInfo().getName());
-        if(friend.getUserInfo().getBookmarks()!=null)
-        {
-            friendWrapper.getFriendNumBookmark().setText(friend.getUserInfo().getBookmarks().size() +" Gets");
-        }
-        else {
-            friendWrapper.getFriendNumBookmark().setText("0 Gets");
-        }
+
+
 
         if(friend.getType().equals(Friend.FRIEND.FRIEND)){
             friendWrapper.getFriendBtn().setVisibility(View.INVISIBLE);
-            friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.white));
+            friendWrapper.getFriendName().setText(friend.getUserInfo().getName());
+            if(friend.getUserInfo().getBookmarks()!=null)
+            {
+                friendWrapper.getFriendNumBookmark().setText(friend.getUserInfo().getBookmarks().size() +" Gets");
+            }
+            else {
+                friendWrapper.getFriendNumBookmark().setText("0 Gets");
+            }
+            //friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.white));
         } else if(friend.getType().equals(Friend.FRIEND.FRIENDRECEIVE)){
-            friendWrapper.getFriendBtn().setText("FriendReceive");
-            friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
+            friendWrapper.getFriendBtn().setText(context.getResources().getString(R.string.accept_btn));
+            friendWrapper.getFriendBtn().setBackgroundColor(context.getResources().getColor(R.color.dark_grey));
+            friendWrapper.getFriendName().setText(friend.getUserInfo().getName()+"("+friend.getUserInfo().getUserId()+")");
+            friendWrapper.getFriendName().setTextColor(context.getResources().getColor(R.color.oxford_blue));
+            friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
+
+            //friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
         } else if(friend.getType().equals(Friend.FRIEND.FRIENDSENT)){
-            friendWrapper.getFriendBtn().setText("FriendSent");
-            friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
+            friendWrapper.getFriendBtn().setText(context.getResources().getString(R.string.waiting_btn));
+            friendWrapper.getFriendBtn().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
+            friendWrapper.getFriendName().setText(friend.getUserInfo().getName()+"("+friend.getUserInfo().getUserId()+")");
+            friendWrapper.getFriendName().setTextColor(context.getResources().getColor(R.color.oxford_blue));
+            friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
+            //friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
         }
 
         return row;
@@ -85,7 +95,7 @@ public class FriendAdatper extends BaseAdapter{
         private View base;
         private TextView friendName;
         private TextView friendNumBookmark;
-        private Button   friendBtn;
+        private TextView   friendBtn;
         private LinearLayout backgroundLayout;
 
         public FriendWrapper(View base){
@@ -106,9 +116,9 @@ public class FriendAdatper extends BaseAdapter{
             return friendNumBookmark;
         }
 
-        public Button getFriendBtn() {
+        public TextView getFriendBtn() {
             if(friendBtn==null){
-                friendBtn = (Button)base.findViewById(R.id.friend_btn);
+                friendBtn = (TextView)base.findViewById(R.id.friend_btn);
             }
             return friendBtn;
         }

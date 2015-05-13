@@ -11,6 +11,7 @@ public class AuthManager {
     public static final String LOGIN_PREF = "login";
     public static final String USER_ID = "user_id";
     public static final String PASSWORD = "password";
+    public static final String EMAIL = "email";
     public static final String TOKEN = "token";
 
 
@@ -37,7 +38,13 @@ public class AuthManager {
         }
         return token;
     }
-
+    public static void register(SharedPreferences sharedPreferences, String user_id, String password, String email){
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString(AuthManager.USER_ID, user_id);
+        edit.putString(AuthManager.PASSWORD, password);
+        edit.putString(AuthManager.EMAIL, email);
+        edit.commit();
+    }
     public static void login(SharedPreferences sharedPreferences, String user_id, String password, String token){
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString(AuthManager.USER_ID, user_id);

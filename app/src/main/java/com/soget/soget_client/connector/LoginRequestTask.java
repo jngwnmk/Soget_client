@@ -38,6 +38,7 @@ public class LoginRequestTask extends AsyncTask<Void, Void, Authorization> {
             ResponseEntity<Authorization> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders("soget","123456");
             String auth_str = RESTAPIManager.getRestAPIManager().getAuthStr(user.getUserId(),user.getPassword());
+            System.out.println("Login(auth_str):"+auth_str);
             response = restTemplate.exchange(RESTAPIManager.auth_url, HttpMethod.POST, new HttpEntity<String>(auth_str,headers), Authorization.class);
             return response.getBody();
         } catch (Exception e){

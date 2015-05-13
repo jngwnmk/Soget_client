@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
@@ -32,7 +33,7 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
     private User user;
     private EditText user_id_edit;
     private EditText user_pwd_edit;
-    private Button login_btn;
+    private ImageButton login_btn;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -52,7 +53,7 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
         } else {
             user = new User();
         }
-        login_btn = (Button)findViewById(R.id.login_btn);
+        login_btn = (ImageButton)findViewById(R.id.login_btn);
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,10 +87,21 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
 
     @Override
     public void onTaskCompleted(Object authorization) {
-        Log.d("LoginActivity", ((Authorization)authorization).toString());
-        //Save authorization info to shared preference
-        AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE),user.getUserId(),user.getPassword(),((Authorization)authorization).getAccess_token());
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        //Login success
+        if(authorization!=null){
+            Log.d("LoginActivity", ((Authorization)authorization).toString());
+            //Save authorization info to shared preference
+            AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE),user.getUserId(),user.getPassword(),((Authorization)authorization).getAccess_token());
+            finish();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(LoginActivity.this, IntroActivity.class));
     }
 
 }

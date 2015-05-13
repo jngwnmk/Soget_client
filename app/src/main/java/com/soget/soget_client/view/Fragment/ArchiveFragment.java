@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
@@ -21,6 +22,7 @@ import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.connector.MyArchiveRequestTask;
 import com.soget.soget_client.connector.WebExtractor;
 import com.soget.soget_client.model.Bookmark;
+import com.soget.soget_client.view.Activity.SettingActivity;
 import com.soget.soget_client.view.Activity.WebViewActivity;
 import com.soget.soget_client.view.Adapter.BookmarkAdapter;
 
@@ -42,21 +44,18 @@ public class ArchiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.archive_layout,container, false);
         settingBtn = (ImageButton)rootView.findViewById(R.id.setting_btn);
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Setting", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), SettingActivity.class));
+            }
+        });
         addBtn = (ImageButton)rootView.findViewById(R.id.add_get_btn);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //Show Add Dialog
-                FragmentManager fm = getFragmentManager();
-                AddBookmarkDialog addBookmarkDialog = new AddBookmarkDialog();
-                addBookmarkDialog.setListener(new OnTaskCompleted() {
-                    @Override
-                    public void onTaskCompleted(Object object) {
-                        getMyArchive();
-                    }
-                });
-                addBookmarkDialog.show(fm,"add_bookmark_dialog");
+                showAddDialog("");
             }
         });
 
@@ -80,10 +79,23 @@ public class ArchiveFragment extends Fragment {
         });
         pDialog = new ProgressDialog(this.getActivity());
         pDialog.setMessage("Loading....");
-        pDialog.show();
+
         return rootView;
     }
 
+    public void showAddDialog(String url){
+        //Show Add Dialog
+        FragmentManager fm = getFragmentManager();
+        AddBookmarkDialog addBookmarkDialog = new AddBookmarkDialog();
+        addBookmarkDialog.updateInputUrl(url);
+        addBookmarkDialog.setListener(new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(Object object) {
+                getMyArchive();
+            }
+        });
+        addBookmarkDialog.show(fm,"add_bookmark_dialog");
+    }
     private void updateBookmarkList(){
         getActivity().runOnUiThread(new Runnable() {
 
@@ -116,6 +128,7 @@ public class ArchiveFragment extends Fragment {
         };
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
         String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+        pDialog.show();
         new MyArchiveRequestTask(onTaskCompleted,user_id, token).execute();
     }
 

@@ -11,11 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.soget.soget_client.R;
+import com.soget.soget_client.common.SogetUtil;
 import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.view.Activity.CommentActivity;
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.DateTime;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Date;
+
+import javax.xml.datatype.Duration;
 
 /**
  * Created by saadati on 10/4/14.
@@ -59,20 +66,39 @@ public class DiscoverAdapter extends BaseAdapter {
             discoverkWrapper = (DiscoverkWrapper)row.getTag();
 
         }
-        //Set title
         Bookmark item = (Bookmark)getItem(position);
+
+        //Set User name & User id
+        discoverkWrapper.getUserId().setText(item.getInitUserName()+"("+item.getInitUserNickName()+")");
+
+        //Set title
         discoverkWrapper.getTitle().setText(item.getTitle());
 
+        //Set elapsed Time
+        discoverkWrapper.getDate().setText(SogetUtil.calDurationTime(item.getDate()));
+
         //Set Thumbnail Image
-        Picasso.with(mContext).load(item.getImg_url())//.into(bookmarkWrapper.getThumbnail());
-                .resizeDimen(R.dimen.list_discover_image_size_w, R.dimen.list_discover_image_size_h)
+        Picasso.with(mContext).load(item.getImg_url())
+                .placeholder(R.drawable.picture_no_image).fit().centerCrop()//.into(bookmarkWrapper.getThumbnail());
+                //.resizeDimen(R.dimen.list_discover_image_size_w, R.dimen.list_discover_image_size_h)
                 .into(discoverkWrapper.getCoverImg());
 
         //Set Tags
         if(item.getTags().size()!=0){
-            discoverkWrapper.getTags().setText(item.getTags().toString());
+            StringBuffer sb = new StringBuffer();
+            for(int i = 0; i < item.getTags().size() ;++i){
+                if(i!=item.getTags().size()-1){
+                    sb.append(item.getTags().get(i));
+                    sb.append(", ");
+                } else {
+                    sb.append(item.getTags().get(i));
+                }
+
+            }
+            discoverkWrapper.getTags().setText(sb.toString());
         } else {
             discoverkWrapper.getTags().setText(mContext.getResources().getString(R.string.blank));
+            discoverkWrapper.getTags().setCompoundDrawables(null,null,null,null);
         }
 
 
@@ -87,12 +113,17 @@ public class DiscoverAdapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
+
+        discoverkWrapper.getDesc().setText(item.getDesc());
+
         return row;
     }
 
     private class DiscoverkWrapper{
         private View base;
         private ImageView coverImg;
+        private TextView userId;
+        private TextView date;
         private TextView tags;
         private TextView title;
         private TextView get_nums;
@@ -108,6 +139,20 @@ public class DiscoverAdapter extends BaseAdapter {
                 coverImg = (ImageView)base.findViewById(R.id.discover_cover_img);
             }
             return coverImg;
+        }
+
+        public TextView getUserId(){
+            if(userId==null){
+                userId = (TextView)base.findViewById(R.id.discover_id);
+            }
+            return userId;
+        }
+
+        public TextView getDate(){
+            if(date==null){
+                date = (TextView)base.findViewById(R.id.discover_date);
+            }
+            return date;
         }
 
         public TextView getTags() {

@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_margin="16dp"
-        android:weightSum="7"
-        >
+        android:gravity="center"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/discover_card_layer"
+        android:layout_marginTop="5dp">
      <LinearLayout
-
          android:orientation="horizontal"
          android:layout_width="match_parent"
-         android:layout_height="0dp"
-         android:layout_weight="1"
-         android:padding="20dp">
+         android:layout_height="wrap_content"
+         android:padding="15dp">
         <LinearLayout
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -28,53 +31,54 @@
                 android:id="@+id/discover_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="15.33sp"
                 android:text="지수진"
-                android:textColor="@color/main_color"/>
+                android:textColor="@color/discover_name"/>
             <TextView
                 android:id="@+id/discover_tags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/archive_clip"
-                android:drawablePadding="3dp"
+                android:drawableLeft="@drawable/discover_tag"
+                android:drawablePadding="3.33dp"
+                android:textSize="12.67sp"
                 android:text="요리, 레시피"
-                android:textColor="@color/grey"/>
+                android:textColor="@color/discover_tag"/>
          </LinearLayout>
          <TextView
              android:id="@+id/discover_date"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="4d"
-             android:textColor="@color/grey"
-             android:paddingRight="20dp"/>
+             android:textSize="13.33sp"
+             android:drawableLeft="@drawable/discover_time"
+             android:drawablePadding="4.67dp"
+             android:textColor="@color/discover_time"
+             />
      </LinearLayout>
      <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="0dp"
-         android:layout_weight="3"
-         >
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content">
          <ImageView
              android:id="@+id/discover_cover_img"
              android:layout_width="match_parent"
-             android:layout_height="230dp"
-             android:background="@color/transparent"/>
+             android:layout_height="match_parent"
+             android:background="@color/transparent"
+             android:src="@drawable/picture_no_image"/>
      </LinearLayout>
 
      <LinearLayout
          android:layout_width="match_parent"
-         android:layout_height="0dp"
-         android:layout_weight="2.69"
+         android:layout_height="wrap_content"
          android:orientation="vertical"
-         android:padding="20dp"
-         >
+         android:padding="15dp">
           <TextView
              android:id="@+id/discover_title"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:textColor="@color/black"
-             android:textSize="25sp"
+             android:textSize="18.67sp"
              android:maxLines="2"
-             android:text="일상과 사회를 바꾸는 주거실험_집에 대한 생각을 커뮤니티로 엮다.........dfdsfsdfadgadgadgasdgadgadg
-             "/>
+             android:text="일상과 사회를 바꾸는 주거실험_집에 대한 생각을 커뮤니티로 엮다.........dfdsfsdfadgadgadgasdgadgadg              "/>
           <LinearLayout
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -84,14 +88,16 @@
                   android:id="@+id/discover_get"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textColor="@color/blur_grey"
+                  android:textColor="@color/discover_info"
+                  android:textSize="12.67sp"
                   android:text="@string/archive_row_num_get"/>
               <TextView
                   android:id="@+id/discover_comment"
-                  android:layout_marginLeft="15dp"
+                  android:layout_marginLeft="13.33dp"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textColor="@color/blur_grey"
+                  android:textSize="12.67sp"
+                  android:textColor="@color/discover_info"
                   android:text="@string/archive_row_num_comment"/>
 
           </LinearLayout>
@@ -102,9 +108,14 @@
              android:text="프랑스 철학자 베르나르 스타글에 는 디자인 내친구의 하나의 테스트 입니다. 그렇습니다. 테스트 입니다. 테스르 타러이마ㅓㅇ리마ㅓㅇ리ㅏ멍리ㅏ멍리ㅏ머이라머이라ㅓ"
              android:textColor="@color/black"
              android:maxLines="3"
-             android:layout_marginTop="15dp"
-             android:textSize="18sp"/>
+             android:textSize="11.67sp"/>
      </LinearLayout>
 
+
     </LinearLayout>
-</LinearLayout>
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

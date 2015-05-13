@@ -18,12 +18,11 @@
             android:layout_gravity="center"
             android:paddingLeft="20dp"
             />
-        <TextView
+        <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/home_title"
+            android:src="@drawable/discover"
             android:layout_weight="1"
-            android:gravity="center"
             android:layout_gravity="center"/>
 
         <ImageButton
@@ -36,9 +35,58 @@
             android:paddingRight="20dp"/>
 
     </LinearLayout>
-    <com.soget.soget_client.view.component.MyCardStackView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/discover_stack_view">
-        </com.soget.soget_client.view.component.MyCardStackView>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/discover_background_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/screenshot_discover"
+            android:alpha="0.15"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/discover_card_layer_shadow"/>
+        <com.soget.soget_client.view.component.MyCardStackView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/discover_stack_view">
+            </com.soget.soget_client.view.component.MyCardStackView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+
+            android:layout_marginTop="10dp">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/discover_count_circle">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/discover_circle_current_idx"
+                        android:text="1"
+                        android:textSize="18.67sp"
+                        android:textColor="@color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/discover_circle_total_num"
+                        android:text="/0"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
+
 </LinearLayout>

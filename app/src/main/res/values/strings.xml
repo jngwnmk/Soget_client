@@ -26,7 +26,9 @@
     <string name="register_condition_1">이용약관 and 개인정보 처리방침</string>
 
     <!--로그인 화면 strings -->
-    <string name="forget_pwd">비밀번호를 잊어버리셨나요?</string>
+    <string name="login_id_hint">아이디</string>
+    <string name="login_pwd_hint">비밀번호</string>
+    <string name="login_forget_pwd"><u>비밀번호를 잊어버리셨나요?</u></string>
 
     <!--my get (archive) 화면 string -->
     <string name="myget_title">MY GET</string>
@@ -43,8 +45,10 @@
     </string-array>
 
     <!-- friends 화면 -->
-    <string name="accept_btn">수락</string>
-    <string name="waiting_btn">대기중</string>
+    <string name="invitation_user">사용하기</string>
+    <string name="invitation">초대장</string>
+    <string name="accept_btn">추가</string>
+    <string name="waiting_btn">대기 중</string>
     <string name="friend_title">FRIENDS</string>
     <string name="search_btn">SEARCH</string>
 
@@ -54,5 +58,16 @@
     <string name="comment_hint">댓글을 남겨주세요</string>
 
     <string name="home_title">HOME</string>
+    <string name="title_activity_setting">Setting</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <!--Setting-->
+    <string name="setting_pwd_reset">비밀번호 재설정</string>
+    <string name="setting_feedback">피드백</string>
+    <string name="setting_blog">MarkIn\' 블로그</string>
+    <string name="setting_privacy_regulation">개인정보 처리방침</string>
+    <string name="setting_app_regulation">이용약관</string>
 
 </resources>

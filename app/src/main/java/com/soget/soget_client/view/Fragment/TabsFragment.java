@@ -23,9 +23,14 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
     public static final String TAB_ARCHIVE = "archive";
     public static final String TAB_FRIEND = "friend";
 
+    private HomeFragment homeFragment = null;
+    private ArchiveFragment archiveFragment = null;
+    private FriendsFragment friendsFragment = null;
+
     private View mRoot;
     private TabHost mTabHost;
     private int mCurrentTab=0;
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -115,21 +120,37 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
         FragmentManager fm = getFragmentManager();
         if(TAB_HOME.equals(tabId)) {
             if (fm.findFragmentByTag(tabId) == null) {
-                fm.beginTransaction().replace(placeholder, new HomeFragment(), tabId).commit();
+                homeFragment = new HomeFragment();
+                fm.beginTransaction().replace(placeholder, homeFragment, tabId).commit();
             }
         }
 
         if(TAB_ARCHIVE.equals(tabId)) {
             if (fm.findFragmentByTag(tabId) == null) {
-                fm.beginTransaction().replace(placeholder, new ArchiveFragment(), tabId).commit();
+                archiveFragment = new ArchiveFragment();
+                fm.beginTransaction().replace(placeholder, archiveFragment, tabId).commit();
+
             }
         }
 
         if(TAB_FRIEND.equals(tabId)) {
             if (fm.findFragmentByTag(tabId) == null) {
-                fm.beginTransaction().replace(placeholder, new FriendsFragment(), tabId).commit();
+                friendsFragment = new FriendsFragment();
+                fm.beginTransaction().replace(placeholder, friendsFragment, tabId).commit();
             }
         }
+        System.out.println("updateTab():TabsFragment");
     }
 
+    public FriendsFragment getFriendsFragment() {
+        return friendsFragment;
+    }
+
+    public HomeFragment getHomeFragment() {
+        return homeFragment;
+    }
+
+    public ArchiveFragment getArchiveFragment() {
+        return archiveFragment;
+    }
 }

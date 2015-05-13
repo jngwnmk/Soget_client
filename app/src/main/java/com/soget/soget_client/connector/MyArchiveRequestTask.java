@@ -42,7 +42,7 @@ public class MyArchiveRequestTask extends AsyncTask<Void, Void, ArrayList<Bookma
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             ResponseEntity<Bookmark[]> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
-            response = restTemplate.exchange(RESTAPIManager.bookmark_url + "/" + user_id, HttpMethod.GET, new HttpEntity(headers), Bookmark[].class);
+            response = restTemplate.exchange(RESTAPIManager.bookmark_url +  user_id, HttpMethod.GET, new HttpEntity(headers), Bookmark[].class);
             bookmarks = new ArrayList<Bookmark>();
             bookmarks.addAll(Arrays.asList(response.getBody()));
             return bookmarks;

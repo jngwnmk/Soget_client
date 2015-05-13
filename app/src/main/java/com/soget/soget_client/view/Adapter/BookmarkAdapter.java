@@ -69,10 +69,21 @@ public class BookmarkAdapter extends BaseAdapter{
                 .into(bookmarkWrapper.getThumbnail());
 
         //Set Tags
+
         if(item.getTags().size()!=0){
-            bookmarkWrapper.getTags().setText(item.getTags().toString());
+            StringBuffer sb = new StringBuffer();
+            for(int i = 0; i < item.getTags().size() ;++i){
+                if(i!=item.getTags().size()-1){
+                    sb.append(item.getTags().get(i));
+                    sb.append(", ");
+                } else {
+                    sb.append(item.getTags().get(i));
+                }
+            }
+            bookmarkWrapper.getTags().setText(sb.toString());
         } else {
             bookmarkWrapper.getTags().setText(mContext.getResources().getString(R.string.blank));
+            bookmarkWrapper.getTags().setCompoundDrawables(null,null,null,null);
         }
 
         //Set privacy

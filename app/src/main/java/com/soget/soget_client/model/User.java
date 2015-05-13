@@ -13,11 +13,13 @@ public class User {
     private String email;
     private String password;
     private String facebookProfile;
+    private String invitationCode;
     private List<String> friends;
-    //TODO : change the variable name to friendsRequestReceived on client and server
-    private List<String> friendsRequestRecieved;
+    private List<String> friendsRequestReceived;
     private List<String> friendsRequestSent;
     private List<String> bookmarks;
+    private List<String> trashcan;
+    private List<String> invitation;
 
     public String getId() {
         return id;
@@ -75,12 +77,12 @@ public class User {
         this.friends = friends;
     }
 
-    public List<String> getFriendsRequestRecieved() {
-        return friendsRequestRecieved;
+    public List<String> getFriendsRequestReceived() {
+        return friendsRequestReceived;
     }
 
-    public void setFriendsRequestRecieved(List<String> friendsRequestRecieved) {
-        this.friendsRequestRecieved = friendsRequestRecieved;
+    public void setFriendsRequestReceived(List<String> friendsRequestReceived) {
+        this.friendsRequestReceived = friendsRequestReceived;
     }
 
     public List<String> getFriendsRequestSent() {
@@ -99,6 +101,30 @@ public class User {
         this.bookmarks = bookmarks;
     }
 
+    public String getInvitationCode() {
+        return invitationCode;
+    }
+
+    public void setInvitationCode(String invitationCode) {
+        this.invitationCode = invitationCode;
+    }
+
+    public List<String> getInvitation() {
+        return invitation;
+    }
+
+    public void setInvitation(List<String> invitation) {
+        this.invitation = invitation;
+    }
+
+    public List<String> getTrashcan() {
+        return trashcan;
+    }
+
+    public void setTrashcan(List<String> trashcan) {
+        this.trashcan = trashcan;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -107,10 +133,15 @@ public class User {
                 ", \"email\":\"" + email + '"' +
                 ", \"password\":\"" + password + '"' +
                 ", \"facebookProfile\":\"" + facebookProfile + '"' +
+                ", \"invitationCode\":\"" + invitationCode +'"' +
                 ", \"friends\":" + friends +
-                ", \"friendsRequestRecieved\":" + friendsRequestRecieved +
+                ", \"friendsRequestReceived\":" + friendsRequestReceived +
                 ", \"friendsRequestSent\":" + friendsRequestSent +
                 ", \"bookmarks\":" + bookmarks +
+                ", \"trashcan\":" + trashcan+
+                ", \"invitation\":" + invitation +
                 "}";
     }
+
+
 }

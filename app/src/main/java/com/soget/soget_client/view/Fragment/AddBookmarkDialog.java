@@ -18,15 +18,18 @@ import android.widget.Toast;
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
-import com.soget.soget_client.connector.AddBookmarkRequestTask;
+import com.soget.soget_client.connector.MakeBookmarkRequestTask;
 import com.soget.soget_client.model.Bookmark;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by wonmook on 2015-03-22.
  */
 public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnItemSelectedListener {
+    private String  inputUrl = "";
     private Spinner privacySpinner = null;
     private EditText urlEt = null;
     private EditText tagEt = null;
@@ -56,6 +59,7 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
         privacySpinner.setOnItemSelectedListener(this);
 
         urlEt = (EditText) rootView.findViewById(R.id.add_bookmark_url);
+        urlEt.setText(getInputUrl());
         tagEt = (EditText) rootView.findViewById(R.id.add_bookmark_tag);
         addBookmarkBtn = (Button)rootView.findViewById(R.id.add_bookmark_btn);
         addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +69,13 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
                 new_bookmark.setTitle("Default");
                 new_bookmark.setUrl(urlEt.getText().toString());
                 new_bookmark.setInitUserId(AuthManager.getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE)).getUserId());
+                List<String> taglist = new ArrayList<String>();
+                String tags = tagEt.getText().toString();
+                StringTokenizer st = new StringTokenizer(tags,",");
+                while(st.hasMoreTokens()){
+                    taglist.add(st.nextToken());
+                }
+                new_bookmark.setTags(taglist);
                 new_bookmark.setPrivacy(privacy);
                 OnTaskCompleted onTaskCompleted;
                 onTaskCompleted = new OnTaskCompleted() {
@@ -78,7 +89,7 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
                     }
                 };
                 String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-                new AddBookmarkRequestTask(onTaskCompleted,new_bookmark, token).execute();
+                new MakeBookmarkRequestTask(onTaskCompleted,new_bookmark, token).execute();
             }
         });
         return rootView;
@@ -107,5 +118,20 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void updateInputUrl(String url){
+        setInputUrl(url);
+        if(urlEt!=null){
+            urlEt.setText(getInputUrl());
+        }
+    }
+
+    public String getInputUrl() {
+        return inputUrl;
+    }
+
+    public void setInputUrl(String inputUrl) {
+        this.inputUrl = inputUrl;
     }
 }
