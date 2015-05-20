@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TabHost;
-import android.widget.TextView;
 
 import com.soget.soget_client.R;
 
@@ -23,13 +22,13 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
     public static final String TAB_ARCHIVE = "archive";
     public static final String TAB_FRIEND = "friend";
 
-    private HomeFragment homeFragment = null;
+    private DiscoverFragment discoverFragment = null;
     private ArchiveFragment archiveFragment = null;
     private FriendsFragment friendsFragment = null;
 
     private View mRoot;
     private TabHost mTabHost;
-    private int mCurrentTab=0;
+    private int mCurrentTab=1;
 
 
     @Override
@@ -54,13 +53,13 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
         mTabHost.setOnTabChangedListener(this);
         mTabHost.setCurrentTab(mCurrentTab);
         // manually start loading stuff in the first tab
-        updateTab(TAB_HOME, R.id.tab_1);
+        //updateTab(TAB_HOME, R.id.tab_1);
     }
 
     private void setupTabs() {
         mTabHost.setup(); // you must call this before adding your tabs!
-        mTabHost.addTab(newTab(TAB_HOME, R.drawable.discover_1, R.id.tab_1));
-        mTabHost.addTab(newTab(TAB_ARCHIVE, R.drawable.archive_0, R.id.tab_2));
+        mTabHost.addTab(newTab(TAB_HOME, R.drawable.discover_0, R.id.tab_1));
+        mTabHost.addTab(newTab(TAB_ARCHIVE, R.drawable.archive_1, R.id.tab_2));
         mTabHost.addTab(newTab(TAB_FRIEND, R.drawable.friends_0, R.id.tab_3));
     }
 
@@ -120,37 +119,37 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
         FragmentManager fm = getFragmentManager();
         if(TAB_HOME.equals(tabId)) {
             if (fm.findFragmentByTag(tabId) == null) {
-                homeFragment = new HomeFragment();
-                fm.beginTransaction().replace(placeholder, homeFragment, tabId).commit();
+                if(discoverFragment ==null){
+                    discoverFragment = new DiscoverFragment();
+
+                }
+                fm.beginTransaction().replace(placeholder, discoverFragment, tabId).commit();
+
             }
+
         }
 
         if(TAB_ARCHIVE.equals(tabId)) {
             if (fm.findFragmentByTag(tabId) == null) {
-                archiveFragment = new ArchiveFragment();
+                if(archiveFragment==null){
+                    archiveFragment = new ArchiveFragment();
+                }
                 fm.beginTransaction().replace(placeholder, archiveFragment, tabId).commit();
 
             }
+
         }
 
         if(TAB_FRIEND.equals(tabId)) {
             if (fm.findFragmentByTag(tabId) == null) {
-                friendsFragment = new FriendsFragment();
+                if(friendsFragment==null){
+                    friendsFragment = new FriendsFragment();
+                }
                 fm.beginTransaction().replace(placeholder, friendsFragment, tabId).commit();
             }
         }
         System.out.println("updateTab():TabsFragment");
     }
 
-    public FriendsFragment getFriendsFragment() {
-        return friendsFragment;
-    }
 
-    public HomeFragment getHomeFragment() {
-        return homeFragment;
-    }
-
-    public ArchiveFragment getArchiveFragment() {
-        return archiveFragment;
-    }
 }

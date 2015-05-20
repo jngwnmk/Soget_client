@@ -1,30 +1,24 @@
 package com.soget.soget_client.view.Activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.soget.soget_client.R;
-import com.soget.soget_client.callback.OnTaskCompleted;
-import com.soget.soget_client.common.AuthManager;
-import com.soget.soget_client.common.StaticValues;
-import com.soget.soget_client.connector.LoginRequestTask;
-import com.soget.soget_client.model.Authorization;
-import com.soget.soget_client.model.User;
 
 
 public class IntroActivity extends Activity  {
 
+
     private ImageButton register_btn = null;
-    private ImageButton login_btn = null;
+    private TextView    request_tv = null;
+    private TextView    login_tv = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +28,9 @@ public class IntroActivity extends Activity  {
     }
 
     private void setLayout(){
-        register_btn  = (ImageButton)findViewById(R.id.register_btn);
-        login_btn = (ImageButton)findViewById(R.id.login_btn);
+        register_btn  = (ImageButton)findViewById(R.id.intro_register_btn);
+        login_tv = (TextView)findViewById(R.id.intro_login_tv);
+        request_tv = (TextView)findViewById(R.id.intro_invitation_request_tv);
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +40,7 @@ public class IntroActivity extends Activity  {
             }
         });
 
-        login_btn.setOnClickListener(new View.OnClickListener() {
+        login_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Start Register Activity
@@ -53,6 +48,13 @@ public class IntroActivity extends Activity  {
                 startActivity(new Intent(IntroActivity.this, LoginActivity.class));
             }
         });
+        request_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Request", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 

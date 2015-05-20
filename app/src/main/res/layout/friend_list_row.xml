@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/friend_name"
             android:text="Name"
-            android:textColor="@color/black"/>
+            android:textSize="13.91sp"
+            android:textColor="@color/friend_name_normal"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,13 +28,16 @@
             />
     </LinearLayout>
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:background="@color/blur_grey"
+        android:background="@drawable/friends_add_box"
         android:textColor="@color/oxford_blue"
+        android:textSize="11.3sp"
         android:text="@string/accept_btn"
+        android:gravity="center"
         android:layout_marginRight="20dp"
         android:id="@+id/friend_btn"
         android:layout_gravity="center_vertical"/>

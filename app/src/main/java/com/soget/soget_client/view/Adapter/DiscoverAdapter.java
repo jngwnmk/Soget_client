@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,13 +15,7 @@ import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.view.Activity.CommentActivity;
 import com.squareup.picasso.Picasso;
 
-import org.joda.time.DateTime;
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Date;
-
-import javax.xml.datatype.Duration;
 
 /**
  * Created by saadati on 10/4/14.
@@ -56,32 +49,32 @@ public class DiscoverAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        View row = convertView;
-        DiscoverkWrapper discoverkWrapper =null;
-        if(discoverkWrapper==null){
-            row = inflater.inflate(R.layout.home_list_row, null);
-            discoverkWrapper = new DiscoverkWrapper(row);
-            row.setTag(discoverkWrapper);
+        DiscoverWrapper discoverWrapper = null;
+        if(convertView==null){
+            convertView  = inflater.inflate(R.layout.home_list_row, null);
+            discoverWrapper = new DiscoverWrapper(convertView);
+            convertView.setTag(discoverWrapper);
         } else {
-            discoverkWrapper = (DiscoverkWrapper)row.getTag();
-
+            discoverWrapper = (DiscoverWrapper)convertView.getTag();
         }
+
         Bookmark item = (Bookmark)getItem(position);
+        System.out.println("Discover" + item.toString());
 
         //Set User name & User id
-        discoverkWrapper.getUserId().setText(item.getInitUserName()+"("+item.getInitUserNickName()+")");
+        discoverWrapper.getUserId().setText(item.getInitUserName() + "(" + item.getInitUserNickName() + ")");
 
         //Set title
-        discoverkWrapper.getTitle().setText(item.getTitle());
+        discoverWrapper.getTitle().setText(item.getTitle());
 
         //Set elapsed Time
-        discoverkWrapper.getDate().setText(SogetUtil.calDurationTime(item.getDate()));
+        discoverWrapper.getDate().setText(SogetUtil.calDurationTime(item.getDate()));
 
         //Set Thumbnail Image
         Picasso.with(mContext).load(item.getImg_url())
                 .placeholder(R.drawable.picture_no_image).fit().centerCrop()//.into(bookmarkWrapper.getThumbnail());
                 //.resizeDimen(R.dimen.list_discover_image_size_w, R.dimen.list_discover_image_size_h)
-                .into(discoverkWrapper.getCoverImg());
+                .into(discoverWrapper.getCoverImg());
 
         //Set Tags
         if(item.getTags().size()!=0){
@@ -95,18 +88,16 @@ public class DiscoverAdapter extends BaseAdapter {
                 }
 
             }
-            discoverkWrapper.getTags().setText(sb.toString());
+            discoverWrapper.getTags().setText(sb.toString());
         } else {
-            discoverkWrapper.getTags().setText(mContext.getResources().getString(R.string.blank));
-            discoverkWrapper.getTags().setCompoundDrawables(null,null,null,null);
+            discoverWrapper.getTags().setText(mContext.getResources().getString(R.string.blank));
+            discoverWrapper.getTags().setCompoundDrawables(null,null,null,null);
         }
-
-
         //Set num of get
-        discoverkWrapper.getGet_nums().setText(item.getFollowers().size()+" "+mContext.getString(R.string.archive_row_num_get));
+        discoverWrapper.getGet_nums().setText(item.getFollowers().size()+" "+mContext.getString(R.string.archive_row_num_get));
         //set num of comment
-        discoverkWrapper.getComment_nums().setText(item.getComments().size()+" "+mContext.getString(R.string.archive_row_num_comment));
-        discoverkWrapper.getComment_nums().setOnClickListener(new View.OnClickListener() {
+        discoverWrapper.getComment_nums().setText(item.getComments().size()+" "+mContext.getString(R.string.archive_row_num_comment));
+        discoverWrapper.getComment_nums().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CommentActivity.class);
@@ -114,12 +105,12 @@ public class DiscoverAdapter extends BaseAdapter {
             }
         });
 
-        discoverkWrapper.getDesc().setText(item.getDesc());
+        discoverWrapper.getDesc().setText(item.getDesc());
 
-        return row;
+        return convertView;
     }
 
-    private class DiscoverkWrapper{
+    private class DiscoverWrapper {
         private View base;
         private ImageView coverImg;
         private TextView userId;
@@ -130,7 +121,7 @@ public class DiscoverAdapter extends BaseAdapter {
         private TextView comment_nums;
         private TextView desc;
 
-        public DiscoverkWrapper(View base){
+        public DiscoverWrapper(View base){
             this.base = base;
         }
 

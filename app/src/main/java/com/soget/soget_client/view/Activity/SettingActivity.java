@@ -11,9 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.soget.soget_client.R;
+import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
+import com.soget.soget_client.connector.InvitationCodeGetRequestTask;
 import com.soget.soget_client.model.Authorization;
 import com.soget.soget_client.model.User;
+
+import java.util.ArrayList;
 
 public class SettingActivity extends ActionBarActivity {
 
@@ -21,6 +25,7 @@ public class SettingActivity extends ActionBarActivity {
     private TextView user_id_tv = null;
     private TextView email_tv = null;
     private ImageButton invitation_btn = null;
+    private TextView invitation_tv = null;
     private ImageButton pwd_reset_btn = null;
     private ImageButton feedback_btn = null;
     private ImageButton blog_btn = null;
@@ -35,6 +40,7 @@ public class SettingActivity extends ActionBarActivity {
 
         setBackBtnAction();
         setUserInfo();
+        setInvitationInfo();
         setInvitationBtnAction();
         setPwdResetBtnAction();
         setFeedBackBtnAction();
@@ -48,6 +54,7 @@ public class SettingActivity extends ActionBarActivity {
         back_btn = (ImageButton)findViewById(R.id.back_btn);
         user_id_tv = (TextView)findViewById(R.id.setting_id);
         email_tv = (TextView)findViewById(R.id.setting_email);
+        invitation_tv = (TextView)findViewById(R.id.setting_invitation_tv);
         invitation_btn = (ImageButton)findViewById(R.id.setting_invitation_btn);
         pwd_reset_btn = (ImageButton)findViewById(R.id.setting_pwd_change_btn);
         feedback_btn = (ImageButton)findViewById(R.id.setting_feedback_btn);
@@ -71,7 +78,21 @@ public class SettingActivity extends ActionBarActivity {
         email_tv.setText(userInfo.getEmail());
     }
 
+    private void setInvitationInfo(){
+        OnTaskCompleted onTaskCompleted;
+        onTaskCompleted = new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(Object object) {
+                ArrayList<String> invitationNum = (ArrayList<String>)object;
+                invitation_tv.setText("초대장: "+ invitationNum.size()+"장");
+            }
+        };
+        String user_id = (AuthManager.getAuthManager().getLoginInfo(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+        String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+        new InvitationCodeGetRequestTask(onTaskCompleted, user_id, token).execute();
+    }
     private void setInvitationBtnAction(){
+
         invitation_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

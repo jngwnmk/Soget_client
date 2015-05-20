@@ -10,45 +10,50 @@ import com.soget.soget_client.model.Bookmark;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
- * Created by wonmook on 15. 5. 13..
+ * Created by wonmook on 15. 5. 15..
  */
-public class TrashBookmarkRequestTask extends AsyncTask<Void, Void, Void> {
+public class InvitationCodeGetRequestTask extends AsyncTask<Void, Void, ArrayList<String>> {
     private OnTaskCompleted listener;
-    private String token ;
+    private ArrayList<String> invitations;
+    private String token;
     private String user_id;
-    private String bookmark_id;
-    ResponseEntity<Bookmark> response;
-    public TrashBookmarkRequestTask(OnTaskCompleted listener, String user_id,String bookmark_id, String token){
+    public InvitationCodeGetRequestTask(OnTaskCompleted listener, String user_id,String token){
         this.listener = listener;
         this.user_id = user_id;
-        this.bookmark_id = bookmark_id;
         this.token = token;
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected ArrayList<String> doInBackground(Void... params) {
         try{
 
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
+            ResponseEntity<String[]> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            restTemplate.exchange(RESTAPIManager.trashcan_url+user_id+"/"+bookmark_id, HttpMethod.PUT, new HttpEntity(headers), String.class);
-
+            response = restTemplate.exchange(RESTAPIManager.invitation_url +  user_id, HttpMethod.GET, new HttpEntity(headers), String[].class);
+            invitations = new ArrayList<String>();
+            invitations.addAll(Arrays.asList(response.getBody()));
+            return invitations;
 
         } catch (Exception e){
-            Log.e("TrashBookmarkRequest", e.getMessage(), e);
+            Log.e("InvitationCodeGetRequestTask", e.getMessage(), e);
         }
         return null;
-    }
+        }
 
+        @Override
+        protected void onPostExecute(ArrayList<String> invitations){
+            listener.onTaskCompleted(invitations);
+        }
 }

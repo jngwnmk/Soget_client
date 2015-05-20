@@ -30,6 +30,8 @@ public class FriendAdatper extends BaseAdapter{
 
     @Override
     public int getCount() {
+
+        System.out.println("getCount():"+friends.size());
         return friends.size();
     }
 
@@ -57,7 +59,7 @@ public class FriendAdatper extends BaseAdapter{
         }
         //Set title
         Friend friend = (Friend)getItem(position);
-
+        System.out.println("FriendAdapter(GetView):"+friend.getType());
 
 
         if(friend.getType().equals(Friend.FRIEND.FRIEND)){
@@ -70,10 +72,11 @@ public class FriendAdatper extends BaseAdapter{
             else {
                 friendWrapper.getFriendNumBookmark().setText("0 Gets");
             }
+
             //friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.white));
         } else if(friend.getType().equals(Friend.FRIEND.FRIENDRECEIVE)){
             friendWrapper.getFriendBtn().setText(context.getResources().getString(R.string.accept_btn));
-            friendWrapper.getFriendBtn().setBackgroundColor(context.getResources().getColor(R.color.dark_grey));
+            //friendWrapper.getFriendBtn().setBackgroundColor(context.getResources().getColor(R.color.dark_grey));
             friendWrapper.getFriendName().setText(friend.getUserInfo().getName()+"("+friend.getUserInfo().getUserId()+")");
             friendWrapper.getFriendName().setTextColor(context.getResources().getColor(R.color.oxford_blue));
             friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
@@ -81,7 +84,7 @@ public class FriendAdatper extends BaseAdapter{
             //friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
         } else if(friend.getType().equals(Friend.FRIEND.FRIENDSENT)){
             friendWrapper.getFriendBtn().setText(context.getResources().getString(R.string.waiting_btn));
-            friendWrapper.getFriendBtn().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
+            //friendWrapper.getFriendBtn().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
             friendWrapper.getFriendName().setText(friend.getUserInfo().getName()+"("+friend.getUserInfo().getUserId()+")");
             friendWrapper.getFriendName().setTextColor(context.getResources().getColor(R.color.oxford_blue));
             friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);

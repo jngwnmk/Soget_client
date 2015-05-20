@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header"
+        >
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/back_btn"
+            android:src="@drawable/back_btn"
+            android:background="@color/transparent"
+            android:layout_gravity="left"
+            android:paddingLeft="20dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/friend_user_id_tv"
+            android:gravity="center"
+            android:textSize="23dp"
+            android:textColor="@color/friend_name_normal"
+            android:text="Friends"/>
+
+
+    </FrameLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/archive_list"
+        android:divider="@color/blur_grey"
+        android:dividerHeight="1dp"></ListView>
+</LinearLayout>

@@ -9,18 +9,21 @@
         android:orientation="vertical"
         android:gravity="center"
         android:paddingLeft="25dp"
-        android:paddingRight="25dp">
+        android:paddingRight="25dp"
+        android:paddingTop="25dp">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/discover_card_layer"
-        android:layout_marginTop="5dp">
+        android:background="@drawable/discover_card_layer">
      <LinearLayout
          android:orientation="horizontal"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:padding="15dp">
+         android:paddingLeft="20dp"
+         android:paddingTop="20dp"
+         android:paddingBottom="10dp"
+         android:paddingRight="20dp">
         <LinearLayout
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -61,7 +64,7 @@
          <ImageView
              android:id="@+id/discover_cover_img"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
+             android:layout_height="wrap_content"
              android:background="@color/transparent"
              android:src="@drawable/picture_no_image"/>
      </LinearLayout>
@@ -70,14 +73,16 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:orientation="vertical"
-         android:padding="15dp">
+         android:paddingLeft="20dp"
+         android:paddingRight="20dp"
+         android:paddingTop="20dp">
           <TextView
              android:id="@+id/discover_title"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:textColor="@color/black"
              android:textSize="18.67sp"
-             android:maxLines="2"
+             android:maxLines="1"
              android:text="일상과 사회를 바꾸는 주거실험_집에 대한 생각을 커뮤니티로 엮다.........dfdsfsdfadgadgadgasdgadgadg              "/>
           <LinearLayout
               android:layout_width="wrap_content"

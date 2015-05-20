@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_color">#94C3C1</color>
+    <color name="main_color">#3E454C</color>
     <color name="discover_name">#3E5279</color>
     <color name="discover_tag">#6F7379</color>
     <color name="discover_time">#D2D4D8</color>
@@ -15,4 +15,12 @@
     <color name="transparent">#00000000</color>
     <color name="shadow_green">#94C3C1</color>
     <color name="oxford_blue">#27313A</color>
+    
+    <!--friend-->
+    <color name="friend_receive_request_btn">#4A5C82</color>
+    <color name="friend_name_normal">#3E454C</color>
+    <color name="friend_name_selected">#FFFFFF</color>
+    <color name="friend_invitation">#3E454C</color>
+
+    <color name="webview_url">#3E454C</color>
 </resources>

@@ -1,55 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/comment_page_background"
+
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_color"
-        android:gravity="right"
+        android:background="@drawable/header"
+
         >
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/close_btn"
-            android:text="@string/close_btn"
-            android:background="@color/transparent"></Button>
+            android:id="@+id/back_btn"
+            android:src="@drawable/back_btn"
+            android:background="@color/transparent"
+            android:layout_gravity="center"
+            android:paddingLeft="20dp"
+            />
 
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/comment_background"
+        android:gravity="center_vertical"
+        android:paddingLeft="26.33dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="25명이 GET 했습니다."
-            android:id="@+id/get_num_desc"
-            android:textSize="17sp"
-            android:padding="10dp"
+            android:id="@+id/comment_markin_num_desc"
+            android:textSize="16.66sp"
+            android:drawablePadding="7dp"
+            android:drawableLeft="@drawable/comment_icon"
             android:layout_gravity="left" />
     </LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/archive_list"></ListView>
+        android:id="@+id/comment_list"></ListView>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:gravity="center"
+        android:background="@drawable/comment_background">
         <EditText
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/comment_hint"/>
-        <Button
+            android:id="@+id/comment_et"
+            android:background="@drawable/comment_editbox"
+            android:hint="@string/comment_hint"
+            android:paddingLeft="7dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/blur_grey"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            >
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/comment_add_btn"
-            android:text="@string/complete_btn"
-            android:background="@color/main_color"/>
+            android:background="@drawable/comment_btn"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/complete_btn"
+                android:layout_gravity="center"/>
+        </FrameLayout>
     </LinearLayout>
 </LinearLayout>

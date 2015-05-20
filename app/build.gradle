@@ -34,6 +34,8 @@ dependencies {
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'net.danlew:android.joda:2.7.2'
+    compile 'com.baoyz.pullrefreshlayout:library:1.0.1'
 
 
 }

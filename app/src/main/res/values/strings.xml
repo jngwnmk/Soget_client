@@ -51,11 +51,14 @@
     <string name="waiting_btn">대기 중</string>
     <string name="friend_title">FRIENDS</string>
     <string name="search_btn">SEARCH</string>
+    <string name="search_cancel_btn">취소</string>
 
     <string name="close_btn">CLOSE</string>
 
-    <string name="complete_btn">완료</string>
-    <string name="comment_hint">댓글을 남겨주세요</string>
+    <!--Comment-->
+
+    <string name="complete_btn">남기기</string>
+    <string name="comment_hint">댓글을 입력하세요</string>
 
     <string name="home_title">HOME</string>
     <string name="title_activity_setting">Setting</string>
@@ -69,5 +72,23 @@
     <string name="setting_blog">MarkIn\' 블로그</string>
     <string name="setting_privacy_regulation">개인정보 처리방침</string>
     <string name="setting_app_regulation">이용약관</string>
+
+    <!--Intro-->
+    <string name="intro_btn">초대장으로 입장하기</string>
+    <string name="intro_desc">초대장 기반으로 운영되는 \n소셜북마킹서비스입니다</string>
+    <string name="intro_invitation_request"><u>초대장이 없으신가요?</u></string>
+    <string name="intro_invitation_login"><u>로그인하기</u></string>
+
+    <!--Invitation Send-->
+    <string name="invitation_send_current_code">내가 가진 MarkIn\' 초대장 : </string>
+    <string name="invitation_send_desc">내가 모은 정보를 \n알려주고 싶은 친구에게만\n초대장을 보내주세요</string>
+    <string name="invitation_receiver">받을 사람</string>
+    <string name="invitation_sms_message">소셜북마킹서비스 MarkIn\' 에 초대합니다.</string>
+    <string name="invitation_code">초대장 번호 : </string>
+    <string name="invitation_app">앱 설치하기 : app.mark.in</string>
+
+    <!--Add bookmark Dialog-->
+    <string name="popup_confirm">확인</string>
+
 
 </resources>

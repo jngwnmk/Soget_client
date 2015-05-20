@@ -6,6 +6,7 @@ import android.util.Log;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.RESTAPIManager;
 import com.soget.soget_client.model.Bookmark;
+import com.soget.soget_client.model.Comment;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,38 +18,42 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Created by wonmook on 15. 5. 13..
+ * Created by wonmook on 15. 5. 16..
  */
-public class TrashBookmarkRequestTask extends AsyncTask<Void, Void, Void> {
+public class AddCommentRequestTask extends AsyncTask<Void, Void, Comment> {
     private OnTaskCompleted listener;
     private String token ;
-    private String user_id;
+    private Comment comment;
     private String bookmark_id;
-    ResponseEntity<Bookmark> response;
-    public TrashBookmarkRequestTask(OnTaskCompleted listener, String user_id,String bookmark_id, String token){
+    ResponseEntity<Comment> response;
+
+    public AddCommentRequestTask(OnTaskCompleted listener, String bookmark_id, Comment comment, String token){
         this.listener = listener;
-        this.user_id = user_id;
         this.bookmark_id = bookmark_id;
+        this.comment = comment;
         this.token = token;
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected Comment doInBackground(Void... params) {
         try{
 
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
             headers.setContentType(MediaType.APPLICATION_JSON);
-            restTemplate.exchange(RESTAPIManager.trashcan_url+user_id+"/"+bookmark_id, HttpMethod.PUT, new HttpEntity(headers), String.class);
-
+            response = restTemplate.exchange(RESTAPIManager.comment_url+bookmark_id, HttpMethod.POST, new HttpEntity(comment,headers), Comment.class);
+            return response.getBody();
 
         } catch (Exception e){
-            Log.e("TrashBookmarkRequest", e.getMessage(), e);
+            Log.e("AddBookmarkRequestTask", e.getMessage(), e);
         }
         return null;
     }
 
+    @Override
+    protected void onPostExecute(Comment comment){
+        listener.onTaskCompleted(comment);
+    }
 }

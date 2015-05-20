@@ -13,12 +13,16 @@ public class RESTAPIManager {
     public final static String auth_url = base_url+"oauth/token";
     public final static String user_url = base_url+"user/";
     public final static String bookmark_url = base_url+"bookmark/";
+    public final static String bookmark_friend_url = bookmark_url+"friend/";
     public final static String trashcan_url = bookmark_url+"trashcan/";
     public final static String discover_url = bookmark_url+"home/friends/";//{user_id}/{date}/{page_no}
     public final static String friends_url = user_url+"friends/";
     public final static String friends_sent_url = friends_url+"sent/";
     public final static String friends_receive_url = friends_url+"receive/";
+    public final static String invitation_url = user_url+"invitation/";
 
+    public final static String comment_url = bookmark_url+"comment/";
+    public final static String user_search_url = user_url+"search/";
     private static RESTAPIManager restapiManager = new RESTAPIManager();
     private RESTAPIManager(){}
     public static RESTAPIManager getRestAPIManager() {return restapiManager;}

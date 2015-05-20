@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
@@ -35,6 +37,7 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
     private EditText user_pwd_edit;
     private ImageButton login_btn;
     private SharedPreferences sharedPreferences;
+    private TextView pwd_forget_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,13 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
                 user.setUserId(user_id_edit.getText().toString());
                 user.setPassword(user_pwd_edit.getText().toString());
                 new LoginRequestTask(LoginActivity.this, user).execute();
+            }
+        });
+        pwd_forget_tv = (TextView)findViewById(R.id.pwd_forget_tv);
+        pwd_forget_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "forget PWD", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -91,9 +101,11 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
         if(authorization!=null){
             Log.d("LoginActivity", ((Authorization)authorization).toString());
             //Save authorization info to shared preference
-            AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE),user.getUserId(),user.getPassword(),((Authorization)authorization).getAccess_token());
+            AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE),user.getUserId(),user.getPassword(), user.getName(), user.getEmail(),((Authorization)authorization).getAccess_token());
             finish();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        } else {
+            Toast.makeText(getApplicationContext(),"Wrong Login Info", Toast.LENGTH_SHORT).show();
         }
 
     }

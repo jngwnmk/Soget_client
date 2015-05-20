@@ -86,12 +86,12 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
     @Override
     public void onTaskCompleted(final Object user) {
         if(user!=null){
-            AuthManager.getAuthManager().register(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE),((User)user).getUserId(),((User)user).getPassword(),((User)user).getEmail());
+            AuthManager.getAuthManager().register(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE),((User)user).getUserId(),((User)user).getPassword(),((User)user).getName(), ((User)user).getEmail());
 
             new LoginRequestTask(new OnTaskCompleted() {
                 @Override
                 public void onTaskCompleted(Object authorization) {
-                    AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE),((User)user).getUserId(),((User)user).getPassword(),((Authorization)authorization).getAccess_token());
+                    AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE),((User)user).getUserId(),((User)user).getPassword(),((User)user).getName(),((User)user).getEmail(),((Authorization)authorization).getAccess_token());
                     finish();
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 }

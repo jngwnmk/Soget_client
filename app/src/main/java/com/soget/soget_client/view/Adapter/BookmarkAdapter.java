@@ -2,6 +2,7 @@ package com.soget.soget_client.view.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.soget.soget_client.R;
+import com.soget.soget_client.common.StaticValues;
 import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.view.Activity.CommentActivity;
+import com.soget.soget_client.view.Activity.WebViewActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -62,7 +65,7 @@ public class BookmarkAdapter extends BaseAdapter{
         //Set title
         Bookmark item = (Bookmark)getItem(position);
         bookmarkWrapper.getTitle().setText(item.getTitle());
-
+        final String bookmark_id = item.getId();
         //Set Thumbnail Image
         Picasso.with(mContext).load(item.getImg_url())//.into(bookmarkWrapper.getThumbnail());
                 .resizeDimen(R.dimen.list_archive_image_size_w, R.dimen.list_archive_image_size_h)
@@ -101,7 +104,11 @@ public class BookmarkAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CommentActivity.class);
+               Bundle extras = new Bundle();
+                extras.putString(StaticValues.BOOKMARKID,bookmark_id);
+                intent.putExtras(extras);
                 mContext.startActivity(intent);
+
             }
         });
         return row;

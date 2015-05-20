@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,12 +36,14 @@ import com.soget.soget_client.view.component.MyCardStackView;
 import com.soget.soget_client.view.component.SwipeTouchListener;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
  * Created by wonmook on 2015-03-18.
  */
-public class HomeFragment extends Fragment{
+public class DiscoverFragment extends Fragment{
     private ImageButton settingBtn = null;
     private MyCardStackView cardStackView = null;
     private ArrayList<Bookmark> bookmarks = new ArrayList<Bookmark>();
@@ -48,7 +51,9 @@ public class HomeFragment extends Fragment{
     private ProgressDialog pDialog;
     private ImageView backgroundImg =null;
     private TextView cardNumTextView = null;
+    private TextView totalCardNumTextView = null;
     private int currentIndex = 0;
+    private FrameLayout discoverRefreshBtn = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -56,7 +61,7 @@ public class HomeFragment extends Fragment{
 
 
 
-        discoverAdapter = new DiscoverAdapter(inflater.getContext(),bookmarks);
+
 
         settingBtn = (ImageButton)rootView.findViewById(R.id.setting_btn);
         settingBtn.setOnClickListener(new View.OnClickListener() {
@@ -66,12 +71,20 @@ public class HomeFragment extends Fragment{
                 startActivity(new Intent(getActivity(), SettingActivity.class));
             }
         });
+        discoverRefreshBtn = (FrameLayout)rootView.findViewById(R.id.discover_refresh_btn);
+        discoverRefreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDiscoverList();
+            }
+        });
         backgroundImg = (ImageView)rootView.findViewById(R.id.discover_background_img);
         cardNumTextView = (TextView)rootView.findViewById(R.id.discover_circle_current_idx);
         cardNumTextView.setText(String.valueOf(bookmarks.size()));
+        totalCardNumTextView = (TextView)rootView.findViewById(R.id.discover_circle_total_num);
+        discoverAdapter = new DiscoverAdapter(getActivity(),bookmarks);
         cardStackView = (MyCardStackView)rootView.findViewById(R.id.discover_stack_view);
         cardStackView.setOrientation(SwipeTouchListener.Orientation.Vertical);
-        cardStackView.setAdapter(discoverAdapter);
         cardStackView.setCardStackMoveListener(new CardStackMoveListener() {
 
             @Override
@@ -93,10 +106,14 @@ public class HomeFragment extends Fragment{
 
             private void treatCardAction(){
                 //SettingManager.setLastDiscoverDate(getActivity().getSharedPreferences(SettingManager.LASTDISCOVER,Context.MODE_PRIVATE),bookmarks.get(currentIndex).getDate());
-
+                //bookmarks.remove(0);
                 ++currentIndex;
                 cardNumTextView.setText(String.valueOf(bookmarks.size()-currentIndex));
                 if(bookmarks.size()==currentIndex){
+                    System.out.println("Reload");
+                    bookmarks.clear();
+                    currentIndex = 0;
+                    getDiscoverList();
                     return;
                 } else {
                     Picasso.with(getActivity().getApplicationContext()).load(bookmarks.get(currentIndex).getImg_url())
@@ -110,38 +127,18 @@ public class HomeFragment extends Fragment{
         });
         pDialog = new ProgressDialog(this.getActivity());
         pDialog.setMessage("Loading....");
-
-
+        getDiscoverList();
         return rootView;
     }
 
-    private void updateDiscoverList(){
-        getActivity().runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                discoverAdapter = new DiscoverAdapter(getActivity().getBaseContext(),bookmarks);
-                cardStackView.setAdapter(discoverAdapter);
-                discoverAdapter.notifyDataSetChanged();
-            }
-        });
-    }
 
     private void trashBookmark(String bookmark_id){
-        OnTaskCompleted onTaskCompleted;
-        onTaskCompleted = new OnTaskCompleted(){
-            @Override
-            public void onTaskCompleted(Object object) {
-                pDialog.dismiss();
-            }
-        };
         User user = AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
         if(user!=null){
             String user_id = user.getUserId();
             String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-            pDialog.show();
-            new TrashBookmarkRequestTask(onTaskCompleted,user_id, bookmark_id, token).execute();
+            //pDialog.show();
+            new TrashBookmarkRequestTask(null,user_id, bookmark_id, token).execute();
         }
     }
 
@@ -164,34 +161,44 @@ public class HomeFragment extends Fragment{
     }
 
     private void getDiscoverList(){
+
         OnTaskCompleted onTaskCompleted;
         onTaskCompleted = new OnTaskCompleted(){
             @Override
             public void onTaskCompleted(Object object) {
                 if(object!=null) {
-                    Log.d("HomeFragment", ((ArrayList<Bookmark>) object).toString());
+                    //Log.d("DiscoverFragment", ((ArrayList<Bookmark>) object).toString());
                     ArrayList<Bookmark> raw_bookmark = ((ArrayList<Bookmark>) object);
                     OnTaskCompleted webExtractTaskComplete = new OnTaskCompleted() {
                         @Override
                         public void onTaskCompleted(Object object) {
-                            bookmarks.clear();
-                            if(object!=null) {
-                                bookmarks.addAll((ArrayList<Bookmark>) object);
+
+                            if(object!=null){
+                                bookmarks.clear();
+                                bookmarks.addAll((ArrayList<Bookmark>)object);
+                                //What the fuck...Why do I have to call twice!!!!!!!??????
+                                cardStackView.setAdapter(discoverAdapter);
+                                discoverAdapter.notifyDataSetChanged();
+                                //cardStackView.setAdapter(discoverAdapter);
+                                //discoverAdapter.notifyDataSetChanged();
                                 cardNumTextView.setText(String.valueOf(bookmarks.size()));
-                                if (bookmarks.size() != 0) {
+                                totalCardNumTextView.setText("/"+String.valueOf(bookmarks.size()));
+                                if(bookmarks.size()>0){
                                     Picasso.with(getActivity().getApplicationContext()).load(bookmarks.get(currentIndex).getImg_url())
                                             .placeholder(R.drawable.picture_no_image).fit().centerCrop()
                                             .into(backgroundImg);
+                                } else {
+                                   System.out.println("Nothing to do recommend");
                                 }
+
                             }
-                            updateDiscoverList();
-                            pDialog.dismiss();
+
                         }
                     };
                     new WebExtractor(webExtractTaskComplete, raw_bookmark).execute();
-                } else {
-                    pDialog.dismiss();
                 }
+                pDialog.dismiss();
+
             }
         };
         try{
@@ -210,11 +217,14 @@ public class HomeFragment extends Fragment{
 
     }
 
+    public void loadDiscoverCard(){
+
+        getDiscoverList();
+    }
 
     @Override
     public void onResume(){
         super.onResume();
-        Log.i("HomeFragment","onResume()");
-        getDiscoverList();
+        Log.i("DiscoverFragment","onResume()");
     }
 }

@@ -1,56 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/popup_box"
     android:padding="20dp">
 
-    <Spinner
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/privacy_spinner"
-        android:layout_gravity="center_horizontal"
+        android:background="@drawable/popup_input_box"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="6.33dp"
+        >
 
-        android:prompt="@color/blur_grey" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/popup_lock_icon"
+            android:layout_marginLeft="10dp"/>
+        <Spinner
+            android:layout_marginLeft="13.67dp"
+            android:layout_marginRight="13.67dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/privacy_spinner"
+            android:layout_gravity="center_horizontal"
+            android:prompt="@color/transparent"
+            android:popupBackground="@color/blur_grey"
+            android:spinnerMode="dropdown" />
 
 
-    <EditText
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/add_bookmark_url"
-        android:hint="@string/add_bookmark_url_hint"
-        android:textColorHint="@color/grey"
-        android:textColor="@color/grey"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/edit_text_shape"
-        android:padding="10dp"
-        android:layout_marginTop="10dp"
-        android:lines="1"
-        android:maxLines="1"
+        android:background="@drawable/popup_input_box"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="6.33dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/popup_tag_icon"
+            android:layout_marginLeft="10dp"/>
+        <EditText
+            android:layout_marginLeft="13.67dp"
+            android:layout_marginRight="13.67dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/add_bookmark_tag"
+            android:hint="@string/add_bookmark_tag_hint"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/oxford_blue"
+            android:background="@color/transparent"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16.66sp"
+            android:paddingTop="14dp"
+            android:layout_marginTop="10dp"
+            android:lines="1"
+
+            android:maxLines="1"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/popup_input_box"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/popup_url_icon"
+            android:layout_marginLeft="10dp"/>
+        <EditText
+            android:layout_marginLeft="13.67dp"
+            android:layout_marginRight="13.67dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/add_bookmark_url"
+            android:hint="@string/add_bookmark_url_hint"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/blur_grey"
+            android:background="@color/transparent"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="14dp"
+            android:textSize="16.66sp"
+            android:layout_marginTop="10dp"
+            android:lines="1"
+            android:maxLines="1"
         />
+    </LinearLayout>
 
-    <EditText
+
+    <FrameLayout
+        android:layout_marginTop="12.67dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/add_bookmark_tag"
-        android:hint="@string/add_bookmark_tag_hint"
-        android:textColorHint="@color/grey"
-        android:textColor="@color/grey"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/edit_text_shape"
-        android:padding="10dp"
-        android:layout_marginTop="10dp"
-        android:lines="1"
-        android:maxLines="1"
-       />
-
-    <Button
+        android:layout_gravity="center"
+        >
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_bookmark_confirm"
         android:id="@+id/add_bookmark_btn"
-        android:textColor="@color/main_color"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/edit_text_shape"
-        android:layout_marginTop="10dp"/>
+        android:background="@drawable/popup_confirm_box"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/popup_confirm"
+        android:textSize="16.62sp"
+        android:layout_gravity="center"
+        android:textColor="@color/shadow_green"/>
+    </FrameLayout>
 </LinearLayout>

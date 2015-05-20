@@ -10,15 +10,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
+import com.soget.soget_client.common.StaticValues;
 import com.soget.soget_client.connector.MyArchiveRequestTask;
 import com.soget.soget_client.connector.WebExtractor;
 import com.soget.soget_client.model.Bookmark;
@@ -39,6 +42,8 @@ public class ArchiveFragment extends Fragment {
     private ProgressDialog pDialog;
     private ImageButton settingBtn = null;
     private ImageButton addBtn = null;
+    private PullRefreshLayout pullRefreshLayout =null;
+    private int page_num = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -61,7 +66,7 @@ public class ArchiveFragment extends Fragment {
 
         bookmarkListView = (ListView)rootView.findViewById(R.id.archive_list);
         bookmarkAdapter = new BookmarkAdapter(inflater.getContext(),bookmarks);
-        bookmarkListView.setAdapter(bookmarkAdapter);
+        //bookmarkListView.setOnScrollListener(this);
         bookmarkListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -72,14 +77,49 @@ public class ArchiveFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),WebViewActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString(WebViewActivity.WEBVIEWURL,url);
+                extras.putString(StaticValues.BOOKMARKID,bookmarks.get(position).getId());
                 intent.putExtras(extras);
                 startActivity(intent);
 
             }
         });
+
+        bookmarkListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            boolean loadMore = false;
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                if (loadMore && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE ) {
+                    System.out.println("load more");
+                    page_num++;
+                    loadMyArchive();
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                     System.out.println("firstVisibleItem:"+firstVisibleItem+",visibleItemCount:"+visibleItemCount+","+totalItemCount);
+                     loadMore = (firstVisibleItem + visibleItemCount == totalItemCount);
+
+            }
+        });
+        bookmarkListView.setAdapter(bookmarkAdapter);
+        pullRefreshLayout = (PullRefreshLayout)rootView.findViewById(R.id.archive_refresh_layout);
+        pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page_num=0;
+                loadMyArchive();
+            }
+        });
+
+        pullRefreshLayout.setRefreshStyle(PullRefreshLayout.STYLE_RING);
+        int[] colors = {R.color.oxford_blue, R.color.black, R.color.shadow_green, R.color.black};
+        pullRefreshLayout.setColorSchemeColors(colors);
         pDialog = new ProgressDialog(this.getActivity());
         pDialog.setMessage("Loading....");
-
+        loadMyArchive();
         return rootView;
     }
 
@@ -91,7 +131,7 @@ public class ArchiveFragment extends Fragment {
         addBookmarkDialog.setListener(new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(Object object) {
-                getMyArchive();
+                loadMyArchive();
             }
         });
         addBookmarkDialog.show(fm,"add_bookmark_dialog");
@@ -106,36 +146,42 @@ public class ArchiveFragment extends Fragment {
         });
     }
 
-    private void getMyArchive(){
+    public void loadMyArchive(){
         OnTaskCompleted onTaskCompleted;
         onTaskCompleted = new OnTaskCompleted(){
             @Override
             public void onTaskCompleted(Object object) {
+                if (object!=null){
+                    Log.d("ArchiveFragment", ((ArrayList<Bookmark>) object).toString());
+                    ArrayList<Bookmark> raw_bookmark = ((ArrayList<Bookmark>) object);
+                    OnTaskCompleted webExtractTaskComplete = new OnTaskCompleted(){
+                        @Override
+                        public void onTaskCompleted(Object object) {
+                            if(page_num==0){
+                                bookmarks.clear();
+                            }
+                            bookmarks.addAll((ArrayList<Bookmark>) object);
+                            updateBookmarkList();
+                            pDialog.dismiss();
+                            pullRefreshLayout.setRefreshing(false);
 
-                Log.d("ArchiveFragment", ((ArrayList<Bookmark>) object).toString());
-                ArrayList<Bookmark> raw_bookmark = ((ArrayList<Bookmark>) object);
-                OnTaskCompleted webExtractTaskComplete = new OnTaskCompleted(){
-                    @Override
-                    public void onTaskCompleted(Object object) {
-                        bookmarks.clear();
-                        bookmarks.addAll((ArrayList<Bookmark>) object);
-                        updateBookmarkList();
-                        pDialog.dismiss();
-                    }
-                };
-                new WebExtractor(webExtractTaskComplete,raw_bookmark).execute();
+                        }
+                    };
+                    new WebExtractor(webExtractTaskComplete,raw_bookmark).execute();
+                }
+
             }
         };
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
         String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
         pDialog.show();
-        new MyArchiveRequestTask(onTaskCompleted,user_id, token).execute();
+        new MyArchiveRequestTask(onTaskCompleted,user_id, token,page_num).execute();
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        getMyArchive();
+        //loadMyArchive();
     }
 
 

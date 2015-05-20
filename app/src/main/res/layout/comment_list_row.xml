@@ -5,34 +5,45 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@drawable/comment_background"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:padding="15dp">
-        <TextView
-            android:layout_width="wrap_content"
+        android:paddingLeft="26.33dp"
+        android:paddingRight="26.33dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/user_id"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/comment_user_info_tv"
             android:text="name_tv"
             android:textColor="@color/black"
             android:textSize="16sp"/>
         <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/comment_date_tv"
+                android:textSize="13sp"
+                android:textColor="@color/blur_grey"
+                android:text="00 Gets"
+                android:paddingTop="10dp"/>
+
+        </LinearLayout>
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:id="@+id/comment_tv"
+            android:id="@+id/comment_content_tv"
             android:textColor="@color/blur_grey"
             android:text="세발자전거에 실은 중국의 삶을 내려보다"
             android:textSize="17sp"
             android:layout_weight="1"
             />
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/date_tv"
-                android:textSize="13sp"
-                android:textColor="@color/blur_grey"
-                android:text="00 Gets"
-                android:paddingTop="10dp"/>
+
 
     </LinearLayout>
 

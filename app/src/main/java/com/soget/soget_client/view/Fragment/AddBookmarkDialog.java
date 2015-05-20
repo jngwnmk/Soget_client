@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
     private EditText tagEt = null;
     private ArrayList<String> privacyType = null;
     private boolean privacy = false;
-    private Button addBookmarkBtn = null;
+    private ImageButton addBookmarkBtn = null;
     private OnTaskCompleted listener =null;
 
     public OnTaskCompleted getListener() {
@@ -50,7 +51,7 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.add_bookmark_dialog,container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(R.color.transparent));
+        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.popup_black_background);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.privacy_array, R.layout.privacy_spinner_item);//new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item, privacyType);
         privacySpinner = (Spinner)rootView.findViewById(R.id.privacy_spinner);
@@ -61,7 +62,7 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
         urlEt = (EditText) rootView.findViewById(R.id.add_bookmark_url);
         urlEt.setText(getInputUrl());
         tagEt = (EditText) rootView.findViewById(R.id.add_bookmark_tag);
-        addBookmarkBtn = (Button)rootView.findViewById(R.id.add_bookmark_btn);
+        addBookmarkBtn = (ImageButton)rootView.findViewById(R.id.add_bookmark_btn);
         addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

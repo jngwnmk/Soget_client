@@ -81,6 +81,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="초대장 : 10장"
+                android:id="@+id/setting_invitation_tv"
                 android:textColor="@color/black"
                 android:textSize="14.67sp"
 

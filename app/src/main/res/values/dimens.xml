@@ -7,5 +7,5 @@
     <dimen name="list_discover_image_size_w">307dp</dimen>
     <dimen name="list_discover_image_size_h">183dp</dimen>
     <dimen name="popup_size_width">300dp</dimen>
-    <dimen name="popup_size_height">300dp</dimen>
+    <dimen name="popup_size_height">250dp</dimen>
 </resources>

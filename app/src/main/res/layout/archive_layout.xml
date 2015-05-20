@@ -35,10 +35,16 @@
             android:paddingRight="20dp"/>
 
     </LinearLayout>
+    <com.baoyz.widget.PullRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/archive_refresh_layout"
+        >
    <ListView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:id="@+id/archive_list"
        android:divider="@color/blur_grey"
        android:dividerHeight="1dp"></ListView>
+</com.baoyz.widget.PullRefreshLayout>
 </LinearLayout>

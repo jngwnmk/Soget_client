@@ -5,15 +5,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_color"
-        android:gravity="right"
+        android:background="@drawable/header"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         >
-        <Button
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:id="@+id/webview_url"
+            android:maxLines="1"
+            android:layout_marginLeft="10dp"
+            android:text="URL"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/webview_url"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:src="@drawable/webview_markin"
+            android:layout_marginRight="20dp"
+            android:id="@+id/markin_btn" />
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/close_btn"
-            android:text="@string/close_btn"
-            android:background="@color/transparent"></Button>
+            android:src="@drawable/webview_close"
+            android:background="@color/transparent"
+            android:layout_marginRight="20dp"/>
 
     </LinearLayout>
     <WebView
