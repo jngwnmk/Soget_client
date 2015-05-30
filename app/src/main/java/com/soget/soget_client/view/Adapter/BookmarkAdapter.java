@@ -63,11 +63,12 @@ public class BookmarkAdapter extends BaseAdapter{
 
         }
         //Set title
-        Bookmark item = (Bookmark)getItem(position);
+        final Bookmark item = (Bookmark)getItem(position);
         bookmarkWrapper.getTitle().setText(item.getTitle());
         final String bookmark_id = item.getId();
         //Set Thumbnail Image
-        Picasso.with(mContext).load(item.getImg_url())//.into(bookmarkWrapper.getThumbnail());
+        System.out.println(item.getImg_url());
+        Picasso.with(mContext).load(item.getImg_url()).placeholder(R.drawable.archive_noimage)//.into(bookmarkWrapper.getThumbnail());
                 .resizeDimen(R.dimen.list_archive_image_size_w, R.dimen.list_archive_image_size_h)
                 .into(bookmarkWrapper.getThumbnail());
 
@@ -106,6 +107,7 @@ public class BookmarkAdapter extends BaseAdapter{
                 Intent intent = new Intent(mContext, CommentActivity.class);
                Bundle extras = new Bundle();
                 extras.putString(StaticValues.BOOKMARKID,bookmark_id);
+                extras.putInt(StaticValues.MARKINNUM, item.getFollowers().size());
                 intent.putExtras(extras);
                 mContext.startActivity(intent);
 

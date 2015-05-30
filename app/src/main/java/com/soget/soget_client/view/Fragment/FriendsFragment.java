@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -21,10 +20,10 @@ import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.common.StaticValues;
-import com.soget.soget_client.connector.FriendListRequestTask;
-import com.soget.soget_client.connector.FriendReceiveListRequestTask;
-import com.soget.soget_client.connector.FriendSentListRequestTask;
-import com.soget.soget_client.connector.InvitationCodeGetRequestTask;
+import com.soget.soget_client.connector.friend.FriendListTask;
+import com.soget.soget_client.connector.friend.FriendReceiveListTask;
+import com.soget.soget_client.connector.friend.FriendSentListTask;
+import com.soget.soget_client.connector.invitation.InvitationCodeGetTask;
 import com.soget.soget_client.model.Friend;
 import com.soget.soget_client.model.User;
 import com.soget.soget_client.view.Activity.FriendArchiveActivity;
@@ -33,7 +32,6 @@ import com.soget.soget_client.view.Activity.InvitatonSendActivity;
 import com.soget.soget_client.view.Activity.SettingActivity;
 import com.soget.soget_client.view.Adapter.FriendAdatper;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -147,7 +145,7 @@ public class FriendsFragment extends Fragment {
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
         String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
         pDialog.show();
-        new FriendListRequestTask(onTaskCompleted, user_id, token).execute();
+        new FriendListTask(onTaskCompleted, user_id, token).execute();
     }
 
     private void getFriendsSentList() {
@@ -171,7 +169,7 @@ public class FriendsFragment extends Fragment {
         };
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
         String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-        new FriendSentListRequestTask(onTaskCompleted, user_id, token).execute();
+        new FriendSentListTask(onTaskCompleted, user_id, token).execute();
     }
 
     private void getFriendsReceiveList() {
@@ -196,7 +194,7 @@ public class FriendsFragment extends Fragment {
         };
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
         String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-        new FriendReceiveListRequestTask(onTaskCompleted, user_id, token).execute();
+        new FriendReceiveListTask(onTaskCompleted, user_id, token).execute();
     }
 
     private void getInvitation(){
@@ -213,7 +211,7 @@ public class FriendsFragment extends Fragment {
         };
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
         String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-        new InvitationCodeGetRequestTask(onTaskCompleted, user_id, token).execute();
+        new InvitationCodeGetTask(onTaskCompleted, user_id, token).execute();
 
     }
 

@@ -1,4 +1,4 @@
-package com.soget.soget_client.connector;
+package com.soget.soget_client.connector.friend;
 
 import android.util.Log;
 
@@ -18,16 +18,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created by wonmook on 15. 5. 16..
+ * Created by wonmook on 2015-03-25.
  */
-public class UserSearchRequestTask extends FriendRequestTask{
-
-    private String keyword;
-    public UserSearchRequestTask(OnTaskCompleted listener, String user_id, String token, String keyword) {
+public class FriendListTask extends FriendTask {
+    public FriendListTask(OnTaskCompleted listener, String user_id, String token) {
         super(listener, user_id, token);
-        this.keyword = keyword;
     }
-
 
     @Override
     protected ArrayList<User> doInBackground(Void... params) {
@@ -38,14 +34,16 @@ public class UserSearchRequestTask extends FriendRequestTask{
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             ResponseEntity<User[]> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
-            response = restTemplate.exchange(RESTAPIManager.user_search_url + user_id+"/"+keyword, HttpMethod.GET, new HttpEntity(headers), User[].class);
+            response = restTemplate.exchange(RESTAPIManager.friends_url + user_id, HttpMethod.GET, new HttpEntity(headers), User[].class);
             friends = new ArrayList<User>();
             friends.addAll(Arrays.asList(response.getBody()));
             return friends;
 
         } catch (Exception e){
-            Log.e("FriendReceive", e.getMessage(), e);
+            Log.e("FriendListTask", e.getMessage(), e);
         }
         return null;
     }
+
+
 }

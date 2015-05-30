@@ -1,22 +1,18 @@
 package com.soget.soget_client.view.Activity;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
-import com.soget.soget_client.connector.LoginRequestTask;
+import com.soget.soget_client.connector.user.UserLoginTask;
 import com.soget.soget_client.model.Authorization;
 import com.soget.soget_client.model.User;
-import com.soget.soget_client.view.Fragment.ArchiveFragment;
 
 /**
  * Created by wonmook on 15. 5. 20..
@@ -70,7 +66,7 @@ public class SplashActivity extends Activity implements OnTaskCompleted{
         user = AuthManager.getAuthManager().getLoginInfo(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
         //Login info has
         if(user!=null){
-            new LoginRequestTask(SplashActivity.this, user).execute();
+            new UserLoginTask(SplashActivity.this, user).execute();
         }
         //Doesn't
         else {

@@ -1,4 +1,4 @@
-package com.soget.soget_client.connector;
+package com.soget.soget_client.connector.friend;
 
 import android.util.Log;
 
@@ -20,8 +20,8 @@ import java.util.Arrays;
 /**
  * Created by wonmook on 2015-03-25.
  */
-public class FriendReceiveListRequestTask extends FriendRequestTask{
-    public FriendReceiveListRequestTask(OnTaskCompleted listener, String user_id, String token) {
+public class FriendReceiveListTask extends FriendTask {
+    public FriendReceiveListTask(OnTaskCompleted listener, String user_id, String token) {
         super(listener, user_id, token);
     }
 

@@ -1,4 +1,4 @@
-package com.soget.soget_client.connector;
+package com.soget.soget_client.connector.comment;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -6,53 +6,56 @@ import android.util.Log;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.RESTAPIManager;
 import com.soget.soget_client.model.Bookmark;
+import com.soget.soget_client.model.Comment;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
- * Created by wonmook on 2015-03-22.
+ * Created by wonmook on 15. 5. 16..
  */
-public class MakeBookmarkRequestTask extends AsyncTask<Void, Void, Bookmark> {
+public class CommentGetTask extends AsyncTask<Void, Void, ArrayList<Comment>> {
     private OnTaskCompleted listener;
+    private ArrayList<Comment> comments;
     private String token ;
-    private String user_id;
-    private Bookmark new_bookmark;
-    ResponseEntity<Bookmark> response;
-    public MakeBookmarkRequestTask(OnTaskCompleted listener, Bookmark bookmark, String token){
+    private String bookmark_id;
+
+    public CommentGetTask(OnTaskCompleted listener, String bookmark_id, String token){
         this.listener = listener;
-        this.new_bookmark = bookmark;
+        this.bookmark_id = bookmark_id;
         this.token = token;
     }
 
     @Override
-    protected Bookmark doInBackground(Void... params) {
+    protected ArrayList<Comment> doInBackground(Void... params) {
         try{
 
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
+            ResponseEntity<Comment[]> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            System.out.println("bookmark:"+new_bookmark.toString());
-            response = restTemplate.exchange(RESTAPIManager.bookmark_url, HttpMethod.POST, new HttpEntity(new_bookmark,headers), Bookmark.class);
-            return response.getBody();
+            response = restTemplate.exchange(RESTAPIManager.comment_url+bookmark_id, HttpMethod.GET, new HttpEntity(headers), Comment[].class);
+            comments = new ArrayList<Comment>();
+            comments.addAll(Arrays.asList(response.getBody()));
+            return comments;
 
         } catch (Exception e){
-            Log.e("MakeBookmarkRequestTask", e.getMessage(), e);
+            Log.e("ArchiveMineTask", e.getMessage(), e);
         }
         return null;
     }
 
     @Override
-    protected void onPostExecute(Bookmark bookmarks){
-        listener.onTaskCompleted(bookmarks);
+    protected void onPostExecute(ArrayList<Comment> comments){
+        listener.onTaskCompleted(comments);
     }
 }

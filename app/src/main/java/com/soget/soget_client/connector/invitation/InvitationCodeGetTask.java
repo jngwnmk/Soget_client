@@ -1,4 +1,4 @@
-package com.soget.soget_client.connector;
+package com.soget.soget_client.connector.invitation;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -6,7 +6,6 @@ import android.util.Log;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.RESTAPIManager;
 import com.soget.soget_client.model.Bookmark;
-import com.soget.soget_client.model.Comment;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,42 +19,41 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created by wonmook on 15. 5. 16..
+ * Created by wonmook on 15. 5. 15..
  */
-public class GetCommentRequestTask extends AsyncTask<Void, Void, ArrayList<Comment>> {
+public class InvitationCodeGetTask extends AsyncTask<Void, Void, ArrayList<String>> {
     private OnTaskCompleted listener;
-    private ArrayList<Comment> comments;
-    private String token ;
-    private String bookmark_id;
-
-    public GetCommentRequestTask(OnTaskCompleted listener, String bookmark_id,String token){
+    private ArrayList<String> invitations;
+    private String token;
+    private String user_id;
+    public InvitationCodeGetTask(OnTaskCompleted listener, String user_id, String token){
         this.listener = listener;
-        this.bookmark_id = bookmark_id;
+        this.user_id = user_id;
         this.token = token;
     }
 
     @Override
-    protected ArrayList<Comment> doInBackground(Void... params) {
+    protected ArrayList<String> doInBackground(Void... params) {
         try{
 
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-            ResponseEntity<Comment[]> response;
+            ResponseEntity<String[]> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
-            response = restTemplate.exchange(RESTAPIManager.comment_url+bookmark_id, HttpMethod.GET, new HttpEntity(headers), Comment[].class);
-            comments = new ArrayList<Comment>();
-            comments.addAll(Arrays.asList(response.getBody()));
-            return comments;
+            response = restTemplate.exchange(RESTAPIManager.invitation_url +  user_id, HttpMethod.GET, new HttpEntity(headers), String[].class);
+            invitations = new ArrayList<String>();
+            invitations.addAll(Arrays.asList(response.getBody()));
+            return invitations;
 
         } catch (Exception e){
-            Log.e("MyArchiveRequestTask", e.getMessage(), e);
+            Log.e("InvitationCodeGetTask", e.getMessage(), e);
         }
         return null;
-    }
+        }
 
-    @Override
-    protected void onPostExecute(ArrayList<Comment> comments){
-        listener.onTaskCompleted(comments);
-    }
+        @Override
+        protected void onPostExecute(ArrayList<String> invitations){
+            listener.onTaskCompleted(invitations);
+        }
 }

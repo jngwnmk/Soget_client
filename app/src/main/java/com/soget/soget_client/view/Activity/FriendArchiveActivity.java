@@ -19,13 +19,9 @@ import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.common.StaticValues;
-import com.soget.soget_client.connector.FriendArchiveRequestTask;
-import com.soget.soget_client.connector.MyArchiveRequestTask;
-import com.soget.soget_client.connector.WebExtractor;
+import com.soget.soget_client.connector.bookmark.ArchiveFriendTask;
 import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.view.Adapter.BookmarkAdapter;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -72,6 +68,7 @@ public class FriendArchiveActivity extends ActionBarActivity {
                 Bundle extras = new Bundle();
                 extras.putString(WebViewActivity.WEBVIEWURL,url);
                 extras.putString(StaticValues.BOOKMARKID,bookmarks.get(position).getId());
+                extras.putBoolean(StaticValues.ISMYBOOKMARK, false);
                 intent.putExtras(extras);
                 startActivity(intent);
             }
@@ -128,31 +125,27 @@ public class FriendArchiveActivity extends ActionBarActivity {
             public void onTaskCompleted(Object object) {
 
                 Log.d("FriendArchiveActivity", ((ArrayList<Bookmark>) object).toString());
-                ArrayList<Bookmark> raw_bookmark = ((ArrayList<Bookmark>) object);
-                OnTaskCompleted webExtractTaskComplete = new OnTaskCompleted(){
-                    @Override
-                    public void onTaskCompleted(Object object) {
-                        if(page_num==0){
-                            bookmarks.clear();
-                        }
-
-                        for(Bookmark bookmark : (ArrayList<Bookmark>) object){
-                            if(!bookmark.isPrivacy()){
-                                bookmarks.add(bookmark);
-                            }
-                        }
-
-                        updateBookmarkList();
-                        pDialog.dismiss();
+                if (object!=null){
+                    Log.d("ArchiveFragment", ((ArrayList<Bookmark>) object).toString());
+                    if(page_num==0){
+                        bookmarks.clear();
                     }
-                };
-                new WebExtractor(webExtractTaskComplete,raw_bookmark).execute();
+
+                    for(Bookmark bookmark : (ArrayList<Bookmark>) object){
+                        if(!bookmark.isPrivacy()){
+                            bookmarks.add(bookmark);
+                        }
+                    }
+
+                    updateBookmarkList();
+                    pDialog.dismiss();
+                }
             }
         };
         //String user_id = (AuthManager.getAuthManager().getLoginInfo(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
         String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
         pDialog.show();
-        new FriendArchiveRequestTask(onTaskCompleted,friend_user_id, token,page_num).execute();
+        new ArchiveFriendTask(onTaskCompleted,friend_user_id, token,page_num).execute();
     }
 
     @Override

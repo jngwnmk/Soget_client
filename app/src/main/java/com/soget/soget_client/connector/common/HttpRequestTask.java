@@ -1,4 +1,4 @@
-package com.soget.soget_client.connector;
+package com.soget.soget_client.connector.common;
 
 import android.os.AsyncTask;
 import android.util.Log;

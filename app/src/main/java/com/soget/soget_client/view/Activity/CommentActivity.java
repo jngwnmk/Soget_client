@@ -5,9 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,8 +16,8 @@ import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.common.StaticValues;
-import com.soget.soget_client.connector.AddCommentRequestTask;
-import com.soget.soget_client.connector.GetCommentRequestTask;
+import com.soget.soget_client.connector.comment.CommentAddTask;
+import com.soget.soget_client.connector.comment.CommentGetTask;
 import com.soget.soget_client.model.Comment;
 import com.soget.soget_client.view.Adapter.CommentAdapter;
 
@@ -28,15 +28,16 @@ import java.util.ArrayList;
  */
 public class CommentActivity extends ActionBarActivity{
     private ImageButton backBtn =null;
-    private TextView markinNum = null;
+    private TextView markinNumTv = null;
     private EditText commentEt = null;
     private ImageButton addCommentBtn = null;
     private ListView commentList = null;
     private CommentAdapter commentAdapter = null;
     private ArrayList<Comment> comments = new ArrayList<Comment>();
-
+    private LinearLayout commentLayout = null;
     private String bookmark_id = "";
     private ProgressDialog pDialog;
+    private int markin_num = 0;
 
 
 
@@ -48,12 +49,16 @@ public class CommentActivity extends ActionBarActivity{
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading....");
         bookmark_id = getIntent().getExtras().getString(StaticValues.BOOKMARKID);
+        markin_num = getIntent().getExtras().getInt(StaticValues.MARKINNUM,0);
         initLayout();
         Toast.makeText(this,bookmark_id,Toast.LENGTH_SHORT).show();
         getComments(bookmark_id);
+
     }
 
     private void initLayout() {
+        commentLayout = (LinearLayout)findViewById(R.id.comment_num_layout);
+        commentLayout.setVisibility(View.GONE);
         backBtn = (ImageButton) findViewById(R.id.back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +66,14 @@ public class CommentActivity extends ActionBarActivity{
                 finish();
             }
         });
-        markinNum = (TextView) findViewById(R.id.comment_markin_num_desc);
+        markinNumTv = (TextView) findViewById(R.id.comment_markin_num_desc);
+        if(markin_num==0){
+            markinNumTv.setText("");
+            commentLayout.setVisibility(View.GONE);
+        } else {
+            markinNumTv.setText(markin_num+"명이 MarkIn\' 했습니다.");
+            commentLayout.setVisibility(View.VISIBLE);
+        }
         commentEt = (EditText) findViewById(R.id.comment_et);
         addCommentBtn = (ImageButton) findViewById(R.id.comment_add_btn);
         addCommentBtn.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +99,9 @@ public class CommentActivity extends ActionBarActivity{
                 comment.setContent(commentEt.getText().toString());
                 comment.setUserId(user_id);
                 pDialog.show();
-                new AddCommentRequestTask(onTaskCompleted,bookmark_id, comment, token).execute();
+                commentEt.setText("");
+
+                new CommentAddTask(onTaskCompleted,bookmark_id, comment, token).execute();
 
             }
         });
@@ -112,7 +126,7 @@ public class CommentActivity extends ActionBarActivity{
         };
         String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
         pDialog.show();
-        new GetCommentRequestTask(onTaskCompleted, bookmark_id, token).execute();
+        new CommentGetTask(onTaskCompleted, bookmark_id, token).execute();
     }
 
 

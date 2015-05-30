@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -22,7 +21,7 @@ import android.widget.Toast;
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
-import com.soget.soget_client.connector.LoginRequestTask;
+import com.soget.soget_client.connector.user.UserLoginTask;
 import com.soget.soget_client.model.Authorization;
 import com.soget.soget_client.model.User;
 
@@ -50,6 +49,29 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
     private void setLayout(){
         user_id_edit = (EditText)findViewById(R.id.user_id_edit);
         user_pwd_edit = (EditText)findViewById(R.id.user_pwd_edit);
+
+        user_id_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(user_id_edit.getText().toString().equals("")){
+                        user_id_edit.setError("Please Enter User Id");
+                    }
+                }
+            }
+        });
+
+        user_pwd_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(user_pwd_edit.getText().toString().equals("")){
+                        user_pwd_edit.setError("Please Enter Password");
+                    }
+                }
+            }
+        });
+
         if(user!=null){
             user_id_edit.setText(user.getUserId());
             user_pwd_edit.setText(user.getPassword());
@@ -62,7 +84,7 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
             public void onClick(View v) {
                 user.setUserId(user_id_edit.getText().toString());
                 user.setPassword(user_pwd_edit.getText().toString());
-                new LoginRequestTask(LoginActivity.this, user).execute();
+                new UserLoginTask(LoginActivity.this, user).execute();
             }
         });
         pwd_forget_tv = (TextView)findViewById(R.id.pwd_forget_tv);

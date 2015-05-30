@@ -28,7 +28,7 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
 
     private View mRoot;
     private TabHost mTabHost;
-    private int mCurrentTab=1;
+    private int mCurrentTab=0;
 
 
     @Override
@@ -58,8 +58,8 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
 
     private void setupTabs() {
         mTabHost.setup(); // you must call this before adding your tabs!
-        mTabHost.addTab(newTab(TAB_HOME, R.drawable.discover_0, R.id.tab_1));
-        mTabHost.addTab(newTab(TAB_ARCHIVE, R.drawable.archive_1, R.id.tab_2));
+        mTabHost.addTab(newTab(TAB_HOME, R.drawable.discover_1, R.id.tab_1));
+        mTabHost.addTab(newTab(TAB_ARCHIVE, R.drawable.archive_0, R.id.tab_2));
         mTabHost.addTab(newTab(TAB_FRIEND, R.drawable.friends_0, R.id.tab_3));
     }
 
@@ -125,6 +125,9 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
                 }
                 fm.beginTransaction().replace(placeholder, discoverFragment, tabId).commit();
 
+            } else {
+                fm.beginTransaction().replace(placeholder, discoverFragment, tabId).commit();
+
             }
 
         }
@@ -136,6 +139,9 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
                 }
                 fm.beginTransaction().replace(placeholder, archiveFragment, tabId).commit();
 
+            }else {
+                fm.beginTransaction().replace(placeholder, archiveFragment, tabId).commit();
+
             }
 
         }
@@ -145,6 +151,9 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
                 if(friendsFragment==null){
                     friendsFragment = new FriendsFragment();
                 }
+                fm.beginTransaction().replace(placeholder, friendsFragment, tabId).commit();
+            }
+            else {
                 fm.beginTransaction().replace(placeholder, friendsFragment, tabId).commit();
             }
         }

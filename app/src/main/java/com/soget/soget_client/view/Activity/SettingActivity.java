@@ -13,8 +13,8 @@ import android.widget.Toast;
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
-import com.soget.soget_client.connector.InvitationCodeGetRequestTask;
-import com.soget.soget_client.model.Authorization;
+import com.soget.soget_client.connector.user.UserInfoGetTask;
+import com.soget.soget_client.connector.invitation.InvitationCodeGetTask;
 import com.soget.soget_client.model.User;
 
 import java.util.ArrayList;
@@ -50,6 +50,12 @@ public class SettingActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+    }
+
     private void initLayout(){
         back_btn = (ImageButton)findViewById(R.id.back_btn);
         user_id_tv = (TextView)findViewById(R.id.setting_id);
@@ -75,7 +81,13 @@ public class SettingActivity extends ActionBarActivity {
     private void setUserInfo(){
         User userInfo = AuthManager.getAuthManager().getLoginInfo(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
         user_id_tv.setText(userInfo.getUserId());
-        email_tv.setText(userInfo.getEmail());
+        if(userInfo.getEmail().equals("")){
+            //Request
+            requestUserInfo(userInfo.getUserId());
+        } else {
+            email_tv.setText(userInfo.getEmail());
+        }
+
     }
 
     private void setInvitationInfo(){
@@ -89,7 +101,7 @@ public class SettingActivity extends ActionBarActivity {
         };
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
         String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-        new InvitationCodeGetRequestTask(onTaskCompleted, user_id, token).execute();
+        new InvitationCodeGetTask(onTaskCompleted, user_id, token).execute();
     }
     private void setInvitationBtnAction(){
 
@@ -146,6 +158,19 @@ public class SettingActivity extends ActionBarActivity {
         });
     }
 
+    private void requestUserInfo(String user_id){
+        String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+        new UserInfoGetTask(new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(Object object) {
+                    if(object!=null){
+                        User user = (User)object;
+                        email_tv.setText(user.getEmail());
+                    }
+            }
+        }, user_id, token).execute();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

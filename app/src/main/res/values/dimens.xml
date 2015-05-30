@@ -2,8 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="list_archive_image_size_w">110dp</dimen>
-    <dimen name="list_archive_image_size_h">115dp</dimen>
+    <dimen name="list_archive_image_size_w">120dp</dimen>
+    <dimen name="list_archive_image_size_h">104dp</dimen>
     <dimen name="list_discover_image_size_w">307dp</dimen>
     <dimen name="list_discover_image_size_h">183dp</dimen>
     <dimen name="popup_size_width">300dp</dimen>

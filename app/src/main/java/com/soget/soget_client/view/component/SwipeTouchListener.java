@@ -1,9 +1,12 @@
 package com.soget.soget_client.view.component;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
+
 import com.soget.soget_client.R;
 
 
@@ -71,6 +74,7 @@ public class SwipeTouchListener implements View.OnTouchListener {
                 if ( !swiped ) {
                     view.setX(originalX);
                     view.setY(originalY);
+
                 }
                 break;
             case MotionEvent.ACTION_MOVE:

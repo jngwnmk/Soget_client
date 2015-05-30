@@ -2,15 +2,14 @@ package com.soget.soget_client.view.Fragment;
 
 import android.app.DialogFragment;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -19,7 +18,8 @@ import android.widget.Toast;
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
-import com.soget.soget_client.connector.MakeBookmarkRequestTask;
+import com.soget.soget_client.connector.bookmark.BookmarkAddTask;
+import com.soget.soget_client.connector.bookmark.BookmarkMakeTask;
 import com.soget.soget_client.model.Bookmark;
 
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
     private boolean privacy = false;
     private ImageButton addBookmarkBtn = null;
     private OnTaskCompleted listener =null;
+    private Bookmark refBookmark = null;
 
     public OnTaskCompleted getListener() {
         return listener;
@@ -66,34 +67,60 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
         addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bookmark new_bookmark = new Bookmark();
-                new_bookmark.setTitle("Default");
-                new_bookmark.setUrl(urlEt.getText().toString());
-                new_bookmark.setInitUserId(AuthManager.getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE)).getUserId());
-                List<String> taglist = new ArrayList<String>();
-                String tags = tagEt.getText().toString();
-                StringTokenizer st = new StringTokenizer(tags,",");
-                while(st.hasMoreTokens()){
-                    taglist.add(st.nextToken());
-                }
-                new_bookmark.setTags(taglist);
-                new_bookmark.setPrivacy(privacy);
-                OnTaskCompleted onTaskCompleted;
-                onTaskCompleted = new OnTaskCompleted() {
-                    @Override
-                    public void onTaskCompleted(Object object) {
-                        Toast.makeText(getActivity(), "Completed",Toast.LENGTH_SHORT).show();
-                        getDialog().dismiss();
-                        if(listener!=null){
-                            listener.onTaskCompleted(object);
+                String url = urlEt.getText().toString();
+
+                if(!Patterns.WEB_URL.matcher(url).matches()){
+                    urlEt.setError("Invalid URL");
+
+                } else {
+                    url = ensure_has_protocol(url);
+                    System.out.println("URL:"+url);
+                    String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+                    String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+                    OnTaskCompleted onTaskCompleted = new OnTaskCompleted() {
+                        @Override
+                        public void onTaskCompleted(Object object) {
+                            Toast.makeText(getActivity(), "Completed", Toast.LENGTH_SHORT).show();
+                            getDialog().dismiss();
+                            if (listener != null) {
+                                listener.onTaskCompleted(object);
+                            }
                         }
+                    };
+                    List<String> taglist = new ArrayList<String>();
+                    String tags = tagEt.getText().toString();
+                    StringTokenizer st = new StringTokenizer(tags, ",");
+                    while (st.hasMoreTokens()) {
+                        taglist.add(st.nextToken());
                     }
-                };
-                String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-                new MakeBookmarkRequestTask(onTaskCompleted,new_bookmark, token).execute();
+                    if(refBookmark==null){
+                        Bookmark new_bookmark = new Bookmark();
+                        new_bookmark.setTitle("Default");
+                        new_bookmark.setUrl(url);
+                        new_bookmark.setInitUserId(AuthManager.getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE)).getUserId());
+                        new_bookmark.setTags(taglist);
+                        new_bookmark.setPrivacy(privacy);
+                        new BookmarkMakeTask(onTaskCompleted, new_bookmark, token).execute();
+                    } else {
+                        refBookmark.setTags(taglist);
+                        refBookmark.setPrivacy(privacy);
+                        new BookmarkAddTask(onTaskCompleted,user_id,refBookmark.getId(), refBookmark, token).execute();
+                    }
+
+                }
             }
         });
         return rootView;
+    }
+    private String ensure_has_protocol(String a_url)
+    {
+        if (a_url.startsWith("http://")||a_url.startsWith("https://"))
+        {
+            return a_url;
+        } else {
+            return "http://"+a_url;
+        }
+        //return a_url;
     }
 
     @Override
@@ -134,5 +161,13 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
 
     public void setInputUrl(String inputUrl) {
         this.inputUrl = inputUrl;
+    }
+
+    public Bookmark getRefBookmark() {
+        return refBookmark;
+    }
+
+    public void setRefBookmark(Bookmark refBookmark) {
+        this.refBookmark = refBookmark;
     }
 }

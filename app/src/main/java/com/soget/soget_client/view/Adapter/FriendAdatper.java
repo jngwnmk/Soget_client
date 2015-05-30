@@ -1,5 +1,6 @@
 package com.soget.soget_client.view.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.soget.soget_client.R;
+import com.soget.soget_client.common.AuthManager;
+import com.soget.soget_client.connector.friend.FriendAcceptTask;
+import com.soget.soget_client.connector.friend.FriendRequestTask;
 import com.soget.soget_client.model.Friend;
+import com.soget.soget_client.view.Activity.FriendSearchActivity;
+import com.soget.soget_client.view.Activity.MainActivity;
 
 import java.util.ArrayList;
 
@@ -58,7 +65,7 @@ public class FriendAdatper extends BaseAdapter{
 
         }
         //Set title
-        Friend friend = (Friend)getItem(position);
+        final Friend friend = (Friend)getItem(position);
         System.out.println("FriendAdapter(GetView):"+friend.getType());
 
 
@@ -73,22 +80,56 @@ public class FriendAdatper extends BaseAdapter{
                 friendWrapper.getFriendNumBookmark().setText("0 Gets");
             }
 
-            //friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.white));
         } else if(friend.getType().equals(Friend.FRIEND.FRIENDRECEIVE)){
             friendWrapper.getFriendBtn().setText(context.getResources().getString(R.string.accept_btn));
-            //friendWrapper.getFriendBtn().setBackgroundColor(context.getResources().getColor(R.color.dark_grey));
+            friendWrapper.getFriendBtn().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Accept",Toast.LENGTH_SHORT).show();
+                    String user_id = (AuthManager.getAuthManager().getLoginInfo(context.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+                    String token = AuthManager.getAuthManager().getToken(context.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+                    String friend_id = friend.getUserInfo().getUserId();
+                    new FriendAcceptTask(user_id,friend_id,token).execute();
+                    friend.setType(Friend.FRIEND.FRIEND);
+                    notifyDataSetChanged();
+
+                }
+            });
             friendWrapper.getFriendName().setText(friend.getUserInfo().getName()+"("+friend.getUserInfo().getUserId()+")");
             friendWrapper.getFriendName().setTextColor(context.getResources().getColor(R.color.oxford_blue));
             friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
 
-            //friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
         } else if(friend.getType().equals(Friend.FRIEND.FRIENDSENT)){
             friendWrapper.getFriendBtn().setText(context.getResources().getString(R.string.waiting_btn));
-            //friendWrapper.getFriendBtn().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
+            friendWrapper.getFriendBtn().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Wait",Toast.LENGTH_SHORT).show();
+                }
+            });
+            friendWrapper.getFriendBtn().setBackgroundResource(R.drawable.friends_waiting_box);
             friendWrapper.getFriendName().setText(friend.getUserInfo().getName()+"("+friend.getUserInfo().getUserId()+")");
             friendWrapper.getFriendName().setTextColor(context.getResources().getColor(R.color.oxford_blue));
             friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
-            //friendWrapper.getBackgroundLayout().setBackgroundColor(context.getResources().getColor(R.color.blur_grey));
+
+        } else if(friend.getType().equals(Friend.FRIEND.NOTFRIEND)){
+            friendWrapper.getFriendBtn().setText(context.getResources().getString(R.string.accept_btn));
+            friendWrapper.getFriendBtn().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Request",Toast.LENGTH_SHORT).show();
+                    String user_id = (AuthManager.getAuthManager().getLoginInfo(context.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+                    String token = AuthManager.getAuthManager().getToken(context.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+                    String friend_id = friend.getUserInfo().getUserId();
+                    new FriendRequestTask(user_id,friend_id,token).execute();
+                    friend.setType(Friend.FRIEND.FRIENDSENT);
+                    notifyDataSetChanged();
+
+                }
+            });
+            friendWrapper.getFriendName().setText(friend.getUserInfo().getName()+"("+friend.getUserInfo().getUserId()+")");
+            friendWrapper.getFriendName().setTextColor(context.getResources().getColor(R.color.oxford_blue));
+            friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
         }
 
         return row;

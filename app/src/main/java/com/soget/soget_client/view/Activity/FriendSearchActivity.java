@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
-import com.soget.soget_client.connector.UserSearchRequestTask;
+import com.soget.soget_client.connector.user.UserSearchRequestTask;
 import com.soget.soget_client.model.Friend;
 import com.soget.soget_client.model.User;
 import com.soget.soget_client.view.Adapter.FriendAdatper;
@@ -67,7 +67,7 @@ public class FriendSearchActivity extends ActionBarActivity {
                                 friends.clear();
                                 ArrayList<Friend> users = new ArrayList<Friend>();
                                 for (int i = 0; i < ((ArrayList<User>) object).size(); ++i) {
-                                    users.add(new Friend(((ArrayList<User>) object).get(i), Friend.FRIEND.FRIEND));
+                                    users.add(new Friend(((ArrayList<User>) object).get(i), Friend.FRIEND.NOTFRIEND));
                                 }
                                 System.out.println(users.toString());
                                 friends.addAll(users);

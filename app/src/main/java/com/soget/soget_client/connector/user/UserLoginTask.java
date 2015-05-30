@@ -1,4 +1,4 @@
-package com.soget.soget_client.connector;
+package com.soget.soget_client.connector.user;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,12 +19,12 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Created by wonmook on 2015-03-22.
  */
-public class LoginRequestTask extends AsyncTask<Void, Void, Authorization> {
+public class UserLoginTask extends AsyncTask<Void, Void, Authorization> {
 
     private OnTaskCompleted listener;
     private User user;
 
-    public LoginRequestTask(OnTaskCompleted listener, User user){
+    public UserLoginTask(OnTaskCompleted listener, User user){
         this.listener = listener;
         this.user = user;
     }
@@ -42,7 +42,7 @@ public class LoginRequestTask extends AsyncTask<Void, Void, Authorization> {
             response = restTemplate.exchange(RESTAPIManager.auth_url, HttpMethod.POST, new HttpEntity<String>(auth_str,headers), Authorization.class);
             return response.getBody();
         } catch (Exception e){
-            Log.e("LoginRequestTask", e.getMessage(), e);
+            Log.e("UserLoginTask", e.getMessage(), e);
         }
         return null;
     }

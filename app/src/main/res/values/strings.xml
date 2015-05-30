@@ -34,7 +34,7 @@
     <string name="myget_title">MY GET</string>
     <string name="setting_btn">SETTING</string>
     <string name="add_btn">ADD</string>
-    <string name="archive_row_num_get"> MarkIn\'s</string>
+    <string name="archive_row_num_get"> MarkIn\'</string>
     <string name="archive_row_num_comment"> Comments</string>
     <string name="add_bookmark_url_hint">URL</string>
     <string name="add_bookmark_tag_hint">TAG</string>
@@ -90,5 +90,9 @@
     <!--Add bookmark Dialog-->
     <string name="popup_confirm">확인</string>
 
+    <!-- KaKao Talk-->
+    <string name="kakao_app_key">2b01b8aa193b65aff676ab8f63e9b5e7</string>
+    <string name="kakao_scheme">kakao2b01b8aa193b65aff676ab8f63e9b5e7</string>
+    <string name="kakaolink_host">kakaolink</string>
 
 </resources>

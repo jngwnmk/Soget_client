@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,8 +21,7 @@ import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.common.StaticValues;
-import com.soget.soget_client.connector.MyArchiveRequestTask;
-import com.soget.soget_client.connector.WebExtractor;
+import com.soget.soget_client.connector.bookmark.ArchiveMineTask;
 import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.view.Activity.SettingActivity;
 import com.soget.soget_client.view.Activity.WebViewActivity;
@@ -78,6 +76,7 @@ public class ArchiveFragment extends Fragment {
                 Bundle extras = new Bundle();
                 extras.putString(WebViewActivity.WEBVIEWURL,url);
                 extras.putString(StaticValues.BOOKMARKID,bookmarks.get(position).getId());
+                extras.putBoolean(StaticValues.ISMYBOOKMARK,true);
                 intent.putExtras(extras);
                 startActivity(intent);
 
@@ -119,7 +118,7 @@ public class ArchiveFragment extends Fragment {
         pullRefreshLayout.setColorSchemeColors(colors);
         pDialog = new ProgressDialog(this.getActivity());
         pDialog.setMessage("Loading....");
-        loadMyArchive();
+        Log.d(ArchiveFragment.class.getName(),"onCreateView()");
         return rootView;
     }
 
@@ -153,21 +152,13 @@ public class ArchiveFragment extends Fragment {
             public void onTaskCompleted(Object object) {
                 if (object!=null){
                     Log.d("ArchiveFragment", ((ArrayList<Bookmark>) object).toString());
-                    ArrayList<Bookmark> raw_bookmark = ((ArrayList<Bookmark>) object);
-                    OnTaskCompleted webExtractTaskComplete = new OnTaskCompleted(){
-                        @Override
-                        public void onTaskCompleted(Object object) {
-                            if(page_num==0){
-                                bookmarks.clear();
-                            }
-                            bookmarks.addAll((ArrayList<Bookmark>) object);
-                            updateBookmarkList();
-                            pDialog.dismiss();
-                            pullRefreshLayout.setRefreshing(false);
-
-                        }
-                    };
-                    new WebExtractor(webExtractTaskComplete,raw_bookmark).execute();
+                    if(page_num==0){
+                        bookmarks.clear();
+                    }
+                    bookmarks.addAll((ArrayList<Bookmark>) object);
+                    updateBookmarkList();
+                    pDialog.dismiss();
+                    pullRefreshLayout.setRefreshing(false);
                 }
 
             }
@@ -175,13 +166,14 @@ public class ArchiveFragment extends Fragment {
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
         String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
         pDialog.show();
-        new MyArchiveRequestTask(onTaskCompleted,user_id, token,page_num).execute();
+        new ArchiveMineTask(onTaskCompleted,user_id, token,page_num).execute();
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        //loadMyArchive();
+        Log.d(ArchiveFragment.class.getName(),"onResume()");
+        loadMyArchive();
     }
 
 

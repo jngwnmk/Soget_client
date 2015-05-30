@@ -1,4 +1,4 @@
-package com.soget.soget_client.connector;
+package com.soget.soget_client.connector.friend;
 
 import android.os.AsyncTask;
 
@@ -10,13 +10,13 @@ import java.util.ArrayList;
 /**
  * Created by wonmook on 2015-03-23.
  */
-public class FriendRequestTask extends AsyncTask<Void, Void, ArrayList<User>> {
+public class FriendTask extends AsyncTask<Void, Void, ArrayList<User>> {
     protected OnTaskCompleted listener;
     protected ArrayList<User> friends;
     protected String token ;
     protected String user_id;
 
-    public FriendRequestTask(OnTaskCompleted listener, String user_id, String token){
+    public FriendTask(OnTaskCompleted listener, String user_id, String token){
         this.listener = listener;
         this.user_id = user_id;
         this.token = token;
@@ -36,7 +36,7 @@ public class FriendRequestTask extends AsyncTask<Void, Void, ArrayList<User>> {
             return friends;
 
         } catch (Exception e){
-            Log.e("FriendRequestTask", e.getMessage(), e);
+            Log.e("FriendTask", e.getMessage(), e);
         }*/
         return null;
     }

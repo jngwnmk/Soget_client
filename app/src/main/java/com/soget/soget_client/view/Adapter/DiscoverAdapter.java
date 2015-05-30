@@ -2,17 +2,24 @@ package com.soget.soget_client.view.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.soget.soget_client.R;
 import com.soget.soget_client.common.SogetUtil;
+import com.soget.soget_client.common.StaticValues;
 import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.view.Activity.CommentActivity;
+import com.soget.soget_client.view.Activity.FriendArchiveActivity;
+import com.soget.soget_client.view.Activity.WebViewActivity;
+import com.soget.soget_client.view.component.SwipeTouchListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,14 +65,30 @@ public class DiscoverAdapter extends BaseAdapter {
             discoverWrapper = (DiscoverWrapper)convertView.getTag();
         }
 
-        Bookmark item = (Bookmark)getItem(position);
+        final Bookmark item = (Bookmark)getItem(position);
         System.out.println("Discover" + item.toString());
+        final String bookmark_id = item.getId();
 
         //Set User name & User id
         discoverWrapper.getUserId().setText(item.getInitUserName() + "(" + item.getInitUserNickName() + ")");
-
+        discoverWrapper.getUserId().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String user_id = item.getInitUserNickName();
+                Intent intent = new Intent(mContext, FriendArchiveActivity.class);
+                intent.putExtra(FriendArchiveActivity.FRIENDID, user_id);
+                mContext.startActivity(intent);
+            }
+        });
         //Set title
         discoverWrapper.getTitle().setText(item.getTitle());
+        discoverWrapper.getTitle().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = item.getUrl();
+                openWebLink(url, item.getId());
+            }
+        });
 
         //Set elapsed Time
         discoverWrapper.getDate().setText(SogetUtil.calDurationTime(item.getDate()));
@@ -95,19 +118,49 @@ public class DiscoverAdapter extends BaseAdapter {
         }
         //Set num of get
         discoverWrapper.getGet_nums().setText(item.getFollowers().size()+" "+mContext.getString(R.string.archive_row_num_get));
+        discoverWrapper.getGet_nums().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openComment(bookmark_id,item.getFollowers().size());
+            }
+        });
         //set num of comment
         discoverWrapper.getComment_nums().setText(item.getComments().size()+" "+mContext.getString(R.string.archive_row_num_comment));
         discoverWrapper.getComment_nums().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, CommentActivity.class);
-                mContext.startActivity(intent);
+                openComment(bookmark_id, item.getFollowers().size());
             }
         });
 
-        discoverWrapper.getDesc().setText(item.getDesc());
-
+        discoverWrapper.getDesc().setText(item.getDescription());
+        discoverWrapper.getDesc().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = item.getUrl();
+                openWebLink(url, item.getId());
+            }
+        });
         return convertView;
+    }
+
+    private void openWebLink(String url, String bookmark_id){
+        Intent intent = new Intent(mContext,WebViewActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString(WebViewActivity.WEBVIEWURL,url);
+        extras.putString(StaticValues.BOOKMARKID,bookmark_id);
+        extras.putBoolean(StaticValues.ISMYBOOKMARK,false);
+        intent.putExtras(extras);
+        mContext.startActivity(intent);
+    }
+
+    private void openComment(String bookmark_id, int size){
+        Intent intent = new Intent(mContext, CommentActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString(StaticValues.BOOKMARKID,bookmark_id);
+        extras.putInt(StaticValues.MARKINNUM, size);
+        intent.putExtras(extras);
+        mContext.startActivity(intent);
     }
 
     private class DiscoverWrapper {

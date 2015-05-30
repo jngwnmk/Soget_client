@@ -1,4 +1,4 @@
-package com.soget.soget_client.connector;
+package com.soget.soget_client.connector.invitation;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -22,13 +22,13 @@ import java.util.Arrays;
 /**
  * Created by wonmook on 15. 5. 15..
  */
-public class InvitationCodeMakeRequestTask extends AsyncTask<Void, Void, ArrayList<String>> {
+public class InvitationCodeMakeTask extends AsyncTask<Void, Void, ArrayList<String>> {
     private OnTaskCompleted listener;
     private String token ;
     private String user_id;
     ResponseEntity<String> response;
 
-    public InvitationCodeMakeRequestTask(OnTaskCompleted listener, String user_id, String token){
+    public InvitationCodeMakeTask(OnTaskCompleted listener, String user_id, String token){
         this.listener = listener;
         this.user_id = user_id;
         this.token = token;
@@ -46,7 +46,7 @@ public class InvitationCodeMakeRequestTask extends AsyncTask<Void, Void, ArrayLi
             return (ArrayList<String>)Arrays.asList(response.getBody());
 
         } catch (Exception e){
-            Log.e("InvitationCodeGetRequestTask", e.getMessage(), e);
+            Log.e("InvitationCodeGetTask", e.getMessage(), e);
         }
         return null;
 

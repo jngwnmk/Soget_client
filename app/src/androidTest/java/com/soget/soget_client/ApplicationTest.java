@@ -4,13 +4,11 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 
 import com.soget.soget_client.callback.OnTaskCompleted;
-import com.soget.soget_client.connector.LoginRequestTask;
-import com.soget.soget_client.connector.MakeBookmarkRequestTask;
+import com.soget.soget_client.connector.bookmark.BookmarkMakeTask;
+import com.soget.soget_client.connector.user.UserLoginTask;
 import com.soget.soget_client.model.Authorization;
 import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.model.User;
-
-import java.util.ArrayList;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -25,7 +23,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         User user = new User();
         user.setUserId("admin");
         user.setPassword("admin");
-        new LoginRequestTask(new OnTaskCompleted() {
+        new UserLoginTask(new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(Object object) {
                 assertNotNull(object);
@@ -35,7 +33,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 bookmark.setInitUserId("admin");
                 bookmark.setPrivacy(false);
 
-                new MakeBookmarkRequestTask(new OnTaskCompleted() {
+                new BookmarkMakeTask(new OnTaskCompleted() {
                     @Override
                     public void onTaskCompleted(Object object) {
                         assertEquals("admin",((Bookmark)object).getInitUserId());

@@ -20,6 +20,7 @@ public class User {
     private List<String> bookmarks;
     private List<String> trashcan;
     private List<String> invitation;
+    private List<String> invitation_sent;
 
     public String getId() {
         return id;
@@ -125,6 +126,14 @@ public class User {
         this.trashcan = trashcan;
     }
 
+    public List<String> getInvitation_sent() {
+        return invitation_sent;
+    }
+
+    public void setInvitation_sent(List<String> invitation_sent) {
+        this.invitation_sent = invitation_sent;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -140,6 +149,7 @@ public class User {
                 ", \"bookmarks\":" + bookmarks +
                 ", \"trashcan\":" + trashcan+
                 ", \"invitation\":" + invitation +
+                ", \"invitation_sent\":" + invitation_sent+
                 "}";
     }
 

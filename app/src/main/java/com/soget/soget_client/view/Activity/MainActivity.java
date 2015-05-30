@@ -1,21 +1,14 @@
 package com.soget.soget_client.view.Activity;
 
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.soget.soget_client.R;
-import com.soget.soget_client.callback.OnTaskCompleted;
-import com.soget.soget_client.common.AuthManager;
-import com.soget.soget_client.common.SettingManager;
-import com.soget.soget_client.connector.LoginRequestTask;
-import com.soget.soget_client.model.Authorization;
-import com.soget.soget_client.model.User;
+import com.soget.soget_client.view.Adapter.DiscoverAdapter;
 import com.soget.soget_client.view.Fragment.ArchiveFragment;
+import com.soget.soget_client.view.Fragment.DiscoverFragment;
 import com.soget.soget_client.view.Fragment.TabsFragment;
 
 /**
@@ -34,7 +27,7 @@ public class MainActivity extends ActionBarActivity{
         FragmentManager fm = getFragmentManager();
         TabsFragment tabsFragment =(TabsFragment) fm.findFragmentById(R.id.tabs_fragment);
         if (tabsFragment != null)
-            tabsFragment.onTabChanged(TabsFragment.TAB_ARCHIVE);
+            tabsFragment.onTabChanged(TabsFragment.TAB_HOME);
 
 
     }
@@ -44,17 +37,21 @@ public class MainActivity extends ActionBarActivity{
         super.onResume();
         System.out.println("onResume():MainActivity");
         Intent intent = getIntent();
-        shared_url = intent.getExtras().getString("SHARED_URL");
+        if(intent!=null){
+            if(intent.getExtras()!=null){
+                shared_url = intent.getExtras().getString("SHARED_URL");
+            }
+        }
         showAddDialog();
 
     }
 
     private void showAddDialog() {
         FragmentManager fm = getFragmentManager();
-        ArchiveFragment archiveFragment = (ArchiveFragment)fm.findFragmentById(R.id.tab_2);
-        if(archiveFragment!=null){
+        DiscoverFragment discoverFragment = (DiscoverFragment)fm.findFragmentById(R.id.tab_1);
+        if(discoverFragment!=null){
             if((!"".equals(shared_url))&&autoMarking){
-                archiveFragment.showAddDialog(shared_url);
+                discoverFragment.showAddDialog(shared_url,null);
                 shared_url = "";
                 autoMarking = false;
             }

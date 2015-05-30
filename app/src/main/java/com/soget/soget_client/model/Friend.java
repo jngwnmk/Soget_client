@@ -4,7 +4,7 @@ package com.soget.soget_client.model;
  * Created by wonmook on 2015-03-25.
  */
 public class Friend{
-    public static enum FRIEND{FRIEND, FRIENDSENT, FRIENDRECEIVE};
+    public static enum FRIEND{FRIEND, FRIENDSENT, FRIENDRECEIVE, NOTFRIEND};
     private User userInfo;
     private FRIEND type;
 

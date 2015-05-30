@@ -1,4 +1,4 @@
-package com.soget.soget_client.connector;
+package com.soget.soget_client.connector.user;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -15,11 +15,11 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Created by wonmook on 2015-03-15.
  */
-public class RegisterRequestTask extends AsyncTask<Void, Void, User> {
+public class UserRegisterTask extends AsyncTask<Void, Void, User> {
     private OnTaskCompleted listener;
     private User user;
 
-    public RegisterRequestTask(OnTaskCompleted listener, User user){
+    public UserRegisterTask(OnTaskCompleted listener, User user){
         this.listener = listener;
         this.user = user;
     }
@@ -33,7 +33,7 @@ public class RegisterRequestTask extends AsyncTask<Void, Void, User> {
             User registered_user = restTemplate.postForObject(RESTAPIManager.user_url+"register", user, User.class);
             return registered_user;
         } catch (Exception e){
-            Log.e("RegisterRequestTask", e.getMessage(), e);
+            Log.e("UserRegisterTask", e.getMessage(), e);
         }
         return null;
     }

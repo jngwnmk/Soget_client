@@ -1,4 +1,4 @@
-package com.soget.soget_client.connector;
+package com.soget.soget_client.connector.friend;
 
 import android.util.Log;
 
@@ -20,8 +20,8 @@ import java.util.Arrays;
 /**
  * Created by wonmook on 2015-03-25.
  */
-public class FriendListRequestTask extends FriendRequestTask{
-    public FriendListRequestTask(OnTaskCompleted listener, String user_id, String token) {
+public class FriendSentListTask extends FriendTask {
+    public FriendSentListTask(OnTaskCompleted listener, String user_id, String token) {
         super(listener, user_id, token);
     }
 
@@ -34,16 +34,14 @@ public class FriendListRequestTask extends FriendRequestTask{
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             ResponseEntity<User[]> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
-            response = restTemplate.exchange(RESTAPIManager.friends_url + user_id, HttpMethod.GET, new HttpEntity(headers), User[].class);
+            response = restTemplate.exchange(RESTAPIManager.friends_sent_url +  user_id, HttpMethod.GET, new HttpEntity(headers), User[].class);
             friends = new ArrayList<User>();
             friends.addAll(Arrays.asList(response.getBody()));
             return friends;
 
         } catch (Exception e){
-            Log.e("FriendListRequestTask", e.getMessage(), e);
+            Log.e("FriendSent", e.getMessage(), e);
         }
         return null;
     }
-
-
 }
