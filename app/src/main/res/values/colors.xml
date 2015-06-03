@@ -15,7 +15,7 @@
     <color name="transparent">#00000000</color>
     <color name="shadow_green">#94C3C1</color>
     <color name="oxford_blue">#27313A</color>
-    
+    <color name="arsenic">#3E454C</color>
     <!--friend-->
     <color name="friend_receive_request_btn">#4A5C82</color>
     <color name="friend_name_normal">#3E454C</color>

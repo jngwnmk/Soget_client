@@ -79,7 +79,7 @@ public class DiscoverFragment extends Fragment{
         discoverRefreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDiscoverList();
+                //getDiscoverList();
             }
         });
         backgroundImg = (ImageView)rootView.findViewById(R.id.discover_background_img);
@@ -96,8 +96,6 @@ public class DiscoverFragment extends Fragment{
                 //addBookmark(bookmarks.get(currentIndex));
                 showAddDialog(bookmarks.get(currentIndex).getUrl(),bookmarks.get(currentIndex));
                 treatCardAction();
-                //Add to My Archive
-                Toast.makeText(getActivity().getApplicationContext(), "Added to my archive!!!", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -121,9 +119,16 @@ public class DiscoverFragment extends Fragment{
                     getDiscoverList();
                     return;
                 } else {
-                    Picasso.with(getActivity().getApplicationContext()).load(bookmarks.get(currentIndex).getImg_url())
-                            .placeholder(R.drawable.picture_no_image).fit().centerCrop()
-                            .into(backgroundImg);
+                    if(bookmarks.get(currentIndex).getImg_url().equals("")){
+                        Picasso.with(getActivity().getApplicationContext()).load(R.drawable.picture_no_image)
+                                .placeholder(R.drawable.picture_no_image).fit().centerCrop()
+                                .into(backgroundImg);
+                    } else {
+                        Picasso.with(getActivity().getApplicationContext()).load(bookmarks.get(currentIndex).getImg_url())
+                                .placeholder(R.drawable.picture_no_image).fit().centerCrop()
+                                .into(backgroundImg);
+                    }
+
                 }
 
 
@@ -146,6 +151,10 @@ public class DiscoverFragment extends Fragment{
             @Override
             public void onTaskCompleted(Object object) {
                 //loadMyArchive();
+                if(object!=null) {
+                    //Add to My Archive
+                    Toast.makeText(getActivity().getApplicationContext(), "Added to my archive!!!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         addBookmarkDialog.show(fm,"add_bookmark_dialog");
@@ -201,9 +210,16 @@ public class DiscoverFragment extends Fragment{
                         cardNumTextView.setText(String.valueOf(bookmarks.size()));
                         totalCardNumTextView.setText("/"+String.valueOf(bookmarks.size()));
                         if(bookmarks.size()>0){
-                            Picasso.with(getActivity().getApplicationContext()).load(bookmarks.get(currentIndex).getImg_url())
-                                    .placeholder(R.drawable.picture_no_image).fit().centerCrop()
-                                    .into(backgroundImg);
+                            if(bookmarks.get(currentIndex).getImg_url().equals("")){
+                                Picasso.with(getActivity().getApplicationContext()).load(R.drawable.picture_no_image)
+                                        .placeholder(R.drawable.picture_no_image).fit().centerCrop()
+                                        .into(backgroundImg);
+                            } else {
+                                Picasso.with(getActivity().getApplicationContext()).load(bookmarks.get(currentIndex).getImg_url())
+                                        .placeholder(R.drawable.picture_no_image).fit().centerCrop()
+                                        .into(backgroundImg);
+                            }
+
                         } else {
                             System.out.println("Nothing to do recommend");
                         }
@@ -228,11 +244,6 @@ public class DiscoverFragment extends Fragment{
             ex.printStackTrace();
         }
 
-    }
-
-    public void loadDiscoverCard(){
-
-        getDiscoverList();
     }
 
     @Override

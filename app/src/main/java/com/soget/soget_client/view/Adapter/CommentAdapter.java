@@ -51,7 +51,7 @@ public class CommentAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         CommentWrapper commentWrapper =null;
-        if(commentWrapper==null)
+        if(row==null)
         {
             row = inflater.inflate(R.layout.comment_list_row, null);
             commentWrapper = new CommentWrapper(row);

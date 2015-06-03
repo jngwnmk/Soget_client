@@ -9,12 +9,13 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/register_input_type1"
+        android:background="@drawable/register_edit_text_selector"
         android:id="@+id/invitation_code_edit"
         android:hint="@string/invitation_code_hint"
         android:padding="10dp"
         android:singleLine="true"
-
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="13.91sp"
         />
 
     <EditText
@@ -22,11 +23,13 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="@string/user_name_hint"
-        android:background="@drawable/register_input_type1"
+        android:background="@drawable/register_edit_text_selector"
         android:id="@+id/user_name_edit"
         android:padding="10dp"
         android:layout_marginTop="5dp"
         android:singleLine="true"
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="13.91sp"
         />
 
     <EditText
@@ -34,10 +37,12 @@
         android:layout_height="wrap_content"
         android:hint="@string/user_id_hint"
         android:id="@+id/user_id_edit"
-        android:background="@drawable/register_input_type1"
+        android:background="@drawable/register_edit_text_selector"
         android:padding="10dp"
         android:layout_marginTop="5dp"
         android:singleLine="true"
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="13.91sp"
          />
 
     <EditText
@@ -45,11 +50,13 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:hint="@string/user_email_hint"
-        android:background="@drawable/register_input_type1"
+        android:background="@drawable/register_edit_text_selector"
         android:id="@+id/user_email_edit"
         android:padding="10dp"
         android:layout_marginTop="5dp"
         android:singleLine="true"
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="13.91sp"
          />
 
     <EditText
@@ -58,27 +65,32 @@
         android:inputType="textPassword"
         android:hint="@string/user_pwd_hint"
         android:id="@+id/user_pwd_edit"
-        android:background="@drawable/register_input_type1"
+        android:background="@drawable/register_edit_text_selector"
         android:padding="10dp"
         android:layout_marginTop="5dp"
         android:singleLine="true"
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="13.91sp"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_condition"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:layout_marginTop="30dp"/>
+        android:textColor="@color/arsenic"
+        android:textSize="9.86sp"
+        android:layout_marginTop="32.33dp"
+        android:drawableLeft="@drawable/register_info_icon"
+        android:drawablePadding="4dp"/>
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp">
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/register_btn"
         android:background="@drawable/register_btn"
-        android:layout_marginTop="10dp"
+
         />
      <TextView
          android:layout_width="fill_parent"
@@ -92,8 +104,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/arsenic"
         android:text="@string/register_condition_1"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="50dp"
+        android:textSize="11.01sp"
+        />
 
 </LinearLayout>

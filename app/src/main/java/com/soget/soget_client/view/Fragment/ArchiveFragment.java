@@ -42,6 +42,7 @@ public class ArchiveFragment extends Fragment {
     private ImageButton addBtn = null;
     private PullRefreshLayout pullRefreshLayout =null;
     private int page_num = 0;
+    private boolean isLastPage = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -63,7 +64,8 @@ public class ArchiveFragment extends Fragment {
         });
 
         bookmarkListView = (ListView)rootView.findViewById(R.id.archive_list);
-        bookmarkAdapter = new BookmarkAdapter(inflater.getContext(),bookmarks);
+        String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+        bookmarkAdapter = new BookmarkAdapter(inflater.getContext(),bookmarks,user_id,true);
         //bookmarkListView.setOnScrollListener(this);
         bookmarkListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -74,8 +76,9 @@ public class ArchiveFragment extends Fragment {
                 //startActivity(intent);
                 Intent intent = new Intent(getActivity(),WebViewActivity.class);
                 Bundle extras = new Bundle();
+                //extras.putParcelable(StaticValues.BOOKMARK, bookmarks.get(position));
                 extras.putString(WebViewActivity.WEBVIEWURL,url);
-                extras.putString(StaticValues.BOOKMARKID,bookmarks.get(position).getId());
+                extras.putString(StaticValues.BOOKMARKID, bookmarks.get(position).getId());
                 extras.putBoolean(StaticValues.ISMYBOOKMARK,true);
                 intent.putExtras(extras);
                 startActivity(intent);
@@ -91,8 +94,11 @@ public class ArchiveFragment extends Fragment {
 
                 if (loadMore && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE ) {
                     System.out.println("load more");
-                    page_num++;
-                    loadMyArchive();
+                    if(!isLastPage()){
+                        page_num++;
+                        loadMyArchive();
+                    }
+
                 }
             }
 
@@ -110,6 +116,7 @@ public class ArchiveFragment extends Fragment {
             public void onRefresh() {
                 page_num=0;
                 loadMyArchive();
+
             }
         });
 
@@ -119,6 +126,7 @@ public class ArchiveFragment extends Fragment {
         pDialog = new ProgressDialog(this.getActivity());
         pDialog.setMessage("Loading....");
         Log.d(ArchiveFragment.class.getName(),"onCreateView()");
+        loadMyArchive();
         return rootView;
     }
 
@@ -130,7 +138,11 @@ public class ArchiveFragment extends Fragment {
         addBookmarkDialog.setListener(new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(Object object) {
-                loadMyArchive();
+                if(object!=null){
+                    loadMyArchive();
+                    Toast.makeText(getActivity().getApplicationContext(), "Added to my archive!!!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         addBookmarkDialog.show(fm,"add_bookmark_dialog");
@@ -155,10 +167,21 @@ public class ArchiveFragment extends Fragment {
                     if(page_num==0){
                         bookmarks.clear();
                     }
-                    bookmarks.addAll((ArrayList<Bookmark>) object);
-                    updateBookmarkList();
+                    ArrayList<Bookmark> moreBookmarks = (ArrayList<Bookmark>) object;
+                    if(moreBookmarks!=null){
+                        if(moreBookmarks.size()==0){
+                            setLastPage(true);
+                        } else {
+                            setLastPage(false);
+                            bookmarks.addAll(moreBookmarks);
+                            updateBookmarkList();
+                        }
+
+                    }
                     pDialog.dismiss();
                     pullRefreshLayout.setRefreshing(false);
+
+
                 }
 
             }
@@ -173,8 +196,13 @@ public class ArchiveFragment extends Fragment {
     public void onResume(){
         super.onResume();
         Log.d(ArchiveFragment.class.getName(),"onResume()");
-        loadMyArchive();
     }
 
+    public boolean isLastPage() {
+        return isLastPage;
+    }
 
+    public void setLastPage(boolean isLastPage) {
+        this.isLastPage = isLastPage;
+    }
 }

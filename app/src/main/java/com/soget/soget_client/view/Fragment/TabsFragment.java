@@ -125,11 +125,7 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
                 }
                 fm.beginTransaction().replace(placeholder, discoverFragment, tabId).commit();
 
-            } else {
-                fm.beginTransaction().replace(placeholder, discoverFragment, tabId).commit();
-
             }
-
         }
 
         if(TAB_ARCHIVE.equals(tabId)) {
@@ -137,9 +133,6 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
                 if(archiveFragment==null){
                     archiveFragment = new ArchiveFragment();
                 }
-                fm.beginTransaction().replace(placeholder, archiveFragment, tabId).commit();
-
-            }else {
                 fm.beginTransaction().replace(placeholder, archiveFragment, tabId).commit();
 
             }
@@ -153,9 +146,7 @@ public class TabsFragment extends Fragment implements TabHost.OnTabChangeListene
                 }
                 fm.beginTransaction().replace(placeholder, friendsFragment, tabId).commit();
             }
-            else {
-                fm.beginTransaction().replace(placeholder, friendsFragment, tabId).commit();
-            }
+
         }
         System.out.println("updateTab():TabsFragment");
     }

@@ -1,11 +1,14 @@
 package com.soget.soget_client.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Date;
 
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
-public class Comment {
+public class Comment{
     private long date;
     private String userKeyId;        //Unique Object Id
     private String userName;      		//User name
@@ -14,7 +17,11 @@ public class Comment {
 
 
     public Comment(){
-
+        date = 0L;
+        userKeyId = "";
+        userName = "";
+        userId = "";
+        content = "";
     }
 
     public Comment(long date, String userKeyId, String userName, String userId, String content) {
@@ -64,4 +71,5 @@ public class Comment {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
 }

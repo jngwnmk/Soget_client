@@ -2,6 +2,7 @@ package com.soget.soget_client.view.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.soget.soget_client.R;
 import com.soget.soget_client.common.StaticValues;
 import com.soget.soget_client.model.Bookmark;
+import com.soget.soget_client.model.Follower;
 import com.soget.soget_client.view.Activity.CommentActivity;
 import com.soget.soget_client.view.Activity.WebViewActivity;
 import com.squareup.picasso.Picasso;
@@ -27,12 +29,15 @@ public class BookmarkAdapter extends BaseAdapter{
     private Context mContext;
     private LayoutInflater inflater;
     private ArrayList<Bookmark> bookmarks;
+    private String userId;
+    private boolean isMyArchive;
 
-    public BookmarkAdapter(Context context, ArrayList<Bookmark> bookmarks){
+    public BookmarkAdapter(Context context, ArrayList<Bookmark> bookmarks, String user_id, boolean isMyArchive){
         this.mContext = context;
         this.bookmarks = bookmarks;
         this.inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        this.userId = user_id;
+        this.isMyArchive = isMyArchive;
     }
 
     @Override
@@ -54,7 +59,7 @@ public class BookmarkAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         BookmarkWrapper bookmarkWrapper =null;
-        if(bookmarkWrapper==null){
+        if(row==null){
             row = inflater.inflate(R.layout.archivce_list_row, null);
             bookmarkWrapper = new BookmarkWrapper(row);
             row.setTag(bookmarkWrapper);
@@ -67,21 +72,47 @@ public class BookmarkAdapter extends BaseAdapter{
         bookmarkWrapper.getTitle().setText(item.getTitle());
         final String bookmark_id = item.getId();
         //Set Thumbnail Image
-        System.out.println(item.getImg_url());
-        Picasso.with(mContext).load(item.getImg_url()).placeholder(R.drawable.archive_noimage)//.into(bookmarkWrapper.getThumbnail());
-                .resizeDimen(R.dimen.list_archive_image_size_w, R.dimen.list_archive_image_size_h)
-                .into(bookmarkWrapper.getThumbnail());
+        if("".equals(item.getImg_url())){
+            Picasso.with(mContext).load(R.drawable.archive_noimage).placeholder(R.drawable.archive_noimage)//.into(bookmarkWrapper.getThumbnail());
+                    .resizeDimen(R.dimen.list_archive_image_size_w, R.dimen.list_archive_image_size_h)
+                    .into(bookmarkWrapper.getThumbnail());
+
+        } else {
+            Picasso.with(mContext).load(item.getImg_url()).placeholder(R.drawable.archive_noimage)//.into(bookmarkWrapper.getThumbnail());
+                    .resizeDimen(R.dimen.list_archive_image_size_w, R.dimen.list_archive_image_size_h)
+                    .into(bookmarkWrapper.getThumbnail());
+        }
+
+        ArrayList<String> tags = new ArrayList<String>();
+        boolean privacy = false;
+        tags = (ArrayList<String>)item.getTags();
+        privacy = item.isPrivacy();
+        /*if(item.getInitUserNickName().equals(userId)){
+            //It's a bookmark I created
+            //Set Tags
+            tags = (ArrayList<String>)item.getTags();
+            //Set Privacy
+            privacy = item.isPrivacy();
+
+        } else {
+            //I am a just follower
+            //Let' find a my own tags and privacy setting
+            //Set Tags
+            tags = findTags((ArrayList<Follower>)(item.getFollowers()));
+            //Set Privacy
+            privacy = findPrivacy((ArrayList<Follower>)(item.getFollowers()));
+
+        }*/
 
         //Set Tags
-
-        if(item.getTags().size()!=0){
+        if(tags.size()!=0){
             StringBuffer sb = new StringBuffer();
-            for(int i = 0; i < item.getTags().size() ;++i){
-                if(i!=item.getTags().size()-1){
-                    sb.append(item.getTags().get(i));
+            for(int i = 0; i < tags.size() ;++i){
+                if(i!=tags.size()-1){
+                    sb.append(tags.get(i));
                     sb.append(", ");
                 } else {
-                    sb.append(item.getTags().get(i));
+                    sb.append(tags.get(i));
                 }
             }
             bookmarkWrapper.getTags().setText(sb.toString());
@@ -90,31 +121,68 @@ public class BookmarkAdapter extends BaseAdapter{
             bookmarkWrapper.getTags().setCompoundDrawables(null,null,null,null);
         }
 
-        //Set privacy
-        if(item.isPrivacy()){
-            bookmarkWrapper.getPrivacy().setImageResource(R.drawable.archive_locked);
+        //Set Privacy
+        if(isMyArchive){
+            if(privacy){
+                bookmarkWrapper.getPrivacy().setImageResource(R.drawable.archive_locked);
+            } else {
+                bookmarkWrapper.getPrivacy().setImageResource(R.drawable.archive_unlocked);
+            }
         } else {
-            bookmarkWrapper.getPrivacy().setImageResource(R.drawable.archive_unlocked);
+            bookmarkWrapper.getPrivacy().setVisibility(View.GONE);
         }
+
+
 
         //Set num of get
         bookmarkWrapper.getGet_nums().setText(item.getFollowers().size()+" "+mContext.getString(R.string.archive_row_num_get));
+        bookmarkWrapper.getGet_nums().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openComment(bookmark_id,item.getFollowers().size());
+            }
+        });
         //set num of comment
         bookmarkWrapper.getComment_nums().setText(item.getComments().size()+" "+mContext.getString(R.string.archive_row_num_comment));
         bookmarkWrapper.getComment_nums().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, CommentActivity.class);
-               Bundle extras = new Bundle();
-                extras.putString(StaticValues.BOOKMARKID,bookmark_id);
-                extras.putInt(StaticValues.MARKINNUM, item.getFollowers().size());
-                intent.putExtras(extras);
-                mContext.startActivity(intent);
+                openComment(bookmark_id,item.getFollowers().size());
 
             }
         });
         return row;
     }
+    private void openComment(String bookmark_id, int size){
+        Intent intent = new Intent(mContext, CommentActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle extras = new Bundle();
+        extras.putString(StaticValues.BOOKMARKID,bookmark_id);
+        extras.putInt(StaticValues.MARKINNUM, size);
+        intent.putExtras(extras);
+        mContext.startActivity(intent);
+    }
+
+
+    private boolean findPrivacy(ArrayList<Follower> followers){
+        for(int i = 0 ; i < followers.size() ;++i){
+            if(userId.equals(followers.get(i).getUserId())){
+                return followers.get(i).isPrivacy();
+            }
+        }
+        return false;
+    }
+
+    private ArrayList<String> findTags(ArrayList<Follower> followers){
+        for(int i = 0 ; i < followers.size() ;++i){
+            if(userId.equals(followers.get(i).getUserId())){
+                return followers.get(i).getTags();
+            }
+        }
+        return new ArrayList<>();
+    }
+
+
 
 
     private class BookmarkWrapper{
@@ -140,6 +208,8 @@ public class BookmarkAdapter extends BaseAdapter{
         public TextView getTags() {
             if(tags==null){
                 tags = (TextView)base.findViewById(R.id.tag_list);
+                tags.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
             }
             return tags;
         }
@@ -147,6 +217,8 @@ public class BookmarkAdapter extends BaseAdapter{
         public TextView getTitle() {
             if(title==null){
                 title = (TextView)base.findViewById(R.id.title);
+                title.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
             }
             return title;
         }
@@ -154,6 +226,8 @@ public class BookmarkAdapter extends BaseAdapter{
         public TextView getGet_nums() {
             if(get_nums==null){
                 get_nums = (TextView)base.findViewById(R.id.get_nums);
+                get_nums.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
+
             }
             return get_nums;
         }
@@ -161,6 +235,8 @@ public class BookmarkAdapter extends BaseAdapter{
         public TextView getComment_nums() {
             if(comment_nums==null){
                 comment_nums = (TextView)base.findViewById(R.id.comment_nums);
+                comment_nums.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
+
             }
             return comment_nums;
         }

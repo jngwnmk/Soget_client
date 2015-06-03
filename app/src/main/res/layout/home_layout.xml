@@ -53,11 +53,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_weight="0.025"></LinearLayout>
             <com.soget.soget_client.view.component.MyCardStackView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:id="@+id/discover_stack_view"
-                android:layout_weight="0.95">
+                android:layout_weight="0.925">
             </com.soget.soget_client.view.component.MyCardStackView>
             <LinearLayout
                 android:layout_width="match_parent"

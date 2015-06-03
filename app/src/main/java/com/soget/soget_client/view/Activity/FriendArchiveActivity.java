@@ -21,6 +21,7 @@ import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.common.StaticValues;
 import com.soget.soget_client.connector.bookmark.ArchiveFriendTask;
 import com.soget.soget_client.model.Bookmark;
+import com.soget.soget_client.model.Follower;
 import com.soget.soget_client.view.Adapter.BookmarkAdapter;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class FriendArchiveActivity extends ActionBarActivity {
     private String friend_user_id;
     public final static String FRIENDID = "friend_user_id";
     private int page_num = 0;
+    private boolean isLastPage = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class FriendArchiveActivity extends ActionBarActivity {
         friendNameTv = (TextView)findViewById(R.id.friend_user_id_tv);
         friendNameTv.setText(friend_user_id);
         bookmarkListView = (ListView)findViewById(R.id.archive_list);
-        bookmarkAdapter = new BookmarkAdapter(getApplicationContext(),bookmarks);
+        bookmarkAdapter = new BookmarkAdapter(getApplicationContext(),bookmarks,friend_user_id,false);
         bookmarkListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -68,6 +70,7 @@ public class FriendArchiveActivity extends ActionBarActivity {
                 Bundle extras = new Bundle();
                 extras.putString(WebViewActivity.WEBVIEWURL,url);
                 extras.putString(StaticValues.BOOKMARKID,bookmarks.get(position).getId());
+                //extras.putParcelable(StaticValues.BOOKMARK, bookmarks.get(position));
                 extras.putBoolean(StaticValues.ISMYBOOKMARK, false);
                 intent.putExtras(extras);
                 startActivity(intent);
@@ -82,8 +85,10 @@ public class FriendArchiveActivity extends ActionBarActivity {
 
                 if (loadMore && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                     System.out.println("load more");
-                    page_num++;
-                    getFriendArchive();
+                    if(!isLastPage()) {
+                        page_num++;
+                        getFriendArchive();
+                    }
                 }
             }
 
@@ -130,15 +135,20 @@ public class FriendArchiveActivity extends ActionBarActivity {
                     if(page_num==0){
                         bookmarks.clear();
                     }
+                    ArrayList<Bookmark> moreBookmarks = (ArrayList<Bookmark>) object;
+                    if(moreBookmarks!=null){
+                        if(moreBookmarks.size()==0){
+                            setLastPage(true);
+                        } else {
+                            setLastPage(false);
+                            bookmarks.addAll(moreBookmarks);
+                            updateBookmarkList();
 
-                    for(Bookmark bookmark : (ArrayList<Bookmark>) object){
-                        if(!bookmark.isPrivacy()){
-                            bookmarks.add(bookmark);
                         }
                     }
 
-                    updateBookmarkList();
                     pDialog.dismiss();
+
                 }
             }
         };
@@ -174,5 +184,13 @@ public class FriendArchiveActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean isLastPage() {
+        return isLastPage;
+    }
+
+    public void setLastPage(boolean isLastPage) {
+        this.isLastPage = isLastPage;
     }
 }

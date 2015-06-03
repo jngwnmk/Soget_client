@@ -1,22 +1,34 @@
 package com.soget.soget_client.view.Activity;
 
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.common.StaticValues;
 import com.soget.soget_client.connector.bookmark.BookmarkAddTask;
+import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.model.User;
+import com.soget.soget_client.view.Fragment.AddBookmarkDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 /**
  * Created by wonmook on 2015-04-01.
@@ -28,16 +40,18 @@ public class WebViewActivity extends ActionBarActivity {
     private WebView webView = null;
     private ProgressDialog pDialog;
 
+    private String url = "";
     private String bookmarkId = "";
     public static String WEBVIEWURL ="URL";
-
+    private Bookmark ref_bookmark = new Bookmark();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview_layout);
 
-        String url = getIntent().getExtras().getString(WEBVIEWURL);
+        //ref_bookmark = getIntent().getExtras().getParcelable(StaticValues.BOOKMARK);
+        url = getIntent().getExtras().getString(WEBVIEWURL);
         bookmarkId = getIntent().getExtras().getString(StaticValues.BOOKMARKID);
         boolean isMyBookmark = getIntent().getExtras().getBoolean(StaticValues.ISMYBOOKMARK);
 
@@ -48,7 +62,11 @@ public class WebViewActivity extends ActionBarActivity {
         markinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddToMyArchive();
+
+                ref_bookmark.setUrl(url);
+                ref_bookmark.setId(bookmarkId);
+                showAddDialog(ref_bookmark.getUrl(), ref_bookmark);
+
             }
         });
         if(isMyBookmark){
@@ -72,21 +90,24 @@ public class WebViewActivity extends ActionBarActivity {
 
     }
 
-    private void AddToMyArchive(){
-        OnTaskCompleted onTaskCompleted;
-        onTaskCompleted = new OnTaskCompleted(){
+    public void showAddDialog(String url,Bookmark ref_bookmark){
+        //Show Add Dialog
+        FragmentManager fm = getFragmentManager();
+        AddBookmarkDialog addBookmarkDialog = new AddBookmarkDialog();
+        addBookmarkDialog.updateInputUrl(url);
+        addBookmarkDialog.setRefBookmark(ref_bookmark);
+        addBookmarkDialog.setListener(new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(Object object) {
-                pDialog.dismiss();
+                if(object!=null){
+                    markinBtn.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(), "Added to my archive!!!", Toast.LENGTH_SHORT).show();
+
+                }
+
             }
-        };
-        User user = AuthManager.getAuthManager().getLoginInfo(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-        if(user!=null){
-            String user_id = user.getUserId();
-            String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-            //pDialog.show();
-            //new BookmarkAddTask(onTaskCompleted,user_id, bookmarkId, token).execute();
-        }
+        });
+        addBookmarkDialog.show(fm,"add_bookmark_dialog");
     }
 
     @Override

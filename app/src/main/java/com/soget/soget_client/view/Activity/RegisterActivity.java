@@ -2,6 +2,7 @@ package com.soget.soget_client.view.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -46,6 +47,7 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
 
     private void setLayout(){
         invitation_code_edit = (EditText)findViewById(R.id.invitation_code_edit);
+        invitation_code_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
         invitation_code_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -73,36 +75,38 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
         });
 
         user_name_edit = (EditText)findViewById(R.id.user_name_edit);
+        user_name_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
         user_name_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    if(user_name_edit.getText().toString().equals("")){
+                if (!hasFocus) {
+                    if (user_name_edit.getText().toString().equals("")) {
                         user_name_edit.setError("Please Enter Your Name");
                     }
                 }
             }
         });
         user_id_edit = (EditText)findViewById(R.id.user_id_edit);
+        user_id_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
         user_id_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    if(!user_id_edit.getText().toString().equals("")){
+                if (!hasFocus) {
+                    if (!user_id_edit.getText().toString().equals("")) {
                         new UserCheckIdDuplicateTask(new OnTaskCompleted() {
                             @Override
                             public void onTaskCompleted(Object object) {
-                                if(object!=null){
-                                    Boolean result = (Boolean)object;
-                                    if(!result){
+                                if (object != null) {
+                                    Boolean result = (Boolean) object;
+                                    if (!result) {
                                         user_id_edit.setError("Duplicated User Id");
                                     }
-                                    Toast.makeText(getApplicationContext(), ((Boolean)object).toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), ((Boolean) object).toString(), Toast.LENGTH_SHORT).show();
 
                                 }
 
                             }
-                        },user_id_edit.getText().toString()).execute();
+                        }, user_id_edit.getText().toString()).execute();
                     } else {
                         user_id_edit.setError("Please Enter User Id");
                     }
@@ -110,7 +114,25 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
             }
         });
         user_email_edit = (EditText)findViewById(R.id.user_email_edit);
+        user_email_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (user_email_edit.getText().toString().equals("")) {
+                    user_email_edit.setError("Please Enter Email");
+                }
+            }
+        });
+        user_email_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
         user_pwd_edit = (EditText)findViewById(R.id.user_pwd_edit);
+        user_pwd_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (user_pwd_edit.getText().toString().equals("")) {
+                    user_pwd_edit.setError("Please Enter Password");
+                }
+            }
+        });
+        user_pwd_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
 
         register_btn = (ImageButton)findViewById(R.id.register_btn);
         register_btn.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +143,7 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
                 String user_id = user_id_edit.getText().toString();
                 String user_email = user_email_edit.getText().toString();
                 String user_pwd = user_pwd_edit.getText().toString();
+
 
                 if(!isValidInvitationCode(invitation_code)){
                     invitation_code_edit.setError("Invalid Invitation Code");
@@ -154,6 +177,7 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
                 new_user.setEmail(user_email);
                 new_user.setPassword(user_pwd);
                 new_user.setFacebookProfile(user_email);
+
                 new UserRegisterTask(RegisterActivity.this, new_user).execute();
 
 
@@ -219,7 +243,7 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
 
     // validating password with retype password
     private boolean isValidPassword(String pass) {
-        if (!pass.equals("") && pass.length() > 6) {
+        if (!pass.equals("") && pass.length() >= 6) {
             return true;
         }
         return false;
@@ -259,8 +283,11 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 }
             }, (User)user).execute();
+            Log.d("RegisterActivity", user.toString());
+        } else {
+            Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
         }
-        Log.d("RegisterActivity", user.toString());
+
     }
 
     @Override

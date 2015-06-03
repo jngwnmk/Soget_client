@@ -2,6 +2,7 @@ package com.soget.soget_client.view.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +41,7 @@ public class IntroActivity extends Activity  {
             }
         });
 
+        login_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Bold.otf"));
         login_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +50,8 @@ public class IntroActivity extends Activity  {
                 startActivity(new Intent(IntroActivity.this, LoginActivity.class));
             }
         });
+
+        request_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Bold.otf"));
         request_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

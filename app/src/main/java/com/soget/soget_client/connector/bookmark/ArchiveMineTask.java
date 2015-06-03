@@ -43,12 +43,12 @@ public class ArchiveMineTask extends AsyncTask<Void, Void, ArrayList<Bookmark>> 
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-            ResponseEntity<Page> response;
+            ResponseEntity<Bookmark[]> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
-            response = restTemplate.exchange(RESTAPIManager.bookmark_url +  user_id + "/"+page_num, HttpMethod.GET, new HttpEntity(headers), Page.class);
-            Bookmark[] bookmark = (Bookmark[])(response.getBody().getContent());
+            response = restTemplate.exchange(RESTAPIManager.bookmark_url +  user_id + "/"+page_num, HttpMethod.GET, new HttpEntity(headers), Bookmark[].class);
+            //Bookmark[] bookmark = (Bookmark[])(response.getBody().getContent());
             bookmarks = new ArrayList<Bookmark>();
-            bookmarks.addAll(Arrays.asList(bookmark));
+            bookmarks.addAll(Arrays.asList(response.getBody()));
             return bookmarks;
 
         } catch (Exception e){

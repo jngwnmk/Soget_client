@@ -29,15 +29,7 @@
         android:paddingLeft="27dp"
         android:paddingTop="27.33dp"
         android:orientation="vertical">
-        <EditText
-            android:id="@+id/invitation_receiver_et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/invitation_receiver_box"
-            android:textColor="@color/main_color"
-            android:textColorHint="@color/main_color"
-            android:paddingLeft="14.67dp"
-            android:hint="@string/invitation_receiver"/>
+
         <TextView
             android:paddingTop="27dp"
             android:layout_width="wrap_content"

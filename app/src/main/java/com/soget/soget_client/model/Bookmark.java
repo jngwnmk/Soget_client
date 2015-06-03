@@ -1,12 +1,20 @@
 package com.soget.soget_client.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
-public class Bookmark {
+public class Bookmark{
     private String id;
     private String title;
     private String url;
@@ -15,7 +23,7 @@ public class Bookmark {
     private String initUserId;
     private String initUserName;
     private String initUserNickName;
-    private List<String> followers;
+    private List<Follower> followers;
     private long date;
     private boolean privacy;
     private List<Comment> comments;
@@ -23,10 +31,26 @@ public class Bookmark {
     private List<String> category;
 
     public Bookmark() {
+        id = "";
+        title = "";
+        url = "";
+        img_url = "";
+        description = "";
+        initUserId = "";
+        initUserName = "";
+        initUserNickName = "";
+        followers = new ArrayList<Follower>();
+        date = 0L;
+        privacy = false;
+        comments = new ArrayList<Comment>();
+        tags = new ArrayList<String>();
+        category = new ArrayList<String>();
 
     }
 
-    public Bookmark(String id, String title, String url, String img_url, String description, String initUserId, String initUserName, String initUserNickName, List<String> followers, long date, boolean privacy, List<Comment> comments, List<String> tags, List<String> category) {
+
+
+    public Bookmark(String id, String title, String url, String img_url, String description, String initUserId, String initUserName, String initUserNickName, List<Follower> followers, long date, boolean privacy, List<Comment> comments, List<String> tags, List<String> category) {
         this.id = id;
         this.title = title;
         this.url = url;
@@ -42,24 +66,6 @@ public class Bookmark {
         this.tags = tags;
         this.category = category;
     }
-
-    /*@Override
-    public String toString() {
-        return "Bookmark{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", url='" + url + '\'' +
-                ", img_url='" + img_url + '\'' +
-                ", desc='" + desc + '\'' +
-                ", initUserId='" + initUserId + '\'' +
-                ", followers=" + followers +
-                ", date=" + date +
-                ", privacy=" + privacy +
-                ", comments=" + comments +
-                ", tags=" + tags +
-                ", category=" + category +
-                '}';
-    }*/
 
     @Override
     public String toString() {
@@ -136,11 +142,11 @@ public class Bookmark {
         this.initUserId = initUserId;
     }
 
-    public List<String> getFollowers() {
+    public List<Follower> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(List<String> followers) {
+    public void setFollowers(List<Follower> followers) {
         this.followers = followers;
     }
 
@@ -207,6 +213,7 @@ public class Bookmark {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }
 
 

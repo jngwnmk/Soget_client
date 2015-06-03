@@ -2,6 +2,7 @@ package com.soget.soget_client.view.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -86,7 +87,7 @@ public class DiscoverAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 String url = item.getUrl();
-                openWebLink(url, item.getId());
+                openWebLink(url, item.getId(),item);
             }
         });
 
@@ -94,10 +95,19 @@ public class DiscoverAdapter extends BaseAdapter {
         discoverWrapper.getDate().setText(SogetUtil.calDurationTime(item.getDate()));
 
         //Set Thumbnail Image
-        Picasso.with(mContext).load(item.getImg_url())
-                .placeholder(R.drawable.picture_no_image).fit().centerCrop()//.into(bookmarkWrapper.getThumbnail());
-                //.resizeDimen(R.dimen.list_discover_image_size_w, R.dimen.list_discover_image_size_h)
-                .into(discoverWrapper.getCoverImg());
+        if("".equals(item.getImg_url())){
+            Picasso.with(mContext).load(R.drawable.picture_no_image)
+                    .placeholder(R.drawable.picture_no_image).fit().centerCrop()//.into(bookmarkWrapper.getThumbnail());
+                    //.resizeDimen(R.dimen.list_discover_image_size_w, R.dimen.list_discover_image_size_h)
+                    .into(discoverWrapper.getCoverImg());
+
+        } else {
+            Picasso.with(mContext).load(item.getImg_url())
+                    .placeholder(R.drawable.picture_no_image).fit().centerCrop()//.into(bookmarkWrapper.getThumbnail());
+                    //.resizeDimen(R.dimen.list_discover_image_size_w, R.dimen.list_discover_image_size_h)
+                    .into(discoverWrapper.getCoverImg());
+
+        }
 
         //Set Tags
         if(item.getTags().size()!=0){
@@ -138,17 +148,18 @@ public class DiscoverAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 String url = item.getUrl();
-                openWebLink(url, item.getId());
+                openWebLink(url, item.getId(),item);
             }
         });
         return convertView;
     }
 
-    private void openWebLink(String url, String bookmark_id){
+    private void openWebLink(String url, String bookmark_id, Bookmark ref_bookmark){
         Intent intent = new Intent(mContext,WebViewActivity.class);
         Bundle extras = new Bundle();
         extras.putString(WebViewActivity.WEBVIEWURL,url);
         extras.putString(StaticValues.BOOKMARKID,bookmark_id);
+        //extras.putParcelable(StaticValues.BOOKMARK, ref_bookmark);
         extras.putBoolean(StaticValues.ISMYBOOKMARK,false);
         intent.putExtras(extras);
         mContext.startActivity(intent);
@@ -188,6 +199,8 @@ public class DiscoverAdapter extends BaseAdapter {
         public TextView getUserId(){
             if(userId==null){
                 userId = (TextView)base.findViewById(R.id.discover_id);
+                userId.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
             }
             return userId;
         }
@@ -195,6 +208,8 @@ public class DiscoverAdapter extends BaseAdapter {
         public TextView getDate(){
             if(date==null){
                 date = (TextView)base.findViewById(R.id.discover_date);
+                date.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
+
             }
             return date;
         }
@@ -202,6 +217,8 @@ public class DiscoverAdapter extends BaseAdapter {
         public TextView getTags() {
             if(tags==null){
                 tags = (TextView)base.findViewById(R.id.discover_tags);
+                tags.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
             }
             return tags;
         }
@@ -209,6 +226,8 @@ public class DiscoverAdapter extends BaseAdapter {
         public TextView getTitle() {
             if(title==null){
                 title = (TextView)base.findViewById(R.id.discover_title);
+                title.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
             }
             return title;
         }
@@ -216,6 +235,8 @@ public class DiscoverAdapter extends BaseAdapter {
         public TextView getGet_nums() {
             if(get_nums==null){
                 get_nums = (TextView)base.findViewById(R.id.discover_get);
+                get_nums.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
+
             }
             return get_nums;
         }
@@ -223,6 +244,8 @@ public class DiscoverAdapter extends BaseAdapter {
         public TextView getComment_nums() {
             if(comment_nums==null){
                 comment_nums = (TextView)base.findViewById(R.id.discover_comment);
+                comment_nums.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
+
             }
             return comment_nums;
         }
@@ -231,6 +254,8 @@ public class DiscoverAdapter extends BaseAdapter {
         public TextView getDesc(){
             if(desc==null){
                 desc = (TextView)base.findViewById(R.id.discover_desc);
+                desc.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
             }
             return desc;
         }

@@ -51,7 +51,7 @@ public class ContactAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         ContactWrapper contactWrapper = null;
-        if (contactWrapper == null) {
+        if (row == null) {
             row = inflater.inflate(R.layout.contact_list_row, null);
             contactWrapper = new ContactWrapper(row);
             row.setTag(contactWrapper);

@@ -23,7 +23,7 @@
     <string name="user_pwd_hint">비밀번호(6자 이상)</string>
     <string name="register_btn">가입하기</string>
     <string name="register_condition">버튼을 누름과 동시에 동의하신 것으로 간주됩니다.</string>
-    <string name="register_condition_1">이용약관 and 개인정보 처리방침</string>
+    <string name="register_condition_1"><u>이용약관 및 개인정보 처리방침</u></string>
 
     <!--로그인 화면 strings -->
     <string name="login_id_hint">아이디</string>

@@ -30,7 +30,7 @@
                 android:textSize="13sp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/archive_clip"
-                android:drawablePadding="3dp"/>
+                android:drawablePadding="5.33dp"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,9 +43,12 @@
             android:layout_height="0dp"
             android:id="@+id/title"
             android:textColor="@color/black"
-            android:text="세발자전거에 실은 중국의 삶을 내려보다"
-            android:textSize="17sp"
+            android:text="세발자전거에 실은 중국의 삶을 내려보다. Thist is test. This is test"
+            android:textSize="13.67sp"
             android:layout_weight="1"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginTop="5dp"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,15 +59,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/get_nums"
-                android:textSize="13sp"
+                android:textSize="11.33sp"
                 android:textColor="@color/blur_grey"
                 android:text="00 MarkIn's"/>
             <TextView
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="13.33dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/comment_nums"
-                android:textSize="13sp"
+                android:textSize="11.33sp"
                 android:textColor="@color/blur_grey"
                 android:text="00 Comments"/>
 

@@ -51,11 +51,11 @@ public class DiscoverGetTask extends AsyncTask<Void, Void, ArrayList<Bookmark>> 
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
             System.out.println("currentTime:"+date);
-            ResponseEntity<Page> response = restTemplate.exchange(RESTAPIManager.discover_url +  user_id + "/" +date+"/0", HttpMethod.GET, new HttpEntity(headers), Page.class);
+            ResponseEntity<Bookmark[]> response = restTemplate.exchange(RESTAPIManager.discover_url +  user_id + "/" +date+"/0", HttpMethod.GET, new HttpEntity(headers), Bookmark[].class);
             System.out.println(response.getBody());
-            Bookmark[] bookmark = (Bookmark[])(response.getBody().getContent());
+            //Bookmark[] bookmark = (Bookmark[])(response.getBody().getContent());
             bookmarks = new ArrayList<Bookmark>();
-            bookmarks.addAll(Arrays.asList(bookmark));
+            bookmarks.addAll(Arrays.asList(response.getBody()));
             return bookmarks;
 
         } catch (Exception e){

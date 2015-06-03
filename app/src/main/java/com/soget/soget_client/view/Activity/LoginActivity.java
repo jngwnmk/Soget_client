@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -49,6 +50,9 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
     private void setLayout(){
         user_id_edit = (EditText)findViewById(R.id.user_id_edit);
         user_pwd_edit = (EditText)findViewById(R.id.user_pwd_edit);
+        user_id_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+        user_pwd_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+
 
         user_id_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

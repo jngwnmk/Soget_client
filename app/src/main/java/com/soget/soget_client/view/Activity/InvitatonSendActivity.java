@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kakao.AppActionBuilder;
+import com.kakao.AppActionInfoBuilder;
 import com.kakao.KakaoLink;
 import com.kakao.KakaoParameterException;
 import com.kakao.KakaoTalkLinkMessageBuilder;
@@ -31,7 +33,6 @@ public class InvitatonSendActivity extends Activity {
     private TextView currentInvitationNumTv = null;
     private TextView senderInfoTv           = null;
     private TextView invitationCodeTv       = null;
-    private EditText receiverPhoneEt        = null;
     private ImageButton invitationSendBtn   = null;
     private int currentInviationNum = 0;
     private String invitationCode = "";
@@ -77,24 +78,7 @@ public class InvitatonSendActivity extends Activity {
         senderInfoTv.setText(userName+" ("+userId+")님이");
 
         invitationCodeTv = (TextView)findViewById(R.id.invitation_code_tv);
-        invitationCodeTv.setText(getString(R.string.invitation_code)+invitationCode);
-
-        receiverPhoneEt = (EditText)findViewById(R.id.invitation_receiver_et);
-        if(!"".equals(phoneNum)){
-            receiverPhoneEt.setText(phoneNum);
-        }
-        receiverPhoneEt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ContactListActivity.class);
-                Bundle extra = new Bundle();
-                extra.putInt(StaticValues.INVITATIONNUM,currentInviationNum);
-                extra.putString(StaticValues.INVITATIONCODE,invitationCode);
-                intent.putExtras(extra);
-                startActivity(intent);
-                finish();
-            }
-        });
+        invitationCodeTv.setText(getString(R.string.invitation_code)+" "+invitationCode);
 
         invitationSendBtn = (ImageButton)findViewById(R.id.invitation_send_btn);
         invitationSendBtn.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +110,7 @@ public class InvitatonSendActivity extends Activity {
         StringBuffer message = new StringBuffer();
         message.append(userName+" ("+userId+")님이 ");
         message.append(getString(R.string.invitation_sms_message)+" ");
-        message.append(getString(R.string.invitation_code)+invitationCode+" ");
+        message.append(getString(R.string.invitation_code)+" "+invitationCode+" ");
         message.append(getString(R.string.invitation_app));
 
         KakaoLink kakaoLink = null;

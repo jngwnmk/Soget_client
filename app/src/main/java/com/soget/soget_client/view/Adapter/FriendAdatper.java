@@ -56,7 +56,7 @@ public class FriendAdatper extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         FriendWrapper friendWrapper =null;
-        if(friendWrapper==null){
+        if(row==null){
             row = layoutInflater.inflate(R.layout.friend_list_row, null);
             friendWrapper = new FriendWrapper(row);
             row.setTag(friendWrapper);

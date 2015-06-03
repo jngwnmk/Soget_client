@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:foo="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/white_background">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/intro_background"
@@ -10,18 +16,22 @@
         android:layout_height="wrap_content"
         android:src="@drawable/logo"
         android:layout_gravity="center"
-        android:layout_marginTop="120dp"/>
-    <TextView
+        android:layout_marginTop="166.67dp"/>
+    <com.soget.soget_client.view.component.AppleGothicNeoSemiBoldTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/intro_desc"
         android:gravity="center_horizontal"
-        android:layout_marginTop="14.67dp"/>
+        android:textColor="@color/main_color"
+        android:textSize="16.23sp"
+        android:lineSpacingExtra="5.8sp"
+        android:layout_marginTop="14.67dp"
+        foo:customFont="AppleSDGothicNeo-Bold"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="30dp">
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,10 +41,13 @@
             android:layout_gravity="center"
             />
         <TextView
+            android:id="@+id/register_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/intro_btn"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:textSize="16.23sp"
+            android:textColor="@color/white"/>
     </FrameLayout>
     <TextView
         android:id="@+id/intro_invitation_request_tv"
@@ -42,13 +55,17 @@
         android:layout_height="wrap_content"
         android:text="@string/intro_invitation_request"
         android:gravity="center"
+        android:textSize="11.01sp"
+        android:textColor="@color/main_color"
         android:layout_marginTop="50dp"/>
     <TextView
         android:id="@+id/intro_login_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/intro_invitation_login"
+        android:textColor="@color/main_color"
+        android:textSize="11.01sp"
         android:gravity="center|bottom"
-        android:layout_marginBottom="40dp"
-        />
+        android:layout_marginBottom="72.67dp" />
 </LinearLayout>
+</FrameLayout>

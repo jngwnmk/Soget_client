@@ -62,7 +62,13 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
 
         urlEt = (EditText) rootView.findViewById(R.id.add_bookmark_url);
         urlEt.setText(getInputUrl());
+        if(refBookmark!=null){
+            //It is an add bookmark. Not making new one.
+            urlEt.setEnabled(false);
+        }
+
         tagEt = (EditText) rootView.findViewById(R.id.add_bookmark_tag);
+
         addBookmarkBtn = (ImageButton)rootView.findViewById(R.id.add_bookmark_btn);
         addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +86,15 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
                     OnTaskCompleted onTaskCompleted = new OnTaskCompleted() {
                         @Override
                         public void onTaskCompleted(Object object) {
-                            Toast.makeText(getActivity(), "Completed", Toast.LENGTH_SHORT).show();
                             getDialog().dismiss();
                             if (listener != null) {
                                 listener.onTaskCompleted(object);
+                                if(object!=null){
+                                    Toast.makeText(getActivity(), "Completed", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    Toast.makeText(getActivity(), "Duplicated URL", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
                     };
