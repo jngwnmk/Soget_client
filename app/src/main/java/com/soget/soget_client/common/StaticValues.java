@@ -5,6 +5,7 @@ package com.soget.soget_client.common;
  */
 public class StaticValues {
     public static String SHAREDURL = "SharedUrl";
+    public static String BOOKMARKTAG = "bookmarktag";
     public static String BOOKMARKID = "bookmarkid";
     public static String ISMYBOOKMARK = "ismybookmark";
     public static String MARKINNUM = "markinNum";

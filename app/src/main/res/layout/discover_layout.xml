@@ -11,13 +11,13 @@
         >
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/setting_btn"
             android:src="@drawable/setting"
             android:background="@color/transparent"
             android:layout_gravity="center"
             android:paddingLeft="20dp"
-            />
+            android:paddingRight="20dp" />
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -27,12 +27,13 @@
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/add_get_btn"
             android:src="@drawable/add"
             android:background="@color/transparent"
             android:layout_gravity="center"
-            android:paddingRight="20dp"/>
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp" />
 
     </LinearLayout>
     <FrameLayout

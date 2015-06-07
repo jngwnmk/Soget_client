@@ -36,6 +36,7 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
     private EditText user_id_edit;
     private EditText user_pwd_edit;
     private ImageButton login_btn;
+    private TextView login_tv;
     private SharedPreferences sharedPreferences;
     private TextView pwd_forget_tv;
 
@@ -91,13 +92,19 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
                 new UserLoginTask(LoginActivity.this, user).execute();
             }
         });
+
+        login_tv = (TextView) findViewById(R.id.login_tv);
+        login_tv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
         pwd_forget_tv = (TextView)findViewById(R.id.pwd_forget_tv);
         pwd_forget_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "forget PWD", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "forget Password", Toast.LENGTH_SHORT).show();
             }
         });
+        pwd_forget_tv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
     }
 
     @Override

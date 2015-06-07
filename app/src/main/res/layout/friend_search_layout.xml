@@ -14,37 +14,39 @@
             android:background="@drawable/friend_search_box"
             android:orientation="horizontal"
             android:gravity="center"
-            android:paddingLeft="10dp">
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="20dp">
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:src="@drawable/friend_search_icon"/>
         <EditText
             android:layout_marginLeft="5dp"
             android:id="@+id/friend_search_et"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/transparent"
             android:layout_marginRight="5dp"
             android:imeOptions="actionSearch"
             android:singleLine="true"
-            />
+            android:gravity="center_vertical" />
         <ImageButton
             android:id="@+id/friend_search_cancel_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:src="@drawable/friend_search_cancle_icon"
             android:background="@color/transparent"
-            android:paddingRight="10dp"/>
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp" />
         </LinearLayout>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/friend_search_close_btn"
             android:textColor="@color/main_color"
             android:text="@string/search_cancel_btn"
-            android:layout_marginLeft="15dp"/>
+            android:gravity="center" />
 
     </LinearLayout>
 

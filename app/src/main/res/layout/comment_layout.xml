@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/comment_page_background"
+    android:background="@drawable/comment_list_background"
 
     >
 
@@ -14,37 +14,50 @@
         >
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/back_btn"
             android:src="@drawable/back_btn"
             android:background="@color/transparent"
             android:layout_gravity="center"
             android:paddingLeft="20dp"
-            />
+            android:paddingRight="20dp" />
 
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/comment_background"
         android:gravity="center_vertical"
         android:paddingLeft="26.33dp"
         android:id="@+id/comment_num_layout">
         <TextView
+            android:paddingLeft="10.33dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="25명이 GET 했습니다."
             android:id="@+id/comment_markin_num_desc"
-            android:textSize="16.66sp"
-            android:drawablePadding="7dp"
+            android:textSize="13.91sp"
+            android:drawablePadding="10.33dp"
             android:drawableLeft="@drawable/comment_icon"
-            android:layout_gravity="left" />
+            android:layout_gravity="left"
+            android:textColor="@color/comment_markins"
+            android:paddingTop="15.33dp"
+            android:paddingBottom="15.33dp" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/comment_header"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blur_grey"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"></LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:id="@+id/comment_list"></ListView>
     <LinearLayout
         android:orientation="horizontal"

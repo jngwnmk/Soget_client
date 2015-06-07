@@ -23,8 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/num_bookmark"
-            android:text="Gets"
-            android:textColor="@color/dark_grey"
+            android:text="MarkIn"
+            android:textColor="@color/blur_grey"
             />
     </LinearLayout>
 
@@ -41,15 +41,6 @@
         android:layout_marginRight="20dp"
         android:id="@+id/friend_btn"
         android:layout_gravity="center_vertical"/>
-    <!--<Button
-        android:layout_gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/friend_btn"
-        android:textColor="@color/black"
-        android:background="@color/white"
-        android:text="@string/accept_btn"
-        android:layout_marginRight="10dp"
-        />-->
+
 
 </LinearLayout>

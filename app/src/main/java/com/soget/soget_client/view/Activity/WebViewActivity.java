@@ -3,14 +3,17 @@ package com.soget.soget_client.view.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by wonmook on 2015-04-01.
@@ -38,21 +42,22 @@ public class WebViewActivity extends ActionBarActivity {
     private ImageButton markinBtn = null;
     private ImageButton closeBtn =null;
     private WebView webView = null;
-    private ProgressDialog pDialog;
-
+    private ProgressBar progressBar = null;
     private String url = "";
     private String bookmarkId = "";
+    private ArrayList<String> tags = new ArrayList<String>();
     public static String WEBVIEWURL ="URL";
     private Bookmark ref_bookmark = new Bookmark();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview_layout);
 
-        //ref_bookmark = getIntent().getExtras().getParcelable(StaticValues.BOOKMARK);
         url = getIntent().getExtras().getString(WEBVIEWURL);
         bookmarkId = getIntent().getExtras().getString(StaticValues.BOOKMARKID);
+        tags = getIntent().getExtras().getStringArrayList(StaticValues.BOOKMARKTAG);
         boolean isMyBookmark = getIntent().getExtras().getBoolean(StaticValues.ISMYBOOKMARK);
 
         markinBtn = (ImageButton)findViewById(R.id.markin_btn);
@@ -65,6 +70,7 @@ public class WebViewActivity extends ActionBarActivity {
 
                 ref_bookmark.setUrl(url);
                 ref_bookmark.setId(bookmarkId);
+                ref_bookmark.setTags(tags);
                 showAddDialog(ref_bookmark.getUrl(), ref_bookmark);
 
             }
@@ -82,11 +88,17 @@ public class WebViewActivity extends ActionBarActivity {
 
 
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(url);
+        webView.getSettings().setBuiltInZoomControls(true);
         webView.setWebViewClient(new WebViewClientClass());
+        webView.setWebChromeClient(new WebChromeClient(){
+          @Override
+          public void onProgressChanged(WebView view, int newProgress){
+              progressBar.setProgress(newProgress);
+          }
+        });
+        webView.loadUrl(url);
 
-        pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Loading....");
+        progressBar = (ProgressBar) findViewById(R.id.webview_progress);
 
     }
 
@@ -101,7 +113,7 @@ public class WebViewActivity extends ActionBarActivity {
             public void onTaskCompleted(Object object) {
                 if(object!=null){
                     markinBtn.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getApplicationContext(), "Added to my archive!!!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Added to my archive!!!", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -124,6 +136,26 @@ public class WebViewActivity extends ActionBarActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url){
             webView.loadUrl(url);
             return true;
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            Toast.makeText(getApplicationContext(),"Loading Error",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            progressBar.setVisibility(View.GONE);
+
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            progressBar.setVisibility(View.VISIBLE);
+
         }
     }
 }

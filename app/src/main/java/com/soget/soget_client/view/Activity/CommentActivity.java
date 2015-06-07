@@ -2,6 +2,7 @@ package com.soget.soget_client.view.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
  */
 public class CommentActivity extends ActionBarActivity{
     private ImageButton backBtn =null;
+    private LinearLayout headerBoarder = null;
     private TextView markinNumTv = null;
     private EditText commentEt = null;
     private ImageButton addCommentBtn = null;
@@ -51,14 +53,14 @@ public class CommentActivity extends ActionBarActivity{
         bookmark_id = getIntent().getExtras().getString(StaticValues.BOOKMARKID);
         markin_num = getIntent().getExtras().getInt(StaticValues.MARKINNUM,0);
         initLayout();
-        Toast.makeText(this,bookmark_id,Toast.LENGTH_SHORT).show();
         getComments(bookmark_id);
 
     }
 
     private void initLayout() {
         commentLayout = (LinearLayout)findViewById(R.id.comment_num_layout);
-        commentLayout.setVisibility(View.GONE);
+        headerBoarder = (LinearLayout)findViewById(R.id.comment_header);
+
         backBtn = (ImageButton) findViewById(R.id.back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,12 +69,17 @@ public class CommentActivity extends ActionBarActivity{
             }
         });
         markinNumTv = (TextView) findViewById(R.id.comment_markin_num_desc);
+        markinNumTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
+
         if(markin_num==0){
             markinNumTv.setText("");
             commentLayout.setVisibility(View.GONE);
+            headerBoarder.setVisibility(View.GONE);
+
         } else {
             markinNumTv.setText(markin_num+"명이 MarkIn\' 했습니다.");
             commentLayout.setVisibility(View.VISIBLE);
+            headerBoarder.setVisibility(View.VISIBLE);
         }
         commentEt = (EditText) findViewById(R.id.comment_et);
         addCommentBtn = (ImageButton) findViewById(R.id.comment_add_btn);
@@ -86,8 +93,6 @@ public class CommentActivity extends ActionBarActivity{
                             Comment comment = ((Comment)object);
                             comments.add(comment);
                             commentAdapter.notifyDataSetChanged();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Null",Toast.LENGTH_SHORT).show();
                         }
                         pDialog.dismiss();
                     }

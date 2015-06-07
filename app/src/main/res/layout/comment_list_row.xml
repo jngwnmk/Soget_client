@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
+    android:paddingLeft="7.33dp"
+    android:paddingRight="7.33dp"
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@drawable/comment_background"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:paddingLeft="26.33dp"
-        android:paddingRight="26.33dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
         <LinearLayout
@@ -22,27 +21,26 @@
             android:layout_weight="1"
             android:id="@+id/comment_user_info_tv"
             android:text="name_tv"
-            android:textColor="@color/black"
-            android:textSize="16sp"/>
+            android:textColor="@color/comment_username"
+            android:textSize="13.33sp"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/comment_date_tv"
-                android:textSize="13sp"
+                android:textSize="12.17sp"
                 android:textColor="@color/blur_grey"
-                android:text="00 Gets"
-                android:paddingTop="10dp"/>
+                android:text="00 Gets" />
 
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:id="@+id/comment_content_tv"
-            android:textColor="@color/blur_grey"
+            android:textColor="@color/comment_content"
             android:text="세발자전거에 실은 중국의 삶을 내려보다"
             android:textSize="17sp"
             android:layout_weight="1"
-            />
+            android:layout_marginTop="9.33dp" />
 
 
     </LinearLayout>

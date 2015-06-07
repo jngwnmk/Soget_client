@@ -16,7 +16,8 @@ import com.soget.soget_client.R;
 
 public class IntroActivity extends Activity  {
 
-
+    private TextView    intro_desc_tv = null;
+    private TextView    register_tv = null;
     private ImageButton register_btn = null;
     private TextView    request_tv = null;
     private TextView    login_tv = null;
@@ -29,9 +30,15 @@ public class IntroActivity extends Activity  {
     }
 
     private void setLayout(){
+        intro_desc_tv = (TextView)findViewById(R.id.markin_intro_tv);
+        intro_desc_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+
         register_btn  = (ImageButton)findViewById(R.id.intro_register_btn);
         login_tv = (TextView)findViewById(R.id.intro_login_tv);
         request_tv = (TextView)findViewById(R.id.intro_invitation_request_tv);
+        register_tv = (TextView)findViewById(R.id.register_tv);
+        register_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

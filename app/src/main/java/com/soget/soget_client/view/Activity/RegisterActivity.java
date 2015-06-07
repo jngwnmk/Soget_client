@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.soget.soget_client.R;
@@ -37,6 +38,11 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
     private EditText user_email_edit;
     private EditText user_pwd_edit;
     private ImageButton register_btn;
+    private TextView register_tv;
+    private TextView register_info_tv;
+    private TextView register_condition_tv;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +140,12 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
         });
         user_pwd_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
 
+        register_info_tv = (TextView)findViewById(R.id.register_info_tv);
+        register_info_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Medium.otf"));
+
+        register_tv = (TextView)findViewById(R.id.register_tv);
+        register_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+
         register_btn = (ImageButton)findViewById(R.id.register_btn);
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,6 +195,10 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
 
             }
         });
+
+        register_condition_tv = (TextView)findViewById(R.id.register_condition_tv);
+        register_condition_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Bold.otf"));
+
     }
 
     //validating invitation_code

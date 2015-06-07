@@ -18,7 +18,7 @@ android:gravity="center_horizontal">
     android:layout_marginTop="73dp"
     android:singleLine="true"
     android:textColor="@color/register_edit_color_selector"
-    />
+    android:textSize="13.91sp" />
 
 <EditText
     android:layout_width="wrap_content"
@@ -35,23 +35,41 @@ android:gravity="center_horizontal">
     android:textColor="@color/register_edit_color_selector"
 
     android:singleLine="true"
-    />
+    android:textSize="13.91sp" />
 
-<ImageButton
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/login_btn"
-    android:background="@drawable/login_btn"
-    android:layout_marginTop="35dp"
-    />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="37dp">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/login_btn"
+            android:background="@color/transparent"
+            android:src="@drawable/register_btn_selector"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/login_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_btn"
+            android:layout_gravity="center"
+            android:textSize="16.23sp"
+            android:textColor="@color/white"/>
+    </FrameLayout>
+
+
 <TextView
     android:id="@+id/pwd_forget_tv"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:textColor="@color/black"
+    android:layout_height="wrap_content"
+    android:textColor="@color/main_color"
+    android:textSize="11.01sp"
     android:text="@string/login_forget_pwd"
     android:layout_gravity="bottom"
     android:gravity="center_horizontal|bottom"
-    android:layout_marginBottom="50dp" />
+    android:layout_marginTop="210dp" />
 
 </LinearLayout>

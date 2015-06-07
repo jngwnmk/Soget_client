@@ -76,8 +76,8 @@ public class ArchiveFragment extends Fragment {
                 //startActivity(intent);
                 Intent intent = new Intent(getActivity(),WebViewActivity.class);
                 Bundle extras = new Bundle();
-                //extras.putParcelable(StaticValues.BOOKMARK, bookmarks.get(position));
                 extras.putString(WebViewActivity.WEBVIEWURL,url);
+                extras.putStringArrayList(StaticValues.BOOKMARKTAG, (ArrayList<String>) bookmarks.get(position).getTags());
                 extras.putString(StaticValues.BOOKMARKID, bookmarks.get(position).getId());
                 extras.putBoolean(StaticValues.ISMYBOOKMARK,true);
                 intent.putExtras(extras);

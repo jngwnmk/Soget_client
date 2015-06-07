@@ -70,7 +70,7 @@ public class FriendArchiveActivity extends ActionBarActivity {
                 Bundle extras = new Bundle();
                 extras.putString(WebViewActivity.WEBVIEWURL,url);
                 extras.putString(StaticValues.BOOKMARKID,bookmarks.get(position).getId());
-                //extras.putParcelable(StaticValues.BOOKMARK, bookmarks.get(position));
+                extras.putStringArrayList(StaticValues.BOOKMARKTAG, (ArrayList<String>) bookmarks.get(position).getTags());
                 extras.putBoolean(StaticValues.ISMYBOOKMARK, false);
                 intent.putExtras(extras);
                 startActivity(intent);

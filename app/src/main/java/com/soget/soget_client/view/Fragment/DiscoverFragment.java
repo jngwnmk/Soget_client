@@ -10,23 +10,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
-import com.soget.soget_client.common.StaticValues;
-import com.soget.soget_client.connector.bookmark.BookmarkAddTask;
 import com.soget.soget_client.connector.discover.DiscoverDiscardTask;
 import com.soget.soget_client.connector.discover.DiscoverGetTask;
 import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.model.User;
 import com.soget.soget_client.view.Activity.SettingActivity;
-import com.soget.soget_client.view.Activity.WebViewActivity;
 import com.soget.soget_client.view.Adapter.DiscoverAdapter;
 import com.soget.soget_client.view.component.CardStackMoveListener;
 import com.soget.soget_client.view.component.MyCardStackView;
@@ -50,14 +50,14 @@ public class DiscoverFragment extends Fragment{
     private TextView totalCardNumTextView = null;
     private int currentIndex = 0;
     private FrameLayout discoverRefreshBtn = null;
+    private View emptyView = null;
+    private ImageView progressImg = null;
+    private ProgressBar progressBar = null;
+    private LinearLayout loadMoreLayout = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View rootView = inflater.inflate(R.layout.home_layout,container, false);
-
-
-
-
+        View rootView = inflater.inflate(R.layout.discover_layout,container, false);
 
         settingBtn = (ImageButton)rootView.findViewById(R.id.setting_btn);
         settingBtn.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +88,22 @@ public class DiscoverFragment extends Fragment{
         totalCardNumTextView = (TextView)rootView.findViewById(R.id.discover_circle_total_num);
         discoverAdapter = new DiscoverAdapter(getActivity(),bookmarks);
         cardStackView = (MyCardStackView)rootView.findViewById(R.id.discover_stack_view);
+        /*emptyView = inflater.inflate(R.layout.discover_reload_layout, null);
+        progressImg = (ImageView) emptyView.findViewById(R.id.reload_img);
+        progressBar = (ProgressBar) emptyView.findViewById(R.id.reload_progress);
+        loadMoreLayout = (LinearLayout)emptyView.findViewById(R.id.reload_layout);
+        loadMoreLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"load more",Toast.LENGTH_SHORT).show();
+                bookmarks.clear();
+                currentIndex = 0;
+                getDiscoverList();
+                emptyView.setVisibility(View.GONE);
+            }
+        });
+        cardStackView.setEmptyView(emptyView);*/
+
         cardStackView.setOrientation(SwipeTouchListener.Orientation.Vertical);
         cardStackView.setCardStackMoveListener(new CardStackMoveListener() {
 
@@ -104,7 +120,7 @@ public class DiscoverFragment extends Fragment{
                 trashBookmark(bookmarks.get(currentIndex).getId());
                 treatCardAction();
                 //Discard to trashcans
-                Toast.makeText(getActivity().getApplicationContext(), "Discard!!!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), "Discard!!!", Toast.LENGTH_SHORT).show();
             }
 
             private void treatCardAction(){
@@ -112,25 +128,25 @@ public class DiscoverFragment extends Fragment{
                 //bookmarks.remove(0);
                 ++currentIndex;
                 cardNumTextView.setText(String.valueOf(bookmarks.size()-currentIndex));
-                if(bookmarks.size()==currentIndex){
-                    System.out.println("Reload");
+
+                if(bookmarks.size()!=currentIndex) {
+                    {
+                        if (bookmarks.get(currentIndex).getImg_url().equals("")) {
+                            Picasso.with(getActivity().getApplicationContext()).load(R.drawable.picture_no_image)
+                                    .placeholder(R.drawable.picture_no_image).fit().centerCrop()
+                                    .into(backgroundImg);
+                        } else {
+                            Picasso.with(getActivity().getApplicationContext()).load(bookmarks.get(currentIndex).getImg_url())
+                                    .placeholder(R.drawable.picture_no_image).fit().centerCrop()
+                                    .into(backgroundImg);
+                        }
+                    }
+                } else {
+                    Toast.makeText(getActivity(),"load more",Toast.LENGTH_SHORT).show();
                     bookmarks.clear();
                     currentIndex = 0;
                     getDiscoverList();
-                    return;
-                } else {
-                    if(bookmarks.get(currentIndex).getImg_url().equals("")){
-                        Picasso.with(getActivity().getApplicationContext()).load(R.drawable.picture_no_image)
-                                .placeholder(R.drawable.picture_no_image).fit().centerCrop()
-                                .into(backgroundImg);
-                    } else {
-                        Picasso.with(getActivity().getApplicationContext()).load(bookmarks.get(currentIndex).getImg_url())
-                                .placeholder(R.drawable.picture_no_image).fit().centerCrop()
-                                .into(backgroundImg);
-                    }
-
                 }
-
 
 
             }
@@ -151,9 +167,9 @@ public class DiscoverFragment extends Fragment{
             @Override
             public void onTaskCompleted(Object object) {
                 //loadMyArchive();
-                if(object!=null) {
+                if (object != null) {
                     //Add to My Archive
-                    Toast.makeText(getActivity().getApplicationContext(), "Added to my archive!!!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity().getApplicationContext(), "Added to my archive!!!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -169,28 +185,6 @@ public class DiscoverFragment extends Fragment{
             new DiscoverDiscardTask(null,user_id, bookmark_id, token).execute();
         }
     }
-
-    /*private void addBookmark(Bookmark ref_bookmark){
-
-        //Show AddBookmarkDialog
-        //showAddDialog();
-        /*
-        OnTaskCompleted onTaskCompleted;
-        onTaskCompleted = new OnTaskCompleted(){
-            @Override
-            public void onTaskCompleted(Object object) {
-                pDialog.dismiss();
-            }
-        };
-        User user = AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-        if(user!=null){
-            String user_id = user.getUserId();
-            String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-            pDialog.show();
-            new BookmarkAddTask(onTaskCompleted,user_id, bookmark_id, token).execute();
-        }
-
-    }*/
 
     private void getDiscoverList(){
 
@@ -221,7 +215,7 @@ public class DiscoverFragment extends Fragment{
                             }
 
                         } else {
-                            System.out.println("Nothing to do recommend");
+                            Toast.makeText(getActivity(), "No more discover!!",Toast.LENGTH_SHORT).show();
                         }
 
                     }

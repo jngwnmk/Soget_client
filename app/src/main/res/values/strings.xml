@@ -95,4 +95,10 @@
     <string name="kakao_scheme">kakao2b01b8aa193b65aff676ab8f63e9b5e7</string>
     <string name="kakaolink_host">kakaolink</string>
 
+    <!-- Discover-->
+    <string name="show_more">더 보기</string>
+
+    <!-- Archive-->
+    <string name="change_to_privacy">비공개 설정되었습니다.</string>
+    <string name="change_to_public">전체공개 설정되었습니다.</string>
 </resources>

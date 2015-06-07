@@ -73,10 +73,11 @@
         android:textSize="13.91sp"
         />
     <TextView
+        android:id="@+id/register_info_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_condition"
-        android:textColor="@color/arsenic"
+        android:textColor="@color/main_color"
         android:textSize="9.86sp"
         android:layout_marginTop="32.33dp"
         android:drawableLeft="@drawable/register_info_icon"
@@ -89,25 +90,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/register_btn"
-        android:background="@drawable/register_btn"
+        android:background="@drawable/register_btn_selector"
 
         />
      <TextView
          android:layout_width="fill_parent"
          android:layout_height="fill_parent"
          android:text="@string/register_btn"
-         android:textSize="20sp"
+         android:id="@+id/register_tv"
+         android:textSize="16.23sp"
          android:textColor="@color/white"
          android:gravity="center"
          android:layout_gravity="center" />
     </FrameLayout>
     <TextView
+        android:id="@+id/register_condition_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/arsenic"
+        android:textColor="@color/main_color"
         android:text="@string/register_condition_1"
         android:layout_marginTop="50dp"
-        android:textSize="11.01sp"
-        />
+        android:textSize="11.01sp"/>
 
 </LinearLayout>

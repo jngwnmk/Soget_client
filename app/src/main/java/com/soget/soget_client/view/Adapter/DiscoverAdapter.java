@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.soget.soget_client.R;
 import com.soget.soget_client.common.SogetUtil;
@@ -20,7 +18,6 @@ import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.view.Activity.CommentActivity;
 import com.soget.soget_client.view.Activity.FriendArchiveActivity;
 import com.soget.soget_client.view.Activity.WebViewActivity;
-import com.soget.soget_client.view.component.SwipeTouchListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -59,7 +56,7 @@ public class DiscoverAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         DiscoverWrapper discoverWrapper = null;
         if(convertView==null){
-            convertView  = inflater.inflate(R.layout.home_list_row, null);
+            convertView  = inflater.inflate(R.layout.discover_list_row, null);
             discoverWrapper = new DiscoverWrapper(convertView);
             convertView.setTag(discoverWrapper);
         } else {
@@ -159,7 +156,7 @@ public class DiscoverAdapter extends BaseAdapter {
         Bundle extras = new Bundle();
         extras.putString(WebViewActivity.WEBVIEWURL,url);
         extras.putString(StaticValues.BOOKMARKID,bookmark_id);
-        //extras.putParcelable(StaticValues.BOOKMARK, ref_bookmark);
+        extras.putStringArrayList(StaticValues.BOOKMARKTAG, (ArrayList<String>) ref_bookmark.getTags());
         extras.putBoolean(StaticValues.ISMYBOOKMARK,false);
         intent.putExtras(extras);
         mContext.startActivity(intent);

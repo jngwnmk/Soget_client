@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,10 +40,11 @@ import java.util.ArrayList;
  */
 public class FriendsFragment extends Fragment {
 
-    private LinearLayout invitationLayoutBtn = null;
     private ImageButton settingBtn = null;
     private ImageButton searchBtn = null;
+    private ImageButton invitationUseBtn = null;
     private TextView invitationNumTv = null;
+    private TextView invitationUseTv = null;
     private ListView friendList = null;
     private ArrayList<Friend> friends = new ArrayList<Friend>();
     private FriendAdatper friendAdatper = null;
@@ -70,8 +72,8 @@ public class FriendsFragment extends Fragment {
             }
         });
 
-        invitationLayoutBtn = (LinearLayout) rootView.findViewById(R.id.invitation_layout_btn);
-        invitationLayoutBtn.setOnClickListener(new View.OnClickListener() {
+        invitationUseBtn = (ImageButton)rootView.findViewById(R.id.invitation_use_btn);
+        invitationUseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(invitationNum.size()!=0){
@@ -83,11 +85,14 @@ public class FriendsFragment extends Fragment {
                     startActivity(intent);
 
                 }
-
-
             }
         });
+
         invitationNumTv = (TextView) rootView.findViewById(R.id.invitation_num_tv);
+        invitationNumTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
+
+        invitationUseTv = (TextView) rootView.findViewById(R.id.invitation_use_tv);
+        invitationUseTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
 
         friendList = (ListView) rootView.findViewById(R.id.friend_list);
 

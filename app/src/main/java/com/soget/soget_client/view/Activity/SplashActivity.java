@@ -51,14 +51,7 @@ public class SplashActivity extends Activity implements OnTaskCompleted{
             shared_url = shared_text;
             Toast.makeText(getApplicationContext(), shared_url, Toast.LENGTH_SHORT).show();
             MainActivity.autoMarking = true;
-            /*FragmentManager fm = getFragmentManager();
-            ArchiveFragment archiveFragment = (ArchiveFragment)fm.findFragmentById(R.id.tab_2);
-            if(archiveFragment!=null){
-                if(!"".equals(shared_url)){
-                    archiveFragment.showAddDialog(shared_url);
-                }
 
-            }*/
         }
     }
 

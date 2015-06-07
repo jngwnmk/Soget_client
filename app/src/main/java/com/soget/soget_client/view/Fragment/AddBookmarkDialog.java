@@ -2,6 +2,7 @@ package com.soget.soget_client.view.Fragment;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.soget.soget_client.R;
@@ -21,6 +23,7 @@ import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.connector.bookmark.BookmarkAddTask;
 import com.soget.soget_client.connector.bookmark.BookmarkMakeTask;
 import com.soget.soget_client.model.Bookmark;
+import com.soget.soget_client.view.component.ConfirmToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,8 @@ import java.util.StringTokenizer;
  * Created by wonmook on 2015-03-22.
  */
 public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnItemSelectedListener {
+
+    private ArrayList<String> tags = new ArrayList<String>();
     private String  inputUrl = "";
     private Spinner privacySpinner = null;
     private EditText urlEt = null;
@@ -37,6 +42,7 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
     private ArrayList<String> privacyType = null;
     private boolean privacy = false;
     private ImageButton addBookmarkBtn = null;
+    private TextView addBookmarkBtnTv = null;
     private OnTaskCompleted listener =null;
     private Bookmark refBookmark = null;
 
@@ -62,12 +68,28 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
 
         urlEt = (EditText) rootView.findViewById(R.id.add_bookmark_url);
         urlEt.setText(getInputUrl());
+        urlEt.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
+        tagEt = (EditText) rootView.findViewById(R.id.add_bookmark_tag);
+        tagEt.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
         if(refBookmark!=null){
             //It is an add bookmark. Not making new one.
             urlEt.setEnabled(false);
+            StringBuffer tagStr = new StringBuffer();
+            setTags((ArrayList<String>) refBookmark.getTags());
+            for(int i = 0 ; i < tags.size() ;++i){
+                tagStr.append(tags.get(i));
+                if(i<tags.size()-1){
+                    tagStr.append(",");
+                }
+
+            }
+            tagEt.setText(tagStr.toString());
         }
 
-        tagEt = (EditText) rootView.findViewById(R.id.add_bookmark_tag);
+        addBookmarkBtnTv = (TextView)rootView.findViewById(R.id.add_bookmark_btn_tv);
+        addBookmarkBtnTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
 
         addBookmarkBtn = (ImageButton)rootView.findViewById(R.id.add_bookmark_btn);
         addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,10 +112,12 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
                             if (listener != null) {
                                 listener.onTaskCompleted(object);
                                 if(object!=null){
-                                    Toast.makeText(getActivity(), "Completed", Toast.LENGTH_SHORT).show();
+                                    ConfirmToast toast = new ConfirmToast(getActivity());
+                                    toast.showToast("MarkIn 되었습니다.", Toast.LENGTH_SHORT);
 
                                 } else {
-                                    Toast.makeText(getActivity(), "Duplicated URL", Toast.LENGTH_SHORT).show();
+                                    ConfirmToast toast = new ConfirmToast(getActivity());
+                                    toast.showToast("이미 추가된 URL입니다.", Toast.LENGTH_SHORT);
                                 }
                             }
                         }
@@ -180,5 +204,13 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
 
     public void setRefBookmark(Bookmark refBookmark) {
         this.refBookmark = refBookmark;
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
     }
 }

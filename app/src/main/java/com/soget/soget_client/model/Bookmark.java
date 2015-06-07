@@ -29,6 +29,7 @@ public class Bookmark{
     private List<Comment> comments;
     private List<String> tags;
     private List<String> category;
+    private String markinId;
 
     public Bookmark() {
         id = "";
@@ -45,7 +46,7 @@ public class Bookmark{
         comments = new ArrayList<Comment>();
         tags = new ArrayList<String>();
         category = new ArrayList<String>();
-
+        markinId = "";
     }
 
 
@@ -65,6 +66,24 @@ public class Bookmark{
         this.comments = comments;
         this.tags = tags;
         this.category = category;
+    }
+
+    public Bookmark(String id, String title, String url, String img_url, String description, String initUserId, String initUserName, String initUserNickName, List<Follower> followers, long date, boolean privacy, List<Comment> comments, List<String> tags, List<String> category, String markinId) {
+        this.id = id;
+        this.title = title;
+        this.url = url;
+        this.img_url = img_url;
+        this.description = description;
+        this.initUserId = initUserId;
+        this.initUserName = initUserName;
+        this.initUserNickName = initUserNickName;
+        this.followers = followers;
+        this.date = date;
+        this.privacy = privacy;
+        this.comments = comments;
+        this.tags = tags;
+        this.category = category;
+        this.markinId = markinId;
     }
 
     @Override
@@ -214,6 +233,13 @@ public class Bookmark{
         this.description = description;
     }
 
+    public String getMarkinId() {
+        return markinId;
+    }
+
+    public void setMarkinId(String markinId) {
+        this.markinId = markinId;
+    }
 }
 
 

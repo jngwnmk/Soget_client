@@ -3,6 +3,7 @@ package com.soget.soget_client.view.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +11,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.soget.soget_client.R;
+import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.common.StaticValues;
+import com.soget.soget_client.connector.bookmark.PrivacyChangeTask;
 import com.soget.soget_client.model.Bookmark;
 import com.soget.soget_client.model.Follower;
 import com.soget.soget_client.view.Activity.CommentActivity;
 import com.soget.soget_client.view.Activity.WebViewActivity;
+import com.soget.soget_client.view.component.ConfirmToast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,6 +36,8 @@ public class BookmarkAdapter extends BaseAdapter{
     private ArrayList<Bookmark> bookmarks;
     private String userId;
     private boolean isMyArchive;
+    private ConfirmToast toast = null;
+
 
     public BookmarkAdapter(Context context, ArrayList<Bookmark> bookmarks, String user_id, boolean isMyArchive){
         this.mContext = context;
@@ -38,6 +45,7 @@ public class BookmarkAdapter extends BaseAdapter{
         this.inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.userId = user_id;
         this.isMyArchive = isMyArchive;
+        this.toast = new ConfirmToast(mContext);
     }
 
     @Override
@@ -84,9 +92,9 @@ public class BookmarkAdapter extends BaseAdapter{
         }
 
         ArrayList<String> tags = new ArrayList<String>();
-        boolean privacy = false;
+        //final boolean privacy = false;
         tags = (ArrayList<String>)item.getTags();
-        privacy = item.isPrivacy();
+
         /*if(item.getInitUserNickName().equals(userId)){
             //It's a bookmark I created
             //Set Tags
@@ -116,18 +124,36 @@ public class BookmarkAdapter extends BaseAdapter{
                 }
             }
             bookmarkWrapper.getTags().setText(sb.toString());
+            bookmarkWrapper.getTags().setVisibility(View.VISIBLE);
         } else {
-            bookmarkWrapper.getTags().setText(mContext.getResources().getString(R.string.blank));
-            bookmarkWrapper.getTags().setCompoundDrawables(null,null,null,null);
+            bookmarkWrapper.getTags().setVisibility(View.GONE);
         }
 
         //Set Privacy
         if(isMyArchive){
-            if(privacy){
+            if(item.isPrivacy()){
                 bookmarkWrapper.getPrivacy().setImageResource(R.drawable.archive_locked);
             } else {
                 bookmarkWrapper.getPrivacy().setImageResource(R.drawable.archive_unlocked);
             }
+            bookmarkWrapper.getPrivacy().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String token = AuthManager.getAuthManager().getToken(mContext.getApplicationContext().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+
+                    if(item.isPrivacy()){
+                        new PrivacyChangeTask(userId,item.getMarkinId(),token,false);
+                        toast.showToast(mContext.getString(R.string.change_to_public), Toast.LENGTH_SHORT);
+                        item.setPrivacy(false);
+                        notifyDataSetChanged();
+                    } else {
+                        new PrivacyChangeTask(userId,item.getMarkinId(),token,true);
+                        item.setPrivacy(true);
+                        toast.showToast(mContext.getString(R.string.change_to_privacy), Toast.LENGTH_SHORT);
+                        notifyDataSetChanged();
+                    }
+                }
+            });
         } else {
             bookmarkWrapper.getPrivacy().setVisibility(View.GONE);
         }

@@ -17,9 +17,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/popup_lock_icon"
-            android:layout_marginLeft="10dp"/>
+            android:paddingLeft="13.67dp"
+            android:paddingTop="14dp"
+            android:paddingRight="9.33dp"
+            android:paddingBottom="14dp" />
         <Spinner
-            android:layout_marginLeft="13.67dp"
             android:layout_marginRight="13.67dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,25 +46,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/popup_tag_icon"
-            android:layout_marginLeft="10dp"/>
+            android:paddingLeft="15.33dp"
+            android:paddingTop="14.33dp"
+            android:paddingRight="11.33dp"
+            android:paddingBottom="14.33dp" />
         <EditText
-            android:layout_marginLeft="13.67dp"
-            android:layout_marginRight="13.67dp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:id="@+id/add_bookmark_tag"
             android:hint="@string/add_bookmark_tag_hint"
             android:textColorHint="@color/grey"
-            android:textColor="@color/oxford_blue"
+            android:textColor="@color/sub_main_color"
             android:background="@color/transparent"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center_vertical"
             android:textSize="16.66sp"
-            android:paddingTop="14dp"
-            android:layout_marginTop="10dp"
             android:lines="1"
 
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:gravity="center_vertical" />
         </LinearLayout>
 
     <LinearLayout
@@ -75,25 +77,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/popup_url_icon"
-            android:layout_marginLeft="10dp"/>
+            android:paddingLeft="14dp"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
+            android:paddingRight="9.33dp" />
         <EditText
-            android:layout_marginLeft="13.67dp"
-            android:layout_marginRight="13.67dp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:id="@+id/add_bookmark_url"
             android:hint="@string/add_bookmark_url_hint"
             android:textColorHint="@color/grey"
-            android:textColor="@color/blur_grey"
+            android:textColor="@color/main_color_33"
             android:background="@color/transparent"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="14dp"
+            android:layout_gravity="center_vertical"
             android:textSize="16.66sp"
-            android:layout_marginTop="10dp"
             android:lines="1"
             android:maxLines="1"
-        />
+            android:gravity="center_vertical" />
     </LinearLayout>
 
 
@@ -111,11 +112,12 @@
         android:background="@drawable/popup_confirm_box"
         />
     <TextView
+        android:id="@+id/add_bookmark_btn_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/popup_confirm"
-        android:textSize="16.62sp"
+        android:textSize="13.62sp"
         android:layout_gravity="center"
-        android:textColor="@color/shadow_green"/>
+        android:textColor="@color/add_markin_confirm"/>
     </FrameLayout>
 </LinearLayout>

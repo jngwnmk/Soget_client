@@ -20,6 +20,7 @@ public class RESTAPIManager {
     public final static String bookmark_friend_url = bookmark_url+"friend/";
     public final static String trashcan_url = bookmark_url+"trashcan/";
     public final static String discover_url = bookmark_url+"home/friends/";//{user_id}/{date}/{page_no}
+    public final static String privacy_change_url = bookmark_url+"privacy/";//{user_id}/{markin_id}
 
     public final static String friends_url = user_url+"friends/";
     public final static String friends_sent_url = friends_url+"sent/";

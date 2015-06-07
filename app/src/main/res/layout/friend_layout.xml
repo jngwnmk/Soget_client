@@ -10,13 +10,13 @@
         >
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/setting_btn"
             android:src="@drawable/setting"
             android:background="@color/transparent"
             android:layout_gravity="center"
             android:paddingLeft="20dp"
-            />
+            android:paddingRight="20dp" />
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -26,12 +26,13 @@
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/friend_search_btn"
             android:src="@drawable/search_icon"
             android:background="@color/transparent"
             android:layout_gravity="center"
-            android:paddingRight="20dp"/>
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp" />
 
     </LinearLayout>
     <LinearLayout
@@ -53,7 +54,7 @@
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/setting_regulation_btn"
+                android:id="@+id/invitation_use_btn"
                 android:src="@drawable/shadow_green_btn_selector"
                 android:background="@color/transparent"
                 />
@@ -74,7 +75,7 @@
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:id="@+id/invitation_layout_btn">
+                >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,7 +85,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/friend_invitation"
+                    android:textColor="@color/blur_grey"
                     android:layout_marginTop="3dp"
                     android:textSize="12.17sp"
                     android:text="10장"
@@ -92,13 +93,17 @@
             </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:drawableRight="@drawable/enter_btn"
                     android:text="@string/invitation_user"
-                    android:textColor="@color/black"
+                    android:textSize="12.17sp"
+                    android:textColor="@color/friend_invitation"
                     android:drawablePadding="10dp"
-                    android:layout_gravity="right|center_vertical"
-                    android:paddingRight="20dp"/>
+                    android:layout_gravity="center|right"
+                    android:paddingRight="20dp"
+                    android:gravity="center"
+                    android:id="@+id/invitation_use_tv"
+                    />
             </LinearLayout>
 
         </FrameLayout>

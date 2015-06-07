@@ -1,12 +1,11 @@
 package com.soget.soget_client.view.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,8 +15,7 @@ import com.soget.soget_client.common.AuthManager;
 import com.soget.soget_client.connector.friend.FriendAcceptTask;
 import com.soget.soget_client.connector.friend.FriendRequestTask;
 import com.soget.soget_client.model.Friend;
-import com.soget.soget_client.view.Activity.FriendSearchActivity;
-import com.soget.soget_client.view.Activity.MainActivity;
+import com.soget.soget_client.view.component.ConfirmToast;
 
 import java.util.ArrayList;
 
@@ -25,12 +23,12 @@ import java.util.ArrayList;
  * Created by wonmook on 2015-03-23.
  */
 public class FriendAdatper extends BaseAdapter{
-    private Context context;
+    private Context mContext;
     private LayoutInflater layoutInflater;
     private ArrayList<Friend> friends;
 
     public FriendAdatper(Context context, ArrayList<Friend> friends){
-        this.context = context;
+        this.mContext = context;
         this.friends = friends;
         this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -74,20 +72,20 @@ public class FriendAdatper extends BaseAdapter{
             friendWrapper.getFriendName().setText(friend.getUserInfo().getName());
             if(friend.getUserInfo().getBookmarks()!=null)
             {
-                friendWrapper.getFriendNumBookmark().setText(friend.getUserInfo().getBookmarks().size() +" Gets");
+                friendWrapper.getFriendNumBookmark().setText(friend.getUserInfo().getBookmarks().size() +" MarkIn'");
             }
             else {
-                friendWrapper.getFriendNumBookmark().setText("0 Gets");
+                friendWrapper.getFriendNumBookmark().setText("0 MarkIn'");
             }
 
         } else if(friend.getType().equals(Friend.FRIEND.FRIENDRECEIVE)){
-            friendWrapper.getFriendBtn().setText(context.getResources().getString(R.string.accept_btn));
+            friendWrapper.getFriendBtn().setText(mContext.getResources().getString(R.string.accept_btn));
             friendWrapper.getFriendBtn().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Accept",Toast.LENGTH_SHORT).show();
-                    String user_id = (AuthManager.getAuthManager().getLoginInfo(context.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
-                    String token = AuthManager.getAuthManager().getToken(context.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+                    Toast.makeText(mContext, "Accept",Toast.LENGTH_SHORT).show();
+                    String user_id = (AuthManager.getAuthManager().getLoginInfo(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+                    String token = AuthManager.getAuthManager().getToken(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
                     String friend_id = friend.getUserInfo().getUserId();
                     new FriendAcceptTask(user_id,friend_id,token).execute();
                     friend.setType(Friend.FRIEND.FRIEND);
@@ -95,31 +93,32 @@ public class FriendAdatper extends BaseAdapter{
 
                 }
             });
-            friendWrapper.getFriendName().setText(friend.getUserInfo().getName()+"("+friend.getUserInfo().getUserId()+")");
-            friendWrapper.getFriendName().setTextColor(context.getResources().getColor(R.color.oxford_blue));
+            friendWrapper.getFriendName().setText(friend.getUserInfo().getName() + "(" + friend.getUserInfo().getUserId() + ")");
+            friendWrapper.getFriendName().setTextColor(mContext.getResources().getColor(R.color.oxford_blue));
             friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
 
         } else if(friend.getType().equals(Friend.FRIEND.FRIENDSENT)){
-            friendWrapper.getFriendBtn().setText(context.getResources().getString(R.string.waiting_btn));
+            friendWrapper.getFriendBtn().setText(mContext.getResources().getString(R.string.waiting_btn));
             friendWrapper.getFriendBtn().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Wait",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Wait",Toast.LENGTH_SHORT).show();
                 }
             });
             friendWrapper.getFriendBtn().setBackgroundResource(R.drawable.friends_waiting_box);
-            friendWrapper.getFriendName().setText(friend.getUserInfo().getName()+"("+friend.getUserInfo().getUserId()+")");
-            friendWrapper.getFriendName().setTextColor(context.getResources().getColor(R.color.oxford_blue));
+            friendWrapper.getFriendName().setText(friend.getUserInfo().getName() + "(" + friend.getUserInfo().getUserId() + ")");
+            friendWrapper.getFriendName().setTextColor(mContext.getResources().getColor(R.color.oxford_blue));
             friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
 
         } else if(friend.getType().equals(Friend.FRIEND.NOTFRIEND)){
-            friendWrapper.getFriendBtn().setText(context.getResources().getString(R.string.accept_btn));
+            friendWrapper.getFriendBtn().setText(mContext.getResources().getString(R.string.accept_btn));
             friendWrapper.getFriendBtn().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Request",Toast.LENGTH_SHORT).show();
-                    String user_id = (AuthManager.getAuthManager().getLoginInfo(context.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
-                    String token = AuthManager.getAuthManager().getToken(context.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+                    ConfirmToast toast = new ConfirmToast(mContext);
+                    toast.showToast("친구요청하였습니다.", Toast.LENGTH_SHORT);
+                    String user_id = (AuthManager.getAuthManager().getLoginInfo(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+                    String token = AuthManager.getAuthManager().getToken(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
                     String friend_id = friend.getUserInfo().getUserId();
                     new FriendRequestTask(user_id,friend_id,token).execute();
                     friend.setType(Friend.FRIEND.FRIENDSENT);
@@ -127,8 +126,8 @@ public class FriendAdatper extends BaseAdapter{
 
                 }
             });
-            friendWrapper.getFriendName().setText(friend.getUserInfo().getName()+"("+friend.getUserInfo().getUserId()+")");
-            friendWrapper.getFriendName().setTextColor(context.getResources().getColor(R.color.oxford_blue));
+            friendWrapper.getFriendName().setText(friend.getUserInfo().getName() + "(" + friend.getUserInfo().getUserId() + ")");
+            friendWrapper.getFriendName().setTextColor(mContext.getResources().getColor(R.color.oxford_blue));
             friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
         }
 
@@ -149,6 +148,8 @@ public class FriendAdatper extends BaseAdapter{
         public TextView getFriendName() {
             if(friendName==null){
                 friendName = (TextView)base.findViewById(R.id.friend_name);
+                friendName.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
             }
             return friendName;
         }
@@ -156,6 +157,8 @@ public class FriendAdatper extends BaseAdapter{
         public TextView getFriendNumBookmark() {
             if(friendNumBookmark==null){
                 friendNumBookmark = (TextView)base.findViewById(R.id.num_bookmark);
+                friendNumBookmark.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
             }
             return friendNumBookmark;
         }
@@ -163,6 +166,8 @@ public class FriendAdatper extends BaseAdapter{
         public TextView getFriendBtn() {
             if(friendBtn==null){
                 friendBtn = (TextView)base.findViewById(R.id.friend_btn);
+                friendBtn.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
             }
             return friendBtn;
         }

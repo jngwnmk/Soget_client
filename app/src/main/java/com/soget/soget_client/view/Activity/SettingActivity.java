@@ -1,6 +1,7 @@
 package com.soget.soget_client.view.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,9 +14,11 @@ import android.widget.Toast;
 import com.soget.soget_client.R;
 import com.soget.soget_client.callback.OnTaskCompleted;
 import com.soget.soget_client.common.AuthManager;
+import com.soget.soget_client.common.StaticValues;
 import com.soget.soget_client.connector.user.UserInfoGetTask;
 import com.soget.soget_client.connector.invitation.InvitationCodeGetTask;
 import com.soget.soget_client.model.User;
+import com.soget.soget_client.view.component.ConfirmToast;
 
 import java.util.ArrayList;
 
@@ -31,6 +34,7 @@ public class SettingActivity extends ActionBarActivity {
     private ImageButton blog_btn = null;
     private ImageButton privacy_regulation_btn = null;
     private ImageButton app_regulation_btn = null;
+    private ArrayList<String> invitationNum = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +99,7 @@ public class SettingActivity extends ActionBarActivity {
         onTaskCompleted = new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(Object object) {
-                ArrayList<String> invitationNum = (ArrayList<String>)object;
+                invitationNum = (ArrayList<String>)object;
                 invitation_tv.setText("초대장: "+ invitationNum.size()+"장");
             }
         };
@@ -108,7 +112,14 @@ public class SettingActivity extends ActionBarActivity {
         invitation_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"invitation btn",Toast.LENGTH_SHORT).show();
+                if(invitationNum.size()!=0) {
+                    Intent intent = new Intent(getApplicationContext(), InvitatonSendActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(StaticValues.INVITATIONCODE, invitationNum.get(0));
+                    bundle.putInt(StaticValues.INVITATIONNUM, invitationNum.size());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
     }
