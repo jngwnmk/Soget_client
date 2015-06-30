@@ -6,7 +6,7 @@
     android:layout_height="fill_parent">
 
     <fragment
-        class="com.soget.soget_client.view.Fragment.TabsFragment"
+        class="com.markin.app.view.Fragment.TabsFragment"
         android:id="@+id/tabs_fragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />

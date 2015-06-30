@@ -9,13 +9,26 @@
     android:layout_height="match_parent"
     android:background="@drawable/intro_background"
     android:orientation="vertical">
-
-    <ImageView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo"
+        android:orientation="horizontal"
         android:layout_gravity="center"
-        android:layout_marginTop="125.67dp"/>
+        android:layout_marginTop="125.67dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            />
+        <TextView
+            android:id="@+id/markin_intro_logo_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="은"
+            android:layout_gravity="bottom"
+            android:textColor="@color/main_color_66"
+            android:textSize="13.91sp"/>
+    </LinearLayout>
     <TextView
         android:id="@+id/markin_intro_tv"
         android:layout_width="match_parent"
@@ -50,15 +63,6 @@
             android:textColor="@color/white"/>
     </FrameLayout>
     <TextView
-        android:id="@+id/intro_invitation_request_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/intro_invitation_request"
-        android:gravity="center"
-        android:textSize="11.01sp"
-        android:textColor="@color/main_color"
-        android:layout_marginTop="30dp"/>
-    <TextView
         android:id="@+id/intro_login_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,6 +70,16 @@
         android:textColor="@color/main_color"
         android:textSize="11.01sp"
         android:gravity="center|bottom"
-        android:layout_marginTop="135dp" />
+        android:layout_marginTop="30dp" />
+    <TextView
+        android:id="@+id/intro_invitation_request_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/intro_invitation_request"
+        android:gravity="center"
+        android:textSize="11.01sp"
+        android:textColor="@color/main_color"
+        android:layout_marginTop="145dp"/>
+
 </LinearLayout>
 </FrameLayout>

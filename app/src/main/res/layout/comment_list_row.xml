@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/comment_date_tv"
                 android:textSize="12.17sp"
-                android:textColor="@color/blur_grey"
+                android:textColor="@color/main_color_33"
                 android:text="00 Gets" />
 
         </LinearLayout>
@@ -36,11 +36,11 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:id="@+id/comment_content_tv"
-            android:textColor="@color/comment_content"
+            android:textColor="@color/main_color_66"
             android:text="세발자전거에 실은 중국의 삶을 내려보다"
-            android:textSize="17sp"
             android:layout_weight="1"
-            android:layout_marginTop="9.33dp" />
+            android:layout_marginTop="9.33dp"
+            android:textSize="13.33sp"/>
 
 
     </LinearLayout>

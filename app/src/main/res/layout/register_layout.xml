@@ -1,95 +1,64 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".MainActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/register_root_layout">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/main_color"
-        android:id="@+id/title_bar">
-        <TextView
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:text="@string/register_label"/>
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/user_name_label"
-        android:text="@string/user_name"
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/user_name_edit" />
-
-    <TextView
-        android:id="@+id/user_id_label"
-        android:text="@string/user_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/user_id_edit"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/user_email_label"
-        android:text="@string/user_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/user_id_edit"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/user_pwd_label"
-        android:text="@string/user_pwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/user_pwd_edit"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:background="@drawable/register_edit_text_selector"
+        android:id="@+id/invitation_code_edit"
+        android:hint="@string/invitation_code_hint"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="13.91sp"
+        />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="@string/user_name_hint"
-        android:ems="20"
+        android:background="@drawable/register_edit_text_selector"
         android:id="@+id/user_name_edit"
-        android:layout_below="@+id/title_bar"
-        android:layout_marginTop="25dp"
-        android:layout_toRightOf="@+id/user_pwd_label"
-        android:layout_toEndOf="@+id/user_name_label" />
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="13.91sp"
+        />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/user_id_hint"
         android:id="@+id/user_id_edit"
-        android:layout_below="@+id/user_name_edit"
-        android:layout_toRightOf="@+id/user_pwd_label"
-        android:layout_alignRight="@+id/user_name_edit"
-        android:layout_alignEnd="@+id/user_name_edit" />
+        android:background="@drawable/register_edit_text_selector"
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="13.91sp"
+         />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:hint="@string/user_email_hint"
-
+        android:background="@drawable/register_edit_text_selector"
         android:id="@+id/user_email_edit"
-        android:layout_below="@+id/user_id_edit"
-        android:layout_toRightOf="@+id/user_pwd_label"
-        android:layout_alignRight="@+id/user_name_edit"
-        android:layout_alignEnd="@+id/user_name_edit" />
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="13.91sp"
+         />
 
     <EditText
         android:layout_width="wrap_content"
@@ -97,28 +66,51 @@
         android:inputType="textPassword"
         android:hint="@string/user_pwd_hint"
         android:id="@+id/user_pwd_edit"
-        android:layout_below="@+id/user_email_edit"
-        android:layout_toRightOf="@+id/user_pwd_label"
-        android:layout_alignRight="@+id/user_name_edit"
-        android:layout_alignEnd="@+id/user_name_edit" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/register_btn"
-        android:id="@+id/register_btn"
-        android:layout_below="@+id/user_pwd_edit"
-        android:layout_centerHorizontal="true" />
-
+        android:background="@drawable/register_edit_text_selector"
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="13.91sp"
+        />
     <TextView
+        android:id="@+id/register_info_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_condition"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/register_btn"
+        android:textColor="@color/main_color"
+        android:textSize="9.86sp"
+        android:layout_marginTop="32.33dp"
+        android:drawableLeft="@drawable/register_info_icon"
+        android:drawablePadding="4dp"/>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp">
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_btn"
+        android:background="@drawable/register_btn_selector"
+
         />
+     <TextView
+         android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:text="@string/register_btn"
+         android:id="@+id/register_tv"
+         android:textSize="16.23sp"
+         android:textColor="@color/white"
+         android:gravity="center"
+         android:layout_gravity="center" />
+    </FrameLayout>
+    <TextView
+        android:id="@+id/register_condition_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/main_color"
+        android:text="@string/register_condition_1"
+        android:layout_marginTop="50dp"
+        android:textSize="11.01sp"/>
 
-
-
-</RelativeLayout>
+</LinearLayout>

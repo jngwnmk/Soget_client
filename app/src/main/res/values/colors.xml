@@ -3,12 +3,15 @@
     <color name="main_color">#3E454C</color>
     <color name="main_color_66">#A83E454C</color>
     <color name="main_color_33">#543E454C</color>
+    <color name="main_color_25">#403E454C</color>
     <color name="sub_main_color">#4A5C82</color>
     <color name="discover_name">#3E5279</color>
     <color name="discover_tag">#6F7379</color>
     <color name="discover_time">#D2D4D8</color>
-    <color name="discover_title">#27313A</color>
+    <color name="discover_title">#3E5279</color>
     <color name="discover_info">#B5B8BB</color>
+    <color name="kakao_color">#432C2A</color>
+    <color name="main_green">#5CA4A1</color>
 
     <color name="white">#FFFFFF</color>
     <color name="dark_grey">#555555</color>
@@ -22,6 +25,8 @@
 
     <!--friend-->
     <color name="friend_receive_request_btn">#4A5C82</color>
+    <color name="friend_receive_request_btn_66">#A83E454C</color>
+
     <color name="friend_name_normal">#3E454C</color>
     <color name="friend_name_selected">#FFFFFF</color>
     <color name="friend_invitation">#3E454C</color>

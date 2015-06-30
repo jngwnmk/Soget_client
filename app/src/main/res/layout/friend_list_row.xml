@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/friend_list_selector"
     android:id="@+id/friend_list_background">
 
     <LinearLayout
@@ -10,22 +10,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:padding="15dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:paddingLeft="19dp"
+        android:paddingTop="12.67dp"
+        android:paddingBottom="12.67dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/friend_name"
             android:text="Name"
             android:textSize="13.91sp"
-            android:textColor="@color/friend_name_normal"/>
+            android:textColor="@drawable/friend_name_tv_selector"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/num_bookmark"
             android:text="MarkIn"
-            android:textColor="@color/blur_grey"
-            />
+            android:textSize="9.86sp"
+            android:textColor="@drawable/friend_markin_num_tv_selector"
+            android:layout_marginTop="6.33dp" />
     </LinearLayout>
 
 
@@ -33,12 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:background="@drawable/friends_add_box"
-        android:textColor="@color/oxford_blue"
+        android:background="@drawable/friend_add_btn"
+        android:textColor="@color/white"
         android:textSize="11.3sp"
         android:text="@string/accept_btn"
         android:gravity="center"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="19.33dp"
         android:id="@+id/friend_btn"
         android:layout_gravity="center_vertical"/>
 

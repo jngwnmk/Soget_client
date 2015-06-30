@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Soget_client</string>
+    <string name="app_name">MarkIn</string>
     <string name="id_label">The ID is</string>
     <string name="id_value">[id]</string>
     <string name="content_label">The Content is</string>
@@ -40,7 +40,7 @@
     <string name="add_bookmark_tag_hint">TAG</string>
     <string name="add_bookmark_confirm">확인</string>
     <string-array name="privacy_array">
-        <item>공개</item>
+        <item>전체공개</item>
         <item>비공개</item>
     </string-array>
 
@@ -81,12 +81,13 @@
 
     <!--Invitation Send-->
     <string name="invitation_send_current_code">내가 가진 MarkIn\' 초대장 : </string>
-    <string name="invitation_send_desc">내가 모은 정보를 \n알려주고 싶은 친구에게만\n초대장을 보내주세요</string>
+    <string name="invitation_send_desc">초대장은 딱 10장만 지급됩니다.\n\n내가 모을 콘텐츠에\n관심을 기울이고 즐거워 할 친구에게만\n초대장을 보내주세요.</string>
     <string name="invitation_receiver">받을 사람</string>
-    <string name="invitation_sms_message">소셜북마킹서비스 MarkIn\' 에 초대합니다.</string>
+    <string name="invitation_sms_message">멋진 음악, 기사 등의 정보를 공유하는\n소셜북마킹서비스 MarkIn\' 에 초대합니다.</string>
     <string name="invitation_code">초대장 번호 : </string>
     <string name="invitation_app">앱 설치하기 : app.mark.in</string>
-
+    <string name="invitation_note">카카오톡이 없는 친구에게는 초대장 번호만 알려주시면 됩니다</string>
+    <string name="kakao_send_btn">카카오톡으로 보내기</string>
     <!--Add bookmark Dialog-->
     <string name="popup_confirm">확인</string>
 
@@ -95,10 +96,14 @@
     <string name="kakao_scheme">kakao2b01b8aa193b65aff676ab8f63e9b5e7</string>
     <string name="kakaolink_host">kakaolink</string>
 
+
     <!-- Discover-->
     <string name="show_more">더 보기</string>
 
     <!-- Archive-->
     <string name="change_to_privacy">비공개 설정되었습니다.</string>
     <string name="change_to_public">전체공개 설정되었습니다.</string>
+
+
+
 </resources>

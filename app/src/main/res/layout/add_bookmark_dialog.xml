@@ -3,15 +3,17 @@
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/popup_box"
-    android:padding="20dp">
+    android:paddingTop="20dp"
+    android:paddingLeft="19.67dp"
+    android:paddingRight="19.67dp"
+    android:paddingBottom="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/popup_input_box"
         android:gravity="center_vertical"
-        android:layout_marginBottom="6.33dp"
-        >
+        android:layout_marginBottom="6dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -24,12 +26,13 @@
         <Spinner
             android:layout_marginRight="13.67dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/privacy_spinner"
             android:layout_gravity="center_horizontal"
             android:prompt="@color/transparent"
-            android:popupBackground="@color/blur_grey"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+
+            />
 
 
     </LinearLayout>
@@ -39,7 +42,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/popup_input_box"
         android:gravity="center_vertical"
-        android:layout_marginBottom="6.33dp"
+        android:layout_marginBottom="6dp"
         >
 
         <ImageView
@@ -62,7 +65,7 @@
             android:layout_gravity="center_vertical"
             android:textSize="16.66sp"
             android:lines="1"
-
+            android:paddingRight="26.67dp"
             android:maxLines="1"
             android:gravity="center_vertical" />
         </LinearLayout>
@@ -84,6 +87,7 @@
         <EditText
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:paddingRight="26.67dp"
             android:layout_height="fill_parent"
             android:id="@+id/add_bookmark_url"
             android:hint="@string/add_bookmark_url_hint"
@@ -98,26 +102,25 @@
     </LinearLayout>
 
 
-    <FrameLayout
-        android:layout_marginTop="12.67dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        >
-    <ImageButton
+
+    <Button
+        android:layout_marginTop="12.33dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/add_bookmark_btn"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/popup_confirm_box"
+        android:background="@drawable/markin_confirm_btn_selector"
+        android:text="@string/popup_confirm"
+        android:textColor="@drawable/markin_confirm_tv_selector"
+        android:textSize="16.66sp"
         />
-    <TextView
+    <!--<TextView
         android:id="@+id/add_bookmark_btn_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/popup_confirm"
-        android:textSize="13.62sp"
+        android:textSize="16.66sp"
         android:layout_gravity="center"
-        android:textColor="@color/add_markin_confirm"/>
-    </FrameLayout>
+        android:textColor="@drawable/markin_confirm_tv_selector"/>-->
+
 </LinearLayout>

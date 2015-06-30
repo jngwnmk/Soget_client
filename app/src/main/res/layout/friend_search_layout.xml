@@ -15,11 +15,13 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:paddingLeft="10dp"
-            android:layout_marginLeft="20dp">
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/friend_search_icon"/>
+            android:src="@drawable/friend_search_icon" />
         <EditText
             android:layout_marginLeft="5dp"
             android:id="@+id/friend_search_et"
@@ -30,6 +32,7 @@
             android:layout_marginRight="5dp"
             android:imeOptions="actionSearch"
             android:singleLine="true"
+            android:textSize="17.39sp"
             android:gravity="center_vertical" />
         <ImageButton
             android:id="@+id/friend_search_cancel_btn"
@@ -44,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/friend_search_close_btn"
-            android:textColor="@color/main_color"
+            android:textColor="@color/main_green"
+            android:textSize="13.91sp"
             android:text="@string/search_cancel_btn"
             android:gravity="center" />
 

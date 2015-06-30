@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.soget.soget_client" >
+    package="com.markin.app" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -13,56 +13,50 @@
         android:label="@string/app_name" >
 
         <activity
-            android:name=".view.Activity.IntroActivity"
+            android:name="com.markin.app.view.Activity.IntroActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".view.Activity.RegisterActivity"
+            android:name="com.markin.app.view.Activity.RegisterActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".view.Activity.LoginActivity"
+            android:name="com.markin.app.view.Activity.LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".view.Activity.MainActivity"
+            android:name="com.markin.app.view.Activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.NoActionBar" >
 
         </activity>
         <activity
-            android:name=".view.Activity.WebViewActivity"
+            android:name="com.markin.app.view.Activity.WebViewActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".view.Activity.CommentActivity"
+            android:name="com.markin.app.view.Activity.CommentActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".view.Activity.SettingActivity"
+            android:name="com.markin.app.view.Activity.SettingActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
-            android:name=".view.Activity.FriendArchiveActivity"
+            android:name="com.markin.app.view.Activity.FriendArchiveActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
-        <activity android:name=".view.Activity.FriendSearchActivity"
+        <activity android:name="com.markin.app.view.Activity.FriendSearchActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
             </activity>
-        <activity android:name=".view.Activity.InvitatonSendActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="@string/kakao_scheme" android:host="@string/kakaolink_host" />
-            </intent-filter>
-
-        </activity>
-
-        <activity android:name=".view.Activity.ContactListActivity"
+        <activity android:name="com.markin.app.view.Activity.InvitatonSendActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </activity>
-        <activity android:name=".view.Activity.SplashActivity"
+
+        <activity android:name="com.markin.app.view.Activity.ContactListActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
+
+        </activity>
+        <activity android:name="com.markin.app.view.Activity.SplashActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -72,7 +66,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
-            </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/kakao_scheme" android:host="@string/kakaolink_host" />
+            </intent-filter>
+
+
+        </activity>
+        <activity android:name="com.markin.app.view.Activity.TutorialActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+
+        <activity android:name="com.markin.app.view.Activity.ConditionActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+
+        <activity android:name="com.markin.app.view.Activity.NormalWebViewActivity"
+             android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />

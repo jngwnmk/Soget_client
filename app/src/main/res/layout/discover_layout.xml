@@ -54,29 +54,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                android:layout_weight="0.025"></LinearLayout>
-            <com.soget.soget_client.view.component.MyCardStackView
+
+
+            <com.markin.app.view.component.MyCardStackView
+                android:layout_marginTop="16.33dp"
+                android:layout_marginLeft="26.33dp"
+                android:layout_marginRight="26.33dp"
+                android:layout_marginBottom="13dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:id="@+id/discover_stack_view"
-                android:layout_weight="0.925">
-            </com.soget.soget_client.view.component.MyCardStackView>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                android:layout_weight="0.025"></LinearLayout>
+                android:layout_weight="0.925"
+                android:orientation="horizontal">
+            </com.markin.app.view.component.MyCardStackView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginBottom="13dp"
                 android:gravity="center"
-                android:layout_gravity="bottom"
-
                 >
                 <FrameLayout
                     android:layout_width="wrap_content"
@@ -104,11 +101,6 @@
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                android:layout_weight="0.025"></LinearLayout>
         </LinearLayout>
     </FrameLayout>
 

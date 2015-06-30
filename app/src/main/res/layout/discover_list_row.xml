@@ -3,28 +3,26 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center">-->
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-
-        android:gravity="center">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:background="@drawable/discover_card_layer"
         >
      <LinearLayout
          android:orientation="horizontal"
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
-         android:paddingLeft="20dp"
-         android:paddingTop="20dp"
-         android:paddingBottom="5dp"
-         android:paddingRight="20dp">
+         android:paddingLeft="27.33dp"
+         android:paddingTop="20.33dp"
+         android:paddingRight="27.33dp"
+         android:paddingBottom="3dp">
         <LinearLayout
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -35,7 +33,7 @@
                 android:id="@+id/discover_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15.33sp"
+                android:textSize="15.65sp"
                 android:text="지수진"
                 android:textColor="@color/discover_name"
                 />
@@ -43,9 +41,9 @@
                 android:id="@+id/discover_tags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="8.67dp"
                 android:drawableLeft="@drawable/discover_tag"
-                android:drawablePadding="3.33dp"
+                android:drawablePadding="6.67dp"
                 android:textSize="12.67sp"
                 android:text="요리, 레시피"
                 android:textColor="@color/discover_tag"/>
@@ -57,17 +55,17 @@
              android:text="4d"
              android:textSize="13.33sp"
              android:drawableLeft="@drawable/discover_time"
-             android:drawablePadding="4.67dp"
+             android:drawablePadding="5.33dp"
              android:textColor="@color/discover_time"
              />
      </LinearLayout>
      <LinearLayout
-         android:layout_width="wrap_content"
+         android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_marginTop="3dp">
          <ImageView
              android:id="@+id/discover_cover_img"
-             android:layout_width="wrap_content"
+             android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:background="@color/transparent"
              android:src="@drawable/picture_no_image"/>
@@ -77,15 +75,16 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:orientation="vertical"
-         android:paddingLeft="20dp"
-         android:paddingRight="20dp"
-         android:paddingTop="10dp">
+         android:paddingTop="13dp"
+         android:paddingLeft="27.33dp"
+         android:paddingRight="27.33dp"
+         android:paddingBottom="18dp">
           <TextView
              android:id="@+id/discover_title"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:textColor="@color/black"
-             android:textSize="18.67sp"
+             android:textColor="@color/discover_title"
+             android:textSize="17.39sp"
              android:maxLines="1"
              android:ellipsize="end"
              android:text="일상과 사회를 바꾸는 주거실험_집에 대한 생각을 커뮤니티로 엮다.........dfdsfsdfadgadgadgasdgadgadg              "/>
@@ -93,26 +92,26 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
-              android:layout_marginTop="6.5dp">
+              android:layout_marginTop="7.33dp">
               <TextView
                   android:id="@+id/discover_get"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textColor="@color/discover_info"
+                  android:textColor="@color/main_color_33"
                   android:textSize="12.67sp"
                   android:text="@string/archive_row_num_get"/>
               <TextView
                   android:id="@+id/discover_comment"
-                  android:layout_marginLeft="13.33dp"
+                  android:layout_marginLeft="12.33dp"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="12.67sp"
-                  android:textColor="@color/discover_info"
+                  android:textColor="@color/main_color_33"
                   android:text="@string/archive_row_num_comment"/>
 
           </LinearLayout>
          <TextView
-             android:layout_marginTop="6.5dp"
+             android:layout_marginTop="10.67dp"
              android:id="@+id/discover_desc"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
@@ -120,13 +119,14 @@
              android:textColor="@color/black"
              android:maxLines="3"
              android:ellipsize="end"
-             android:textSize="11.67sp"/>
+             android:textSize="11.67sp"
+             android:lineSpacingExtra="5.22sp"/>
      </LinearLayout>
 
 
     </LinearLayout>
 
-    </LinearLayout>
+  <!-- </LinearLayout>-->
 
 
 
