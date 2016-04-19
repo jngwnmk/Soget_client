@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="@dimen/category_row_height"
+    android:paddingTop="@dimen/category_padding_top"
+    android:paddingBottom="@dimen/category_padding_bottom"
+    android:background="@color/white"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/category_img_height"
+
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/category_img_height"
+            android:id="@+id/category_frame"
+            android:background="@drawable/image_listening"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/category_text_white"
+                android:textSize="@dimen/category_desc_text_size"
+                android:text="음악, 인간이 알고 있는 최고의 것"
+                android:id="@+id/category_desc_tv"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/category_text_white"
+                    android:textSize="@dimen/category_by_text_size"
+                    android:text="by  " />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/category_text_white"
+                    android:textSize="@dimen/category_author_text_size"
+                    android:text="Joseph Addison"
+                    android:id="@+id/category_author_tv"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/category_title"
+        android:textSize="@dimen/category_title_text_size"
+        android:paddingLeft="@dimen/category_title_padding_left"
+        android:paddingTop="@dimen/category_title_padding_top"
+        android:textColor="@color/black"
+        android:id="@+id/category_type_tv"
+
+       />
+
+</LinearLayout>

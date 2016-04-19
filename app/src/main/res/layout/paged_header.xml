@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/headerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background_color"
+    android:orientation="vertical"
+    >
+
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/headerViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/feed_header_height"
+        />
+    <com.markin.app.view.component.PagedHeadListView.PagedHeadIndicatorNumber
+        android:id="@+id/headerViewIndicator"
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"/>
+
+</LinearLayout>

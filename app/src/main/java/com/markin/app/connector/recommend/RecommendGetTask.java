@@ -1,4 +1,4 @@
-package com.markin.app.connector.discover;
+package com.markin.app.connector.recommend;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -21,14 +21,14 @@ import java.util.Arrays;
 /**
  * Created by wonmook on 15. 5. 13..
  */
-public class DiscoverGetTask extends AsyncTask<Void, Void, ArrayList<Bookmark>> {
+public class RecommendGetTask extends AsyncTask<Void, Void, ArrayList<Bookmark>> {
     private OnTaskCompleted listener;
     private ArrayList<Bookmark> bookmarks;
     private String token ;
     private String user_id;
     private long date;
 
-    public DiscoverGetTask(OnTaskCompleted listener, String user_id, String token, long date){
+    public RecommendGetTask(OnTaskCompleted listener, String user_id, String token, long date){
         this.listener = listener;
         this.user_id = user_id;
         this.token = token;
@@ -46,7 +46,6 @@ public class DiscoverGetTask extends AsyncTask<Void, Void, ArrayList<Bookmark>> 
             System.out.println("currentTime:"+date);
             ResponseEntity<Bookmark[]> response = restTemplate.exchange(RESTAPIManager.discover_url +  user_id + "/" +date+"/0", HttpMethod.GET, new HttpEntity(headers), Bookmark[].class);
             System.out.println(response.getBody());
-            //Bookmark[] bookmark = (Bookmark[])(response.getBody().getContent());
             bookmarks = new ArrayList<Bookmark>();
             bookmarks.addAll(Arrays.asList(response.getBody()));
             return bookmarks;

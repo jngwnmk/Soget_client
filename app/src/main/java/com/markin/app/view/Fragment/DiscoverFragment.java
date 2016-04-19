@@ -21,8 +21,8 @@ import android.widget.Toast;
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
-import com.markin.app.connector.discover.DiscoverDiscardTask;
-import com.markin.app.connector.discover.DiscoverGetTask;
+import com.markin.app.connector.recommend.RecommendDiscardTask;
+import com.markin.app.connector.recommend.RecommendGetTask;
 import com.markin.app.model.Bookmark;
 import com.markin.app.model.User;
 import com.markin.app.view.Activity.SettingActivity;
@@ -180,7 +180,7 @@ public class DiscoverFragment extends Fragment{
             String user_id = user.getUserId();
             String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
             //pDialog.show();
-            new DiscoverDiscardTask(null,user_id, bookmark_id, token).execute();
+            new RecommendDiscardTask(null,user_id, bookmark_id, token).execute();
         }
     }
 
@@ -229,7 +229,7 @@ public class DiscoverFragment extends Fragment{
                 String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
                 long date = System.currentTimeMillis();//SettingManager.getLastDiscoverDate(getActivity().getSharedPreferences(SettingManager.LASTDISCOVER,Context.MODE_PRIVATE));
                 pDialog.show();
-                new DiscoverGetTask(onTaskCompleted,user_id, token,date).execute();
+                new RecommendGetTask(onTaskCompleted,user_id, token,date).execute();
             }
 
         } catch (NullPointerException ex){

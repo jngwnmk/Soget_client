@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="main_background_color">#36393a</color>
+    <color name="main_text_color">#36393a</color>
+    <color name="sub_text_color">#ff854a</color>
+
     <color name="main_color">#3E454C</color>
     <color name="main_color_66">#A83E454C</color>
     <color name="main_color_33">#543E454C</color>
@@ -38,4 +43,8 @@
     <color name="comment_content">#3E454C</color>
 
     <color name="add_markin_confirm">#5CA4A1</color>
+
+    <!-- Category -->
+    <color name="category_text_charcol">#2f353b</color>
+    <color name="category_text_white">#ffffff</color>
 </resources>

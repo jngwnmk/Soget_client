@@ -1,4 +1,4 @@
-package com.markin.app.connector.discover;
+package com.markin.app.connector.recommend;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,13 +19,13 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Created by wonmook on 15. 5. 13..
  */
-public class DiscoverDiscardTask extends AsyncTask<Void, Void, Void> {
+public class RecommendDiscardTask extends AsyncTask<Void, Void, Void> {
     private OnTaskCompleted listener;
     private String token ;
     private String user_id;
     private String bookmark_id;
     ResponseEntity<Bookmark> response;
-    public DiscoverDiscardTask(OnTaskCompleted listener, String user_id, String bookmark_id, String token){
+    public RecommendDiscardTask(OnTaskCompleted listener, String user_id, String bookmark_id, String token){
         this.listener = listener;
         this.user_id = user_id;
         this.bookmark_id = bookmark_id;

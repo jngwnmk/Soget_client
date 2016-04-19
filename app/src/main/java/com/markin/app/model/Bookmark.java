@@ -1,12 +1,15 @@
 package com.markin.app.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
-public class Bookmark{
+public class Bookmark implements Parcelable{
     private String id;
     private String title;
     private String url;
@@ -22,6 +25,8 @@ public class Bookmark{
     private List<String> tags;
     private List<String> category;
     private String markinId;
+
+
 
     public Bookmark() {
         id = "";
@@ -77,6 +82,64 @@ public class Bookmark{
         this.category = category;
         this.markinId = markinId;
     }
+
+    public Bookmark(Parcel in){
+        readFromParcel(in);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(title);
+        parcel.writeString(url);
+        parcel.writeString(img_url);
+        parcel.writeString(description);
+        parcel.writeString(initUserId);
+        parcel.writeString(initUserName);
+        parcel.writeString(initUserNickName);
+        parcel.writeList(followers);
+        parcel.writeLong(date);
+        parcel.writeByte((byte) (privacy ? 1 : 0));
+        parcel.writeList(comments);
+        parcel.writeList(tags);
+        parcel.writeList(category);
+        parcel.writeString(markinId);
+    }
+
+    private void readFromParcel(Parcel in){
+
+        id = in.readString();
+        title  = in.readString();
+        url = in.readString();
+        img_url = in.readString();
+        description = in.readString();
+        initUserId = in.readString();
+        initUserName = in.readString();
+        initUserNickName = in.readString();
+        followers = in.readArrayList(null);
+        date = in.readLong();
+        privacy = in.readByte() != 0;
+        comments = in.readArrayList(null);
+        tags = in.readArrayList(null);
+        category = in.readArrayList(null);
+        markinId = in.readString();
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Bookmark createFromParcel(Parcel in) {
+            return new Bookmark(in);
+        }
+
+        public Bookmark[] newArray(int size) {
+            return new Bookmark[size];
+        }
+    };
+
 
     @Override
     public String toString() {
@@ -232,6 +295,8 @@ public class Bookmark{
     public void setMarkinId(String markinId) {
         this.markinId = markinId;
     }
+
+
 }
 
 

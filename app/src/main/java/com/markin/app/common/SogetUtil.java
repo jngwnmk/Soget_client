@@ -40,10 +40,10 @@ public class SogetUtil {
                 result = commentformat.format(date);
             } else {
                 if(diffHours>0){
-                    result = diffHours+"h";
+                    result = diffHours+" hours";
                 } else {
                     if(diffMinutes>0){
-                        result = diffMinutes +"m";
+                        result = diffMinutes +" mins";
                     } else {
                         result = "now";
                     }

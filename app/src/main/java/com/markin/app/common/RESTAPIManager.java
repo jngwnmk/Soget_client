@@ -9,7 +9,7 @@ import org.springframework.http.HttpHeaders;
  */
 public class RESTAPIManager {
 
-    public final static String base_url = "http://52.68.175.130/";
+    public final static String base_url = "http://socket-env.ap-northeast-1.elasticbeanstalk.com/";
     public final static String auth_url = base_url+"oauth/token";
     public final static String user_url = base_url+"user/";
     public final static String user_info_url = user_url+"info/";
@@ -19,7 +19,7 @@ public class RESTAPIManager {
     public final static String bookmark_url = base_url+"bookmark/";
     public final static String bookmark_friend_url = bookmark_url+"friend/";
     public final static String trashcan_url = bookmark_url+"trashcan/";
-    public final static String discover_url = bookmark_url+"home/friends/";//{user_id}/{date}/{page_no}
+    public final static String discover_url = bookmark_url+"feed/";//{user_id}/{date}/{page_no}
     public final static String privacy_change_url = bookmark_url+"privacy/";//{user_id}/{markin_id}
 
     public final static String friends_url = user_url+"friends/";
@@ -30,6 +30,8 @@ public class RESTAPIManager {
 
     public final static String invitation_url = user_url+"invitation/";
     public final static String invitation_use_url = invitation_url + "send/";
+
+    public final static String category_url = base_url+"category/all";
 
     public final static String comment_url = bookmark_url+"comment/";
     public final static String user_search_url = user_url+"search/";

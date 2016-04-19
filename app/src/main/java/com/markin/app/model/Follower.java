@@ -1,13 +1,48 @@
 package com.markin.app.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class Follower{
+public class Follower implements Parcelable{
 	private String userKeyId;        //Unique Object Id
 	private String userName;      		//User name
 	private String userId;  			//User id in Markin
 	private ArrayList<String> tags;
 	private boolean privacy;
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel parcel, int i) {
+		parcel.writeString(userKeyId);
+		parcel.writeString(userName);
+		parcel.writeString(userId);
+		parcel.writeStringList(tags);
+		parcel.writeByte((byte) (privacy ? 1 : 0));
+	}
+
+	private void readFromParcel(Parcel in){
+		userKeyId = in.readString();
+		userName = in.readString();
+		userId = in.readString();
+		in.readStringList(tags);
+		privacy = in.readByte() != 0;
+	}
+
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+		public Follower createFromParcel(Parcel in) {
+			return new Follower(in);
+		}
+
+		public Follower[] newArray(int size) {
+			return new Follower[size];
+		}
+	};
 
     public Follower(){
         userKeyId ="";
@@ -17,6 +52,9 @@ public class Follower{
         privacy = false;
     }
 
+	public Follower(Parcel in){
+		readFromParcel(in);
+	}
 
     public Follower(String userKeyId, String userName, String userId, ArrayList<String> tags, boolean privacy) {
         this.userKeyId = userKeyId;
@@ -56,6 +94,7 @@ public class Follower{
 	public void setPrivacy(boolean privacy) {
 		this.privacy = privacy;
 	}
+
 
 
 }

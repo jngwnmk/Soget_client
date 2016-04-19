@@ -105,5 +105,13 @@
     <string name="change_to_public">전체공개 설정되었습니다.</string>
 
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+
+    <!--Category-->
+    <string name="category_title">Category</string>
+
 
 </resources>
