@@ -1,9 +1,11 @@
 package com.markin.app.view.Fragment;
 
-import android.app.Fragment;
+
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +14,20 @@ import android.widget.ListView;
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
+import com.markin.app.common.StaticValues;
 import com.markin.app.connector.category.CategoryGetTask;
 import com.markin.app.model.Category;
 import com.markin.app.model.User;
 import com.markin.app.view.Adapter.CategoryAdapter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by wonmook on 2016. 4. 12..
  */
-public class CategoryFragment extends Fragment{
+public class CategoryFragment extends Fragment {
     private ArrayList<Category> categories = new ArrayList<Category>();
     private ListView categoryListView = null;
     private CategoryAdapter categoryAdapter =null;
@@ -56,6 +61,7 @@ public class CategoryFragment extends Fragment{
                 if(object!=null){
                     categories.clear();
                     categories.addAll((ArrayList<Category>) object);
+                    saveCategory((ArrayList<Category>)object);
                     categoryListView.setAdapter(categoryAdapter);
                     categoryAdapter.notifyDataSetChanged();
                 }
@@ -75,6 +81,17 @@ public class CategoryFragment extends Fragment{
         } catch (NullPointerException ex){
             ex.printStackTrace();
         }
+    }
+
+    private void saveCategory(ArrayList<Category> categories){
+        HashSet<String> categorySet = new HashSet<>();
+        for(int i = 0 ; i < categories.size() ; ++i) {
+            categorySet.add(categories.get(i).getType());
+        }
+        SharedPreferences prefs = getActivity().getSharedPreferences(StaticValues.PREFERENCE.CATEGORY.NAME, getActivity().MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putStringSet(StaticValues.PREFERENCE.CATEGORY.TITLE, categorySet);
+        editor.commit();
     }
 
 }

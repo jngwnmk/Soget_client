@@ -1,5 +1,6 @@
 package com.markin.app.view.Fragment;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,9 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.swipe.SwipeLayout;
 import com.markin.app.R;
+import com.markin.app.callback.FragmentChangeListener;
 import com.markin.app.callback.PageMove;
+import com.markin.app.common.StaticValues;
 import com.markin.app.model.Bookmark;
+import com.markin.app.view.Activity.CommentActivity;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -29,11 +34,54 @@ public class RecommendFragment extends Fragment {
     private TextView commentNumTv = null;
     private ImageView backgroundIv = null;
 
+    private Bookmark bookmark = null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.recommend_list_item, container, false);
         Bundle bundle = this.getArguments();
-        Bookmark bookmark = bundle.getParcelable("bookmark");
+        bookmark = bundle.getParcelable("bookmark");
+
+        SwipeLayout swipeLayout =  (SwipeLayout)v.findViewById(R.id.surfaceview);
+
+        //set show mode.
+        swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+
+        //add drag edge.(If the BottomView has 'layout_gravity' attribute, this line is unnecessary)
+        swipeLayout.setRightSwipeEnabled(false);
+        swipeLayout.addDrag(SwipeLayout.DragEdge.Bottom, v.findViewById(R.id.bottom_wrapper_down));
+        swipeLayout.addDrag(SwipeLayout.DragEdge.Top, v.findViewById(R.id.bottom_wrapper_up));
+
+        swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+            @Override
+            public void onClose(SwipeLayout layout) {
+                //when the SurfaceView totally cover the BottomView.
+            }
+
+            @Override
+            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+                //you are swiping.
+            }
+
+            @Override
+            public void onStartOpen(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                //when the BottomView totally show.
+            }
+
+            @Override
+            public void onStartClose(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+                //when user's hand released.
+            }
+        });
 
         fromNameTv = (TextView)v.findViewById(R.id.recommend_user_name);
         fromNameTv.setTextColor(getResources().getColor(R.color.sub_text_color));
@@ -56,6 +104,13 @@ public class RecommendFragment extends Fragment {
 
         commentNumTv  = (TextView)v.findViewById(R.id.recommend_comment_num);
         commentNumTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
+        commentNumTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openComment(bookmark.getId(), bookmark.getComments().size());
+            }
+        });
+
 
         backgroundIv = (ImageView)v.findViewById(R.id.recommend_background_img);
 
@@ -83,5 +138,15 @@ public class RecommendFragment extends Fragment {
 
 
         return v;
+    }
+
+    private void openComment(String bookmark_id, int size){
+        Intent intent = new Intent(getContext(), CommentActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle extras = new Bundle();
+        extras.putString(StaticValues.BOOKMARKID,bookmark_id);
+        extras.putInt(StaticValues.MARKINNUM, size);
+        intent.putExtras(extras);
+        getActivity().startActivity(intent);
     }
 }

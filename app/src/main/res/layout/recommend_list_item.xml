@@ -1,110 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
-    >
-    <ImageView
+
+    tools:context="com.markin.app.view.Activity.MainActivity">
+    <com.daimajia.swipe.SwipeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recommend_background_img"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/main_color_66"></LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:paddingLeft="@dimen/feed_recommend_card_padding_left"
-        android:paddingRight="@dimen/feed_recommend_card_padding_right"
-        android:paddingBottom="@dimen/feed_recommend_card_padding_bottom"
-        >
+        android:id="@+id/surfaceview"
+        android:background="@android:color/darker_gray">
+
+        <!-- Bottom View Start-->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:background="#66ddff00"
+            android:id="@+id/bottom_wrapper_dummy"
+            android:layout_width="0dp"
+            android:weightSum="1"
+            android:layout_height="100dp"
             android:orientation="horizontal">
+            <!--What you want to show-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="via "
-                android:textSize="@dimen/feed_recommend_card_user_name_text_size"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:id="@+id/recommend_user_name"
-                android:textSize="@dimen/feed_recommend_card_user_name_text_size"/>
+                android:text="text1_up"/>
 
         </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:id="@+id/recommend_title"
-            android:layout_marginTop="@dimen/feed_recommend_card_title_margin_top"
-            android:textSize="@dimen/feed_recommend_card_title_text_size"
-            android:lines="1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="url"
-            android:id="@+id/recommend_url"
-            android:layout_marginTop="@dimen/feed_recommend_card_url_margin_top"
-            android:textSize="@dimen/feed_recommend_card_url_text_size"
-            android:lines="1"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="adfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfad"
-            android:ellipsize="end"
-            android:lines="3"
-            android:singleLine="false"
-            android:id="@+id/recommend_desc"
-            android:layout_marginTop="@dimen/feed_recommend_card_desc_margin_top"
-            android:textSize="@dimen/feed_recommend_card_desc_text_size"/>
 
         <LinearLayout
+            android:background="@color/main_background_color"
+            android:id="@+id/bottom_wrapper_up"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/feed_recommend_card_info_margin_top">
-            <TextView
+            android:weightSum="1"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <!--What you want to show-->
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="23"
-                android:id="@+id/recommend_like_num"
-                android:drawableLeft="@drawable/like_icon_feed_pressed"
-                android:drawablePadding="4dp"
-                android:textSize="@dimen/feed_recommend_card_like_text_size"
-
+                android:src="@drawable/socket_icon_markin"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="8"
-                android:id="@+id/recommend_socket_num"
-                android:drawableLeft="@drawable/socket_icon_pressed"
-                android:drawablePadding="4dp"
-                android:layout_marginLeft="@dimen/feed_recommend_card_info_between_margin"
-                android:textSize="@dimen/feed_recommend_card_socket_text_size"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="9"
-                android:id="@+id/recommend_comment_num"
-                android:drawableLeft="@drawable/comment_icon_pressed"
-                android:drawablePadding="4dp"
-                android:layout_marginLeft="@dimen/feed_recommend_card_info_between_margin"
-                android:textSize="@dimen/feed_recommend_card_comment_text_size"/>
 
         </LinearLayout>
-    </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/main_background_color"
+            android:id="@+id/bottom_wrapper_down"
+            android:layout_width="match_parent"
+            android:weightSum="1"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <!--What you want to show-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/socket_icon_discard"
+                />
+
+        </LinearLayout>
+        <!-- Bottom View End-->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dark_grey"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recommend_background_img"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/main_color_66"></LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:paddingLeft="@dimen/feed_recommend_card_padding_left"
+                android:paddingRight="@dimen/feed_recommend_card_padding_right"
+                android:paddingBottom="@dimen/feed_recommend_card_padding_bottom"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="via "
+                        android:textSize="@dimen/feed_recommend_card_user_name_text_size"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:id="@+id/recommend_user_name"
+                        android:textSize="@dimen/feed_recommend_card_user_name_text_size"/>
+
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:id="@+id/recommend_title"
+                    android:layout_marginTop="@dimen/feed_recommend_card_title_margin_top"
+                    android:textSize="@dimen/feed_recommend_card_title_text_size"
+                    android:lines="1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="url"
+                    android:id="@+id/recommend_url"
+                    android:layout_marginTop="@dimen/feed_recommend_card_url_margin_top"
+                    android:textSize="@dimen/feed_recommend_card_url_text_size"
+                    android:lines="1"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="adfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfadfad"
+                    android:ellipsize="end"
+                    android:lines="3"
+                    android:singleLine="false"
+                    android:id="@+id/recommend_desc"
+                    android:layout_marginTop="@dimen/feed_recommend_card_desc_margin_top"
+                    android:textSize="@dimen/feed_recommend_card_desc_text_size"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/feed_recommend_card_info_margin_top">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="23"
+                        android:id="@+id/recommend_like_num"
+                        android:drawableLeft="@drawable/like_icon_feed_pressed"
+                        android:drawablePadding="4dp"
+                        android:textSize="@dimen/feed_recommend_card_like_text_size"
+
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8"
+                        android:id="@+id/recommend_socket_num"
+                        android:drawableLeft="@drawable/socket_icon_pressed"
+                        android:drawablePadding="4dp"
+                        android:layout_marginLeft="@dimen/feed_recommend_card_info_between_margin"
+                        android:textSize="@dimen/feed_recommend_card_socket_text_size"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9"
+                        android:id="@+id/recommend_comment_num"
+                        android:drawableLeft="@drawable/comment_icon_pressed"
+                        android:drawablePadding="4dp"
+                        android:layout_marginLeft="@dimen/feed_recommend_card_info_between_margin"
+                        android:textSize="@dimen/feed_recommend_card_comment_text_size"/>
+
+                </LinearLayout>
+            </LinearLayout>
 
 
 
-</FrameLayout>
+        </FrameLayout>
+    </com.daimajia.swipe.SwipeLayout>
+</RelativeLayout>

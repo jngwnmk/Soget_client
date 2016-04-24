@@ -1,6 +1,7 @@
 package com.markin.app.view.component.PagedHeadListView;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,14 +62,19 @@ public class PagedHeadIndicatorNumber extends AbstractPagedHeadIndicator{
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         indicatorView = (LinearLayout) inflater.inflate(R.layout.recommend_num_indicator, null);
         currentPageTv = (TextView)indicatorView.findViewById(R.id.recommend_current_idx);
+        currentPageTv.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
+        currentPageTv.setTextColor(context.getResources().getColor(R.color.sub_text_color));
+
         totalPageTv = (TextView)indicatorView.findViewById(R.id.recommend_total_num);
+        totalPageTv.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
+
         addView(indicatorView, indicatorParams);
     }
 
     @Override
     public void addPage() {
         pageCount++;
-        totalPageTv.setText(String.valueOf(pageCount));
+        totalPageTv.setText(" / "+String.valueOf(pageCount));
     }
 
     @Override

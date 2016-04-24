@@ -79,6 +79,7 @@ public class CommentAdapter extends BaseAdapter{
         public TextView getUserInfoTv(){
             if(userInfoTv==null){
                 userInfoTv = (TextView)base.findViewById(R.id.comment_user_info_tv);
+                userInfoTv.setTextColor(mContext.getResources().getColor(R.color.sub_text_color_80));
                 userInfoTv.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
 
             }
@@ -88,7 +89,8 @@ public class CommentAdapter extends BaseAdapter{
         public TextView getDateTv(){
             if(dateTv==null){
                 dateTv = (TextView)base.findViewById(R.id.comment_date_tv);
-                dateTv.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+                dateTv.setTextColor(mContext.getResources().getColor(R.color.charcol_text_color_33));
+                dateTv.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
 
             }
             return dateTv;
@@ -97,6 +99,7 @@ public class CommentAdapter extends BaseAdapter{
         public TextView getCommentTv(){
             if(commentTv==null){
                 commentTv = (TextView)base.findViewById(R.id.comment_content_tv);
+                commentTv.setTextColor(mContext.getResources().getColor(R.color.charcol_text_color_66));
                 commentTv.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
 
             }

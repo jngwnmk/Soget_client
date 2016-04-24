@@ -2,28 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/popup_box"
-    android:paddingTop="20dp"
-    android:paddingLeft="19.67dp"
-    android:paddingRight="19.67dp"
-    android:paddingBottom="20dp">
+    android:background="@drawable/pop_background"
+    >
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/popup_input_box"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="6dp">
-
+        android:background="@drawable/pop_header"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/popup_just_add"
+            android:layout_gravity="left|center_vertical"
+            android:paddingLeft="@dimen/popup_left_padding"
+            android:textSize="@dimen/popup_just_add_size"
+            android:id="@+id/just_add_tv"/>
         <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/socket_icon_card"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/popup_confirm"
+            android:layout_gravity="right|center_vertical"
+            android:paddingRight="@dimen/popup_right_padding"
+            android:textSize="@dimen/popup_complete_size"
+            android:id="@+id/add_complete_tv"/>
+        <!--<ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/popup_lock_icon"
             android:paddingLeft="13.67dp"
             android:paddingTop="14dp"
             android:paddingRight="9.33dp"
-            android:paddingBottom="14dp" />
-        <Spinner
+            android:paddingBottom="14dp" />-->
+        <!--<Spinner
             android:layout_marginRight="13.67dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,12 +48,29 @@
             android:prompt="@color/transparent"
             android:spinnerMode="dropdown"
 
-            />
+            />-->
 
 
-    </LinearLayout>
-
-    <LinearLayout
+    </FrameLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="@string/popup_hint"
+        android:paddingRight="@dimen/popup_right_padding"
+        android:paddingLeft="@dimen/popup_left_padding"
+        android:textColorHint="@color/light_text_color"
+        android:textSize="@dimen/popup_comment_size"
+        android:id="@+id/comment_et"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/category_spinner"
+        android:layout_gravity="center_horizontal"
+        android:prompt="@color/transparent"
+        android:spinnerMode="dropdown"
+        />
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/popup_input_box"
@@ -68,9 +101,9 @@
             android:paddingRight="26.67dp"
             android:maxLines="1"
             android:gravity="center_vertical" />
-        </LinearLayout>
+    </LinearLayout>-->
 
-    <LinearLayout
+   <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/popup_input_box"
@@ -99,11 +132,11 @@
             android:lines="1"
             android:maxLines="1"
             android:gravity="center_vertical" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 
-    <Button
+    <!--<Button
         android:layout_marginTop="12.33dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -113,7 +146,7 @@
         android:text="@string/popup_confirm"
         android:textColor="@drawable/markin_confirm_tv_selector"
         android:textSize="16.66sp"
-        />
+        />-->
     <!--<TextView
         android:id="@+id/add_bookmark_btn_tv"
         android:layout_width="wrap_content"

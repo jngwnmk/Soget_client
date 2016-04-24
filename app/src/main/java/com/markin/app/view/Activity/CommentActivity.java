@@ -21,6 +21,8 @@ import com.markin.app.connector.comment.CommentGetTask;
 import com.markin.app.model.Comment;
 import com.markin.app.view.Adapter.CommentAdapter;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -29,9 +31,9 @@ import java.util.ArrayList;
 public class CommentActivity extends ActionBarActivity{
     private ImageButton backBtn =null;
     private LinearLayout headerBoarder = null;
-    private TextView markinNumTv = null;
     private EditText commentEt = null;
     private ImageButton addCommentBtn = null;
+    private TextView    addCommentTv  = null;
     private ListView commentList = null;
     private CommentAdapter commentAdapter = null;
     private ArrayList<Comment> comments = new ArrayList<Comment>();
@@ -55,8 +57,6 @@ public class CommentActivity extends ActionBarActivity{
     }
 
     private void initLayout() {
-        commentLayout = (LinearLayout)findViewById(R.id.comment_num_layout);
-        headerBoarder = (LinearLayout)findViewById(R.id.comment_header);
 
         backBtn = (ImageButton) findViewById(R.id.back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -65,19 +65,7 @@ public class CommentActivity extends ActionBarActivity{
                 finish();
             }
         });
-        markinNumTv = (TextView) findViewById(R.id.comment_markin_num_desc);
-        markinNumTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
 
-        if(markin_num==0){
-            markinNumTv.setText("");
-            commentLayout.setVisibility(View.GONE);
-            headerBoarder.setVisibility(View.GONE);
-
-        } else {
-            markinNumTv.setText(markin_num+"명이 MarkIn\' 했습니다.");
-            commentLayout.setVisibility(View.VISIBLE);
-            headerBoarder.setVisibility(View.VISIBLE);
-        }
         commentEt = (EditText) findViewById(R.id.comment_et);
         addCommentBtn = (ImageButton) findViewById(R.id.comment_add_btn);
         addCommentBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +95,10 @@ public class CommentActivity extends ActionBarActivity{
 
             }
         });
+        addCommentTv = (TextView)findViewById(R.id.comment_add_btn_tv);
+        addCommentTv.setTextColor(getResources().getColor(R.color.sub_text_color_80));
+        addCommentTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
+
         commentList = (ListView) findViewById(R.id.comment_list);
         commentAdapter = new CommentAdapter(getApplicationContext(), comments);
         commentList.setAdapter(commentAdapter);

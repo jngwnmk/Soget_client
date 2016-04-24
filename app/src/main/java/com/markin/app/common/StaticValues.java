@@ -15,4 +15,12 @@ public class StaticValues {
     public static String CONDITION ="condition";
     public static String PRIVACY = "privacy";
 
+    public static class PREFERENCE {
+        public static class CATEGORY{
+            public static String NAME = "category";
+            public static String TITLE = "category_title";
+        }
+    }
+
+
 }

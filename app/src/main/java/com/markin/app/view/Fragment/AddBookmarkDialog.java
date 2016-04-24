@@ -3,6 +3,7 @@ package com.markin.app.view.Fragment;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -15,18 +16,24 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
+import com.markin.app.common.StaticValues;
 import com.markin.app.connector.bookmark.BookmarkAddTask;
 import com.markin.app.connector.bookmark.BookmarkMakeTask;
 import com.markin.app.model.Bookmark;
 import com.markin.app.view.component.ConfirmToast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
@@ -36,15 +43,22 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
 
     private ArrayList<String> tags = new ArrayList<String>();
     private String  inputUrl = "";
-    private Spinner privacySpinner = null;
-    private EditText urlEt = null;
-    private EditText tagEt = null;
+    //private Spinner privacySpinner = null;
+    //private EditText urlEt = null;
+    //private EditText tagEt = null;
     private ArrayList<String> privacyType = null;
     private boolean privacy = false;
-    private Button addBookmarkBtn = null;
+    //private Button addBookmarkBtn = null;
     private OnTaskCompleted listener =null;
     private Bookmark refBookmark = null;
     private ProgressDialog pDialog;
+
+
+
+    private TextView completeTv = null;
+    private TextView justAddTv = null;
+    private EditText commentEt = null;
+    private Spinner categorySpinner = null;
 
 
     public OnTaskCompleted getListener() {
@@ -61,8 +75,15 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.popup_black_background);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.privacy_array, R.layout.privacy_spinner_item);//new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item, privacyType);
-        privacySpinner = (Spinner)rootView.findViewById(R.id.privacy_spinner);
+        justAddTv = (TextView)rootView.findViewById(R.id.just_add_tv);
+        completeTv = (TextView)rootView.findViewById(R.id.add_complete_tv);
+        commentEt = (EditText)rootView.findViewById(R.id.comment_et);
+        categorySpinner = (Spinner)rootView.findViewById(R.id.category_spinner);
+
+        setupView();
+
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.privacy_array, R.layout.privacy_spinner_item);//new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item, privacyType);
+        /*privacySpinner = (Spinner)rootView.findViewById(R.id.privacy_spinner);
 
         privacySpinner.setAdapter(adapter);
         privacySpinner.setOnItemSelectedListener(this);
@@ -147,12 +168,32 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
 
                 }
             }
-        });
+        });*/
         pDialog = new ProgressDialog(this.getActivity());
         pDialog.setMessage("Loading....");
 
         return rootView;
     }
+
+    private void setupView(){
+
+        justAddTv.setTextColor(getActivity().getResources().getColor(R.color.charcol_text_color));
+        justAddTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
+        completeTv.setTextColor(getActivity().getResources().getColor(R.color.charcol_text_color));
+        completeTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
+        commentEt.setTextColor(getActivity().getResources().getColor(R.color.light_text_color));
+        commentEt.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
+    }
+
+    private Set<String> loadCategory(){
+        SharedPreferences prefs = getActivity().getSharedPreferences(StaticValues.PREFERENCE.CATEGORY.NAME, getActivity().MODE_PRIVATE);
+        Set<String> categoryTitles = prefs.getStringSet(StaticValues.PREFERENCE.CATEGORY.TITLE, new HashSet<String>());
+        return categoryTitles;
+    }
+
     private String ensure_has_protocol(String a_url)
     {
         if (a_url.startsWith("http://")||a_url.startsWith("https://"))
@@ -191,9 +232,9 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
 
     public void updateInputUrl(String url){
         setInputUrl(url);
-        if(urlEt!=null){
-            urlEt.setText(getInputUrl());
-        }
+        //if(urlEt!=null){
+          //  urlEt.setText(getInputUrl());
+        //}
     }
 
     public String getInputUrl() {

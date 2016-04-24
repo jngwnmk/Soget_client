@@ -1,6 +1,7 @@
 package com.markin.app.view.Adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import com.markin.app.R;
 import com.markin.app.model.Bookmark;
 import com.markin.app.model.Category;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -69,6 +72,7 @@ public class ArchiveAdapter extends BaseAdapter{
 
     private class ArchiveWrapper{
         private View base;
+        private TextView via;
         private TextView fromName;
         private TextView archiveDate;
         private TextView title;
@@ -82,10 +86,20 @@ public class ArchiveAdapter extends BaseAdapter{
             this.base = base;
         }
 
+        public TextView getViaTv(){
+            if(via==null){
+                via = (TextView)base.findViewById(R.id.via_tv);
+                via.setTextColor(mContext.getResources().getColor(R.color.light_text_color));
+                via.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Light.otf"));
+
+            }
+            return via;
+        }
         public TextView getFromNameTv(){
             if(fromName==null){
                 fromName = (TextView)base.findViewById(R.id.from_name);
                 fromName.setTextColor(mContext.getResources().getColor(R.color.sub_text_color));
+                fromName.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
             }
             return fromName;
         }
@@ -94,6 +108,8 @@ public class ArchiveAdapter extends BaseAdapter{
             if(archiveDate==null){
                 archiveDate = (TextView)base.findViewById(R.id.archive_date);
                 archiveDate.setTextColor(mContext.getResources().getColor(R.color.main_text_color));
+                archiveDate.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
+
             }
             return archiveDate;
         }
@@ -102,6 +118,8 @@ public class ArchiveAdapter extends BaseAdapter{
             if(title==null){
                 title = (TextView)base.findViewById(R.id.archive_title);
                 title.setTextColor(mContext.getResources().getColor(R.color.main_text_color));
+                title.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
             }
             return title;
         }
@@ -109,7 +127,9 @@ public class ArchiveAdapter extends BaseAdapter{
         public TextView getUrlTv() {
             if(url==null){
                 url = (TextView)base.findViewById(R.id.archive_url);
-                url.setTextColor(mContext.getResources().getColor(R.color.main_text_color));
+                url.setTextColor(mContext.getResources().getColor(R.color.light_text_color));
+                url.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
+
             }
             return url;
         }

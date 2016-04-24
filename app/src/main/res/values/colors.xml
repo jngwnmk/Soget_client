@@ -4,6 +4,11 @@
     <color name="main_background_color">#36393a</color>
     <color name="main_text_color">#36393a</color>
     <color name="sub_text_color">#ff854a</color>
+    <color name="sub_text_color_80">#b8ff854a</color>
+    <color name="light_text_color">#808080</color>
+    <color name="charcol_text_color">#3e454c</color>
+    <color name="charcol_text_color_66">#a83e454c</color>
+    <color name="charcol_text_color_33">#543e454c</color>
 
     <color name="main_color">#3E454C</color>
     <color name="main_color_66">#A83E454C</color>

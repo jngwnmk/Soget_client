@@ -57,7 +57,7 @@
 
     <!--Comment-->
 
-    <string name="complete_btn">남기기</string>
+    <string name="complete_btn">입력</string>
     <string name="comment_hint">댓글을 입력하세요</string>
 
     <string name="home_title">HOME</string>
@@ -88,8 +88,11 @@
     <string name="invitation_app">앱 설치하기 : app.mark.in</string>
     <string name="invitation_note">카카오톡이 없는 친구에게는 초대장 번호만 알려주시면 됩니다</string>
     <string name="kakao_send_btn">카카오톡으로 보내기</string>
+
     <!--Add bookmark Dialog-->
-    <string name="popup_confirm">확인</string>
+    <string name="popup_confirm">완료</string>
+    <string name="popup_just_add">그냥 담기기</string>
+    <string name="popup_hint">어떤 점이 좋았는지 친구들에게도 얘기해주세요.</string>
 
     <!-- KaKao Talk-->
     <string name="kakao_app_key">2b01b8aa193b65aff676ab8f63e9b5e7</string>

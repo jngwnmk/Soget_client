@@ -1,18 +1,25 @@
 package com.markin.app.view.Activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.markin.app.R;
+import com.markin.app.callback.FragmentChangeListener;
+import com.markin.app.callback.OnTaskCompleted;
+import com.markin.app.view.Fragment.AddBookmarkDialog;
 import com.markin.app.view.Fragment.CategoryFragment;
 import com.markin.app.view.Fragment.DiscoverFragment;
 import com.markin.app.view.Fragment.FeedFragment;
@@ -24,11 +31,12 @@ import java.util.HashMap;
  * Created by wonmook on 2015-03-18.
  */
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentChangeListener{
 
     private String shared_url = "";
     public static boolean autoMarking = false;
     private TextView titleTv = null;
+    private ImageButton addBookmarkBtn = null;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -65,6 +73,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        addBookmarkBtn = (ImageButton)findViewById(R.id.add_bookmark_btn);
+        addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                android.app.FragmentManager fm = getFragmentManager();
+                AddBookmarkDialog addBookmarkDialog = new AddBookmarkDialog();
+                addBookmarkDialog.show(fm, "add_bookmark_dialog");
+            }
+        });
     }
 
     @Override
@@ -75,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         fragment = new CategoryFragment();
         titleTv.setText("Category");
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .commit();
@@ -92,7 +109,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showAddDialog() {
-        FragmentManager fm = getFragmentManager();
+        /*FragmentManager fm = getFragmentManager();
         DiscoverFragment discoverFragment = (DiscoverFragment)fm.findFragmentById(R.id.tab_1);
         if(discoverFragment!=null){
             if((!"".equals(shared_url))&&autoMarking){
@@ -100,7 +117,7 @@ public class MainActivity extends AppCompatActivity
                 shared_url = "";
                 autoMarking = false;
             }
-        }
+        }*/
     }
 
     @Override
@@ -130,7 +147,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .commit();
@@ -140,4 +157,18 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
+    /**
+     * Callback method when the fragment is changed.
+     *
+     * @param fragment
+     */
+    @Override
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_frame, fragment, fragment.toString());
+        fragmentTransaction.addToBackStack(fragment.toString());
+        fragmentTransaction.commit();
+    }
 }

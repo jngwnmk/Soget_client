@@ -20,6 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="via  "
+                android:id="@+id/via_tv"
                 android:textColor="@color/main_text_color"
                 />
             <TextView

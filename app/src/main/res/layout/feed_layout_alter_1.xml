@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoPanelHeight="68dp"
+    sothree:umanoPanelHeight="@dimen/feed_archive_top_height"
     sothree:umanoShadowHeight="4dp"
     sothree:umanoParallaxOffset="100dp"
     sothree:umanoDragView="@+id/dragView"
@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 recommendview:headerHeight="@dimen/feed_header_height"
-                recommendview:disableVerticalTouchOnHeader="false">
+                >
 
             </com.markin.app.view.component.RecommendView>
 
@@ -50,7 +50,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="1dp"
             android:orientation="horizontal">
 
             <TextView
@@ -77,7 +77,8 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:divider="@drawable/line_1">
         </ListView>
 
     </LinearLayout>

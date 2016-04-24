@@ -1,11 +1,12 @@
 package com.markin.app.view.Fragment;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -144,7 +145,7 @@ public class ArchiveFragment extends Fragment {
 
             }
         });
-        addBookmarkDialog.show(fm,"add_bookmark_dialog");
+        //addBookmarkDialog.show(fm,"add_bookmark_dialog");
     }
     private void updateBookmarkList(){
         getActivity().runOnUiThread(new Runnable() {

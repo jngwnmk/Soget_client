@@ -3,6 +3,9 @@
     <dimen name="header_title_size">18dp</dimen>
     <dimen name="header_height">58.7dp</dimen>
 
+    <!--Header-->
+    <dimen name="header_prev_left_padding">26.3dp</dimen>
+    <dimen name="header_title_text_size">18sp</dimen>
 
     <!--Category-->
     <dimen name="category_row_height">215dp</dimen>
@@ -27,6 +30,7 @@
     <dimen name="feed_archive_row_padding_left">38.3dp</dimen>
     <dimen name="feed_archive_row_padding_right">38.3dp</dimen>
     <dimen name="feed_archive_row_between_margin">13.3dp</dimen>
+    <dimen name="feed_archive_top_height">124dp</dimen>
 
     <dimen name="default_header_height">200dp</dimen>
     <dimen name="indicator_height">8dp</dimen>
@@ -41,6 +45,11 @@
     <dimen name="feed_recommend_card_desc_margin_top">12dp</dimen>
     <dimen name="feed_recommend_card_info_margin_top">13.3dp</dimen>
     <dimen name="feed_recommend_card_info_between_margin">13.3dp</dimen>
+    <dimen name="feed_recommend_card_page_margin_top">20.3dp</dimen>
+
+    <dimen name="feed_recommend_discard_icon_margin_top">42.7dp</dimen>
+
+
 
     <dimen name="feed_recommend_card_user_name_text_size">13.3sp</dimen>
     <dimen name="feed_recommend_card_title_text_size">21.3sp</dimen>
@@ -50,6 +59,28 @@
     <dimen name="feed_recommend_card_socket_text_size">14.7sp</dimen>
     <dimen name="feed_recommend_card_comment_text_size">14.7sp</dimen>
 
+    <!--Comment-->
+    <dimen name="comment_left_padding">7.7dp</dimen>
+    <dimen name="comment_right_padding">7.7dp</dimen>
+    <dimen name="comment_item_left_padding">30.3dp</dimen>
+    <dimen name="comment_item_right_padding">30.3dp</dimen>
+    <dimen name="comment_input_top_padding">13dp</dimen>
+    <dimen name="comment_input_bottom_padding">13dp</dimen>
+    <dimen name="comment_input_left_padding">30dp</dimen>
+    <dimen name="comment_input_right_padding">30dp</dimen>
+    <dimen name="comment_input_text_size">15.3sp</dimen>
+    <dimen name="comment_item_name_text_size">14sp</dimen>
+    <dimen name="comment_item_date_text_size">12sp</dimen>
+    <dimen name="comment_item_content_text_size">15.3sp</dimen>
+
+    <!--Pop up-->
+    <dimen name="popup_left_padding">30dp</dimen>
+    <dimen name="popup_right_padding">30dp</dimen>
+    <dimen name="popup_just_add_size">16sp</dimen>
+    <dimen name="popup_complete_size">16sp</dimen>
+    <dimen name="popup_comment_size">14.7sp</dimen>
+    <dimen name="popup_category_spinner_size">16sp</dimen>
+    
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="list_archive_image_size_w">120dp</dimen>
