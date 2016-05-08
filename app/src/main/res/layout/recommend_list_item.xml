@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/recommend_card_layout"
 
     tools:context="com.markin.app.view.Activity.MainActivity">
     <com.daimajia.swipe.SwipeLayout
@@ -140,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:text="23"
                         android:id="@+id/recommend_like_num"
-                        android:drawableLeft="@drawable/like_icon_feed_pressed"
+                        android:drawableLeft="@drawable/like_icon"
                         android:drawablePadding="4dp"
                         android:textSize="@dimen/feed_recommend_card_like_text_size"
 
@@ -150,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:text="8"
                         android:id="@+id/recommend_socket_num"
-                        android:drawableLeft="@drawable/socket_icon_pressed"
+                        android:drawableLeft="@drawable/socket_icon"
                         android:drawablePadding="4dp"
                         android:layout_marginLeft="@dimen/feed_recommend_card_info_between_margin"
                         android:textSize="@dimen/feed_recommend_card_socket_text_size"
@@ -160,7 +161,7 @@
                         android:layout_height="wrap_content"
                         android:text="9"
                         android:id="@+id/recommend_comment_num"
-                        android:drawableLeft="@drawable/comment_icon_pressed"
+                        android:drawableLeft="@drawable/comment_icon"
                         android:drawablePadding="4dp"
                         android:layout_marginLeft="@dimen/feed_recommend_card_info_between_margin"
                         android:textSize="@dimen/feed_recommend_card_comment_text_size"/>

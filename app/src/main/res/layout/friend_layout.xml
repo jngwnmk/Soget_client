@@ -5,44 +5,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/header"
-        >
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/setting_btn"
-            android:src="@drawable/setting"
-            android:background="@color/transparent"
-            android:layout_gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp" />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/friend"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/friend_search_btn"
-            android:src="@drawable/search_icon"
-            android:background="@color/transparent"
-            android:layout_gravity="center"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/setting_background"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp">
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,75 +18,49 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:paddingTop="19.67dp"
-            android:paddingBottom="19.67dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/invitation_use_btn"
-                android:src="@drawable/shadow_green_btn_selector"
-                android:background="@color/transparent"
-                />
+            android:paddingTop="21dp"
+            android:paddingLeft="30.7dp"
+            android:paddingRight="21dp"
+            android:paddingBottom="21.3dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_invitation"
-                android:layout_gravity="center_vertical"/>
-            <LinearLayout
+
+                <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                >
+                android:layout_gravity="center_vertical">
                 <TextView
                     android:id="@+id/invitation_tv"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/main_color"
                     android:textSize="16.23sp"
-                    android:text="@string/invitation"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/main_color_66"
-                    android:layout_marginTop="7.33dp"
-                    android:textSize="13.62sp"
-                    android:text="10장"
-                    android:id="@+id/invitation_num_tv" />
-            </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:drawableRight="@drawable/enter_btn"
-                    android:text="@string/invitation_user"
-                    android:textSize="12.17sp"
-                    android:textColor="@color/main_color"
-                    android:drawablePadding="10dp"
-                    android:layout_gravity="center|right"
-                    android:gravity="center"
-                    android:id="@+id/invitation_use_tv"
-                    />
+                    android:text="@string/invitation"
+                    android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_icon"/>
+                </LinearLayout>
             </LinearLayout>
 
         </FrameLayout>
         </LinearLayout>
-    <ListView
-        android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/friend_list"
-        android:dividerHeight="1dp"
-        android:divider="@drawable/setting_line_seperator"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"></ListView>
+        <ExpandableListView
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/friend_list"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:dividerHeight="0.3dp"
+            android:childDivider="@color/charcol_text_color_33">
+        </ExpandableListView>
     </LinearLayout>
 </LinearLayout>

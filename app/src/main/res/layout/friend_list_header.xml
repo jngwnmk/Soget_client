@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="@dimen/friend_list_header_height"
+    android:background="@color/white"
+    android:id="@+id/friend_list_background"
+    android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/friend_list_header_title"
+            android:text="연결 중인 친구"
+            android:paddingLeft="@dimen/friend_list_header_left_padding"
+            android:paddingTop="10.7dp"
+            android:paddingBottom="10.7dp"
+            android:textSize="@dimen/friend_list_header_text_size"
+            android:textColor="@color/sub_text_color_80"/>
+
+</LinearLayout>

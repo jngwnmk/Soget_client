@@ -16,6 +16,7 @@
     <com.markin.app.view.component.PagedHeadListView.PagedHeadIndicatorNumber
         android:id="@+id/headerViewIndicator"
         android:layout_width = "match_parent"
-        android:layout_height = "match_parent"/>
+        android:layout_height = "match_parent"
+        />
 
 </LinearLayout>

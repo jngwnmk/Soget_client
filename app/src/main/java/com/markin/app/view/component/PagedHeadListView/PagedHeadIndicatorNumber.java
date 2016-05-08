@@ -2,7 +2,9 @@ package com.markin.app.view.component.PagedHeadListView;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.markin.app.view.component.PagedHeadListView.utils.DisplayUtils;
  * Created by wonmook on 2016. 4. 13..
  */
 public class PagedHeadIndicatorNumber extends AbstractPagedHeadIndicator{
+
 
 
     private LinearLayout indicatorView;
@@ -74,7 +77,13 @@ public class PagedHeadIndicatorNumber extends AbstractPagedHeadIndicator{
     @Override
     public void addPage() {
         pageCount++;
-        totalPageTv.setText(" / "+String.valueOf(pageCount));
+        totalPageTv.setText(" / " + String.valueOf(pageCount));
+    }
+
+    @Override
+    public void removePage() {
+        pageCount--;
+        totalPageTv.setText(" / " + String.valueOf(pageCount));
     }
 
     @Override
@@ -87,18 +96,88 @@ public class PagedHeadIndicatorNumber extends AbstractPagedHeadIndicator{
 
     }
 
+    /**
+     * This method will be invoked when the current page is scrolled, either as part
+     * of a programmatically initiated smooth scroll or a user initiated touch scroll.
+     *
+     * @param position             Position index of the first page currently being displayed.
+     *                             Page position+1 will be visible if positionOffset is nonzero.
+     * @param positionOffset       Value from [0, 1) indicating the offset from the page at position.
+     * @param positionOffsetPixels Value in pixels indicating the offset from position.
+     */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
 
+    /**
+     * This method will be invoked when a new page becomes selected. Animation is not
+     * necessarily complete.
+     *
+     * @param position Position index of the new selected page.
+     */
     @Override
     public void onPageSelected(int position) {
-        currentPageTv.setText(String.valueOf(position+1));
+        currentPageTv.setText(String.valueOf(position + 1));
     }
 
+    /**
+     * Called when the scroll state changes. Useful for discovering when the user
+     * begins dragging, when the pager is automatically settling to the current page,
+     * or when it is fully stopped/idle.
+     *
+     * @param state The new scroll state.
+     * @see ViewPager#SCROLL_STATE_IDLE
+     * @see ViewPager#SCROLL_STATE_DRAGGING
+     * @see ViewPager#SCROLL_STATE_SETTLING
+     */
     @Override
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    /*@Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Log.i("", "onPageScrolled: " + position);
+
+        CampaignPagerFragment sampleFragment = (CampaignPagerFragment) ((CampaignPagerAdapter) getAdapter()).getRegisteredFragment(position);
+
+
+        float scale = 1 - (positionOffset * RATIO_SCALE);
+
+        // Just a shortcut to findViewById(R.id.image).setScale(scale);
+        sampleFragment.scaleImage(scale);
+
+
+        if (position + 1 < pager.getAdapter().getCount()) {
+            sampleFragment = (CampaignPagerFragment) ((CampaignPagerAdapter) pager.getAdapter()).getRegisteredFragment(position + 1);
+            scale = positionOffset * RATIO_SCALE + (1 - RATIO_SCALE);
+            sampleFragment.scaleImage(scale);
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.i("", "onPageSelected: " + position);
+        currentPageTv.setText(String.valueOf(position + 1));
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        Log.i("", "onPageScrollStateChanged: " + state);
+        if (state == ViewPager.SCROLL_STATE_IDLE) {
+            CampaignPagerFragment fragment = (CampaignPagerFragment) ((CampaignPagerAdapter) pager.getAdapter()).getRegisteredFragment(pager.getCurrentItem());
+            fragment.scaleImage(1);
+            if (pager.getCurrentItem() > 0) {
+                fragment = (CampaignPagerFragment) ((CampaignPagerAdapter) pager.getAdapter()).getRegisteredFragment(pager.getCurrentItem() - 1);
+                fragment.scaleImage(1 - RATIO_SCALE);
+            }
+
+            if (pager.getCurrentItem() + 1 < pager.getAdapter().getCount()) {
+                fragment = (CampaignPagerFragment) ((CampaignPagerAdapter) pager.getAdapter()).getRegisteredFragment(pager.getCurrentItem() + 1);
+                fragment.scaleImage(1 - RATIO_SCALE);
+            }
+        }
+
+    }*/
 }

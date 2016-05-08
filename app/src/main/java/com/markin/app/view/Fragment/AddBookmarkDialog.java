@@ -1,21 +1,22 @@
 package com.markin.app.view.Fragment;
 
-import android.app.DialogFragment;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Patterns;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,18 +24,15 @@ import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
 import com.markin.app.common.StaticValues;
-import com.markin.app.connector.bookmark.BookmarkAddTask;
-import com.markin.app.connector.bookmark.BookmarkMakeTask;
+import com.markin.app.connector.category.CategoryGetTask;
 import com.markin.app.model.Bookmark;
-import com.markin.app.view.component.ConfirmToast;
-
-import org.w3c.dom.Text;
+import com.markin.app.model.Category;
+import com.markin.app.model.User;
+import com.markin.app.view.Adapter.AddBookmarkPageAdapter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 /**
  * Created by wonmook on 2015-03-22.
@@ -54,12 +52,18 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
     private ProgressDialog pDialog;
 
 
-
+    private ArrayList<Category> categories = new ArrayList<>();
     private TextView completeTv = null;
     private TextView justAddTv = null;
     private EditText commentEt = null;
-    private Spinner categorySpinner = null;
+    private TextView categoryTv = null;
+    private FrameLayout categorySelector = null;
 
+    private FrameLayout addFragmentLayout = null;
+
+
+    private ViewPager viewPager;
+    private AddBookmarkPageAdapter addBookmarkPageAdapter;
 
     public OnTaskCompleted getListener() {
         return listener;
@@ -71,16 +75,22 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View rootView = inflater.inflate(R.layout.add_bookmark_dialog,container, false);
+        View rootView = inflater.inflate(R.layout.add_bookmark_dialog_1, container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.popup_black_background);
-
-        justAddTv = (TextView)rootView.findViewById(R.id.just_add_tv);
+        /*justAddTv = (TextView)rootView.findViewById(R.id.just_add_tv);
         completeTv = (TextView)rootView.findViewById(R.id.add_complete_tv);
         commentEt = (EditText)rootView.findViewById(R.id.comment_et);
-        categorySpinner = (Spinner)rootView.findViewById(R.id.category_spinner);
+        categoryTv = (TextView)rootView.findViewById(R.id.category_tv);
+        categorySelector = (FrameLayout)rootView.findViewById(R.id.category_selector);
 
-        setupView();
+
+        setupView();*/
+
+        viewPager = (ViewPager)rootView.findViewById(R.id.add_dialog_pager);
+        addBookmarkPageAdapter = new AddBookmarkPageAdapter(getActivity().getSupportFragmentManager());
+        viewPager.setAdapter(addBookmarkPageAdapter);
+
 
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.privacy_array, R.layout.privacy_spinner_item);//new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item, privacyType);
         /*privacySpinner = (Spinner)rootView.findViewById(R.id.privacy_spinner);
@@ -171,21 +181,69 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
         });*/
         pDialog = new ProgressDialog(this.getActivity());
         pDialog.setMessage("Loading....");
+        getGetegoryList();
 
         return rootView;
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        listener.onTaskCompleted(null);
+    }
+
     private void setupView(){
 
-        justAddTv.setTextColor(getActivity().getResources().getColor(R.color.charcol_text_color));
+        justAddTv.setTextColor(getActivity().getResources().getColor(R.color.charcol_text_color_33));
         justAddTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
 
-        completeTv.setTextColor(getActivity().getResources().getColor(R.color.charcol_text_color));
+        completeTv.setTextColor(getActivity().getResources().getColor(R.color.charcol_text_color_66));
         completeTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
 
         commentEt.setTextColor(getActivity().getResources().getColor(R.color.light_text_color));
         commentEt.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+        //commentEt.getBackground().mutate().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
 
+        categoryTv.setTextColor(getActivity().getResources().getColor(R.color.charcol_text_color_80));
+        categoryTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
+
+        categorySelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Touch Category", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void getGetegoryList(){
+        OnTaskCompleted onTaskCompleted;
+        onTaskCompleted = new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(Object object) {
+                if(object!=null){
+                    categories.clear();
+                    categories.addAll((ArrayList<Category>) object);
+                    if(categories.size()!=0){
+                        categoryTv.setText(categories.get(0).getType());
+                    }
+                }
+                pDialog.dismiss();
+            }
+        };
+
+        try{
+            User user = AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+            if(user!=null){
+                String user_id = user.getUserId();
+                String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+                pDialog.show();
+                new CategoryGetTask(onTaskCompleted,user_id, token).execute();
+            }
+
+        } catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
     }
 
     private Set<String> loadCategory(){

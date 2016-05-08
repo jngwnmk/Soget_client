@@ -34,7 +34,9 @@
         </activity>
         <activity
             android:name="com.markin.app.view.Activity.WebViewActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" >
+
+            </activity>
         <activity
             android:name="com.markin.app.view.Activity.CommentActivity"
             android:theme="@style/AppTheme" />
@@ -46,10 +48,6 @@
             android:name="com.markin.app.view.Activity.FriendArchiveActivity"
             android:theme="@style/AppTheme">
         </activity>
-        <activity android:name="com.markin.app.view.Activity.FriendSearchActivity"
-            android:theme="@style/AppTheme">
-
-            </activity>
         <activity android:name="com.markin.app.view.Activity.InvitatonSendActivity"
             android:theme="@style/AppTheme">
 
@@ -63,14 +61,10 @@
             android:theme="@style/AppTheme">
            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
+
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -80,6 +74,16 @@
 
 
         </activity>
+
+        <activity android:name=".view.Activity.AddBookmarkActivity"
+            android:theme="@android:style/Theme.Translucent">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="com.markin.app.view.Activity.TutorialActivity"
             android:theme="@style/AppTheme">
         </activity>
@@ -91,6 +95,9 @@
         <activity android:name="com.markin.app.view.Activity.NormalWebViewActivity"
              android:theme="@style/AppTheme">
         </activity>
+
+        <activity android:name=".view.Activity.FeedActivity"
+            android:theme="@style/AppTheme"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

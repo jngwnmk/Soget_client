@@ -77,28 +77,29 @@ public class WebViewActivity extends ActionBarActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.setWebViewClient(new WebViewClientClass());
-        webView.setWebChromeClient(new WebChromeClient(){
-          @Override
-          public void onProgressChanged(WebView view, int newProgress){
-              progressBar.setProgress(newProgress);
-          }
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                progressBar.setProgress(newProgress);
+            }
         });
-        webView.loadUrl(url);
 
+
+        webView.loadUrl(url);
         progressBar = (ProgressBar) findViewById(R.id.webview_progress);
 
     }
 
     public void showAddDialog(String url,Bookmark ref_bookmark){
         //Show Add Dialog
-        FragmentManager fm = getFragmentManager();
+        /*FragmentManager fm = getFragmentManager();
         AddBookmarkDialog addBookmarkDialog = new AddBookmarkDialog();
         addBookmarkDialog.updateInputUrl(url);
         addBookmarkDialog.setRefBookmark(ref_bookmark);
         addBookmarkDialog.setListener(new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(Object object) {
-                if(object!=null){
+                if (object != null) {
                     markinBtn.setVisibility(View.INVISIBLE);
                     //Toast.makeText(getApplicationContext(), "Added to my archive!!!", Toast.LENGTH_SHORT).show();
 
@@ -106,7 +107,7 @@ public class WebViewActivity extends ActionBarActivity {
 
             }
         });
-        addBookmarkDialog.show(fm,"add_bookmark_dialog");
+        addBookmarkDialog.show(fm,"add_bookmark_dialog");*/
     }
 
     @Override

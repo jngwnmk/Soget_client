@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity
         addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                android.app.FragmentManager fm = getFragmentManager();
+                /*android.app.FragmentManager fm = getFragmentManager();
                 AddBookmarkDialog addBookmarkDialog = new AddBookmarkDialog();
-                addBookmarkDialog.show(fm, "add_bookmark_dialog");
+                addBookmarkDialog.show(fm, "add_bookmark_dialog");*/
             }
         });
     }
@@ -139,11 +139,11 @@ public class MainActivity extends AppCompatActivity
             fragment = new CategoryFragment();
             titleTv.setText("Category");
         } else if (id == R.id.nav_friend) {
-            fragment = new FeedFragment();
-            titleTv.setText("Friend");
+            fragment = new FriendsFragment();
+            titleTv.setText("Connect");
         } else if (id == R.id.nav_setting) {
             fragment = new FriendsFragment();
-            titleTv.setText("Setting");
+            titleTv.setText("Connect");
         }
 
         // Insert the fragment by replacing any existing fragment

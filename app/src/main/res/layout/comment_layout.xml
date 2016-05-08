@@ -20,6 +20,10 @@
             android:background="@color/transparent"
             android:layout_gravity="left|center_vertical"
             android:paddingLeft="@dimen/header_prev_left_padding"
+            android:paddingRight="@dimen/header_prev_left_padding"
+            android:paddingTop="@dimen/header_prev_top_padding"
+            android:paddingBottom="@dimen/header_prev_top_padding"
+
             />
         <TextView
             android:layout_width="wrap_content"
@@ -27,7 +31,9 @@
             android:text="Comment"
             android:textColor="@color/white"
             android:textSize="@dimen/header_title_text_size"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:id="@+id/comment_title_tv"
+            />
 
     </FrameLayout>
 
@@ -65,7 +71,9 @@
             android:hint="@string/comment_hint"
             android:textColor="@color/black"
             android:textColorHint="@color/main_color_33"
-            android:textSize="@dimen/comment_input_text_size" />
+            android:textSize="@dimen/comment_input_text_size"
+            android:textCursorDrawable="@drawable/color_cursor"
+            />
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

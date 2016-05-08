@@ -16,6 +16,8 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+
 /**
  * Created by wonmook on 15. 5. 13..
  */
@@ -49,6 +51,11 @@ public class RecommendDiscardTask extends AsyncTask<Void, Void, Void> {
             Log.e("TrashBookmarkRequest", e.getMessage(), e);
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void response){
+        listener.onTaskCompleted(response);
     }
 
 }

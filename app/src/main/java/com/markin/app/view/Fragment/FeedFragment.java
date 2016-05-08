@@ -32,7 +32,7 @@ import java.util.List;
  * Created by wonmook on 2016. 4. 13..
  */
 public class FeedFragment extends Fragment {
-    private static final String TAG = "FeedFragment";
+    public static final String TAG = "FeedFragment";
     private RecommendView recommendView= null;
 
     private ProgressDialog pDialog          = null;
@@ -60,12 +60,16 @@ public class FeedFragment extends Fragment {
         mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
-                Log.i(TAG, "onPanelSlide, offset " + slideOffset);
+                //Log.i(TAG, "onPanelSlide, offset " + slideOffset);
             }
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                Log.i(TAG, "onPanelStateChanged " + newState);
+                if(newState== SlidingUpPanelLayout.PanelState.ANCHORED){
+                    mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+                }
+                //Log.i(TAG, "onPanelStateChanged " + newState);
             }
         });
         mLayout.setFadeOnClickListener(new View.OnClickListener() {
@@ -74,6 +78,8 @@ public class FeedFragment extends Fragment {
                 mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
+
+        mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
 
 
@@ -112,7 +118,7 @@ public class FeedFragment extends Fragment {
                 String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
                 long date = System.currentTimeMillis();
                 pDialog.show();
-                new RecommendGetTask(onTaskCompleted,user_id, token,date).execute();
+                new RecommendGetTask(onTaskCompleted,user_id, token,date,"",0).execute();
             }
 
         } catch (NullPointerException ex){

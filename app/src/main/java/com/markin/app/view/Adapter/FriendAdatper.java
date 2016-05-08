@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,36 +23,86 @@ import java.util.ArrayList;
 /**
  * Created by wonmook on 2015-03-23.
  */
-public class FriendAdatper extends BaseAdapter{
+public class FriendAdatper extends BaseExpandableListAdapter{
     private Context mContext;
     private LayoutInflater layoutInflater;
+    private ArrayList<String> groupTitles;
     private ArrayList<Friend> friends;
+    private ArrayList<String> sentInvitations;
 
-    public FriendAdatper(Context context, ArrayList<Friend> friends){
+    public FriendAdatper(Context context, ArrayList<String> groupTitles, ArrayList<Friend> friends, ArrayList<String> sentInvitations){
         this.mContext = context;
+        this.groupTitles = groupTitles;
         this.friends = friends;
+        this.sentInvitations = sentInvitations;
         this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
-    public int getCount() {
-
-        System.out.println("getCount():"+friends.size());
-        return friends.size();
+    public int getGroupCount() {
+        return 2;
     }
 
     @Override
-    public Object getItem(int position) {
-        return friends.get(position);
+    public int getChildrenCount(int groupPosition) {
+        if(groupPosition==0){
+            return sentInvitations.size();
+        } else if(groupPosition==1){
+            return friends.size();
+        }
+        return 0;
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public String getGroup(int groupPosition) {
+
+        return groupTitles.get(groupPosition);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public Object getChild(int groupPosition, int childPosition) {
+        if(groupPosition==0){
+            return sentInvitations.get(childPosition);
+        } else if(groupPosition==1){
+            return friends.get(childPosition);
+        }
+        return null;
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean b, View convertView, ViewGroup viewGroup) {
+        View row = convertView;
+        GroupTitleWrapper groupTitleWrapper =null;
+        if(row==null){
+            row = layoutInflater.inflate(R.layout.friend_list_header, null);
+            groupTitleWrapper = new GroupTitleWrapper(row);
+            row.setTag(groupTitleWrapper);
+        } else {
+            groupTitleWrapper = (GroupTitleWrapper)row.getTag();
+
+        }
+
+        groupTitleWrapper.getTitle().setText(groupTitles.get(groupPosition));
+        return row;
+    }
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean b, View convertView, ViewGroup viewGroup) {
         View row = convertView;
         FriendWrapper friendWrapper =null;
         if(row==null){
@@ -62,75 +113,50 @@ public class FriendAdatper extends BaseAdapter{
             friendWrapper = (FriendWrapper)row.getTag();
 
         }
-        //Set title
-        final Friend friend = (Friend)getItem(position);
-        System.out.println("FriendAdapter(GetView):"+friend.getType());
-
-
-        if(friend.getType().equals(Friend.FRIEND.FRIEND)){
+        if(groupPosition==0){
+            String sentInvitation = (String)getChild(groupPosition, childPosition);
+            friendWrapper.getFriendName().setText("코드번호 : "+sentInvitation);
+            friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
             friendWrapper.getFriendBtn().setVisibility(View.INVISIBLE);
-            friendWrapper.getFriendName().setText(friend.getUserInfo().getName());
-            if(friend.getUserInfo().getBookmarks()!=null)
-            {
-                friendWrapper.getFriendNumBookmark().setText(friend.getUserInfo().getBookmarks().size() +" MarkIn'");
-            }
-            else {
-                friendWrapper.getFriendNumBookmark().setText("0 MarkIn'");
-            }
 
-        } else if(friend.getType().equals(Friend.FRIEND.FRIENDRECEIVE)){
-            friendWrapper.getFriendBtn().setText(mContext.getResources().getString(R.string.accept_btn));
-            friendWrapper.getFriendBtn().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(mContext, "Accept",Toast.LENGTH_SHORT).show();
-                    String user_id = (AuthManager.getAuthManager().getLoginInfo(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
-                    String token = AuthManager.getAuthManager().getToken(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-                    String friend_id = friend.getUserInfo().getUserId();
-                    new FriendAcceptTask(user_id,friend_id,token).execute();
-                    friend.setType(Friend.FRIEND.FRIEND);
-                    notifyDataSetChanged();
-
+        } else if(groupPosition==1){
+            final Friend friend = (Friend)getChild(groupPosition, childPosition);
+            if(friend.getType().equals(Friend.FRIEND.FRIEND)){
+                friendWrapper.getFriendBtn().setVisibility(View.INVISIBLE);
+                friendWrapper.getFriendName().setText(friend.getUserInfo().getName());
+                if(friend.getUserInfo().getBookmarks()!=null)
+                {
+                    friendWrapper.getFriendNumBookmark().setText(friend.getUserInfo().getBookmarks().size() +" MarkIn'");
                 }
-            });
-            friendWrapper.getFriendBtn().setTextColor(mContext.getResources().getColor(R.color.white));
-            friendWrapper.getFriendBtn().setBackgroundResource(R.drawable.friend_add_btn);
-            friendWrapper.getFriendName().setText(friend.getUserInfo().getName() + "(" + friend.getUserInfo().getUserId() + ")");
-            friendWrapper.getFriendName().setTextColor(mContext.getResources().getColor(R.color.friend_receive_request_btn));
-            friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
-
-        } else if(friend.getType().equals(Friend.FRIEND.FRIENDSENT)){
-            friendWrapper.getFriendBtn().setText(mContext.getResources().getString(R.string.waiting_btn));
-            friendWrapper.getFriendBtn().setTextColor(mContext.getResources().getColor(R.color.friend_receive_request_btn_66));
-            friendWrapper.getFriendBtn().setBackgroundResource(R.drawable.friends_waiting_box);
-            friendWrapper.getFriendName().setText(friend.getUserInfo().getName() + "(" + friend.getUserInfo().getUserId() + ")");
-            friendWrapper.getFriendName().setTextColor(mContext.getResources().getColor(R.color.friend_receive_request_btn));
-            friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
-
-        } else if(friend.getType().equals(Friend.FRIEND.NOTFRIEND)){
-            friendWrapper.getFriendBtn().setText(mContext.getResources().getString(R.string.accept_btn));
-            friendWrapper.getFriendBtn().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ConfirmToast toast = new ConfirmToast(mContext);
-                    toast.showToast("친구요청하였습니다.", Toast.LENGTH_SHORT);
-                    String user_id = (AuthManager.getAuthManager().getLoginInfo(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
-                    String token = AuthManager.getAuthManager().getToken(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-                    String friend_id = friend.getUserInfo().getUserId();
-                    new FriendRequestTask(user_id, friend_id, token).execute();
-                    friend.setType(Friend.FRIEND.FRIENDSENT);
-                    notifyDataSetChanged();
-
+                else {
+                    friendWrapper.getFriendNumBookmark().setText("0 MarkIn'");
                 }
-            });
-            friendWrapper.getFriendBtn().setTextColor(mContext.getResources().getColor(R.color.white));
-            friendWrapper.getFriendBtn().setBackgroundResource(R.drawable.friend_add_btn);
-            friendWrapper.getFriendName().setText(friend.getUserInfo().getName() + "(" + friend.getUserInfo().getUserId() + ")");
-            friendWrapper.getFriendName().setTextColor(mContext.getResources().getColor(R.color.friend_receive_request_btn));
-            friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
+
+            }
         }
 
         return row;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
+    private class GroupTitleWrapper{
+        private View base;
+        private TextView title;
+
+        public GroupTitleWrapper(View base) {this.base = base;}
+
+        public TextView getTitle(){
+            if(title==null){
+                title = (TextView)base.findViewById(R.id.friend_list_header_title);
+                title.setTypeface(Typeface.createFromAsset(mContext.getAssets(),"fonts/AppleSDGothicNeo-Medium.otf"));
+                title.setTextColor(mContext.getResources().getColor(R.color.sub_text_color_80));
+            }
+            return title;
+        }
     }
 
     private class FriendWrapper{

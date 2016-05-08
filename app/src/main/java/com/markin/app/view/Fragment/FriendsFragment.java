@@ -11,11 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
@@ -25,12 +23,10 @@ import com.markin.app.connector.friend.FriendListTask;
 import com.markin.app.connector.friend.FriendReceiveListTask;
 import com.markin.app.connector.friend.FriendSentListTask;
 import com.markin.app.connector.invitation.InvitationCodeGetTask;
+import com.markin.app.connector.user.UserInfoGetTask;
 import com.markin.app.model.Friend;
 import com.markin.app.model.User;
-import com.markin.app.view.Activity.FriendArchiveActivity;
-import com.markin.app.view.Activity.FriendSearchActivity;
 import com.markin.app.view.Activity.InvitatonSendActivity;
-import com.markin.app.view.Activity.SettingActivity;
 import com.markin.app.view.Adapter.FriendAdatper;
 
 import java.util.ArrayList;
@@ -40,15 +36,15 @@ import java.util.ArrayList;
  */
 public class FriendsFragment extends Fragment {
 
-    private ImageButton settingBtn = null;
-    private ImageButton searchBtn = null;
     private ImageButton invitationUseBtn = null;
     private TextView invitationTv = null;
     private TextView invitationNumTv = null;
-    private TextView invitationUseTv = null;
-    private ListView friendList = null;
+
+    private ExpandableListView friendList = null;
+    private ArrayList<String> sentInvitations = new ArrayList<>();
     private ArrayList<Friend> friends = new ArrayList<Friend>();
     private FriendAdatper friendAdatper = null;
+
     private ProgressDialog pDialog;
     ArrayList<String> invitationNum = new ArrayList<String>();
 
@@ -56,53 +52,40 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.friend_layout, container, false);
 
-        settingBtn = (ImageButton) rootView.findViewById(R.id.setting_btn);
-        settingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SettingActivity.class));
-            }
-        });
-        searchBtn = (ImageButton) rootView.findViewById(R.id.friend_search_btn);
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FriendSearchActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        invitationUseBtn = (ImageButton)rootView.findViewById(R.id.invitation_use_btn);
+        /*invitationUseBtn = (ImageButton)rootView.findViewById(R.id.invitation_use_btn);
         invitationUseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(invitationNum.size()!=0){
-                    Intent intent = new Intent(getActivity(),InvitatonSendActivity.class);
+                if (invitationNum.size() != 0) {
+                    Intent intent = new Intent(getActivity(), InvitatonSendActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString(StaticValues.INVITATIONCODE,invitationNum.get(0));
+                    bundle.putString(StaticValues.INVITATIONCODE, invitationNum.get(0));
                     bundle.putInt(StaticValues.INVITATIONNUM, invitationNum.size());
                     intent.putExtras(bundle);
                     startActivity(intent);
 
                 }
             }
-        });
+        });*/
 
         invitationTv = (TextView)rootView.findViewById(R.id.invitation_tv);
-        invitationTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
+        invitationTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+        invitationTv.setTextColor(getResources().getColor(R.color.charcol_text_color_80));
 
-        invitationNumTv = (TextView) rootView.findViewById(R.id.invitation_num_tv);
-        invitationNumTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+        ArrayList<String> titles = new ArrayList<>();
+        titles.add("연결 중인 친구");
+        titles.add("연결된 친구");
 
-        invitationUseTv = (TextView) rootView.findViewById(R.id.invitation_use_tv);
-        invitationUseTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
-
-        friendList = (ListView) rootView.findViewById(R.id.friend_list);
-
-
-        friendAdatper = new FriendAdatper(inflater.getContext(), friends);
+        friendList = (ExpandableListView)rootView.findViewById(R.id.friend_list);
+        friendAdatper = new FriendAdatper(inflater.getContext(), titles, friends, sentInvitations);
         friendList.setAdapter(friendAdatper);
-        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*friendList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                return true;
+            }
+        });*/
+       /* friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (friends.get(position).getType().equals(Friend.FRIEND.FRIEND)) {
@@ -113,7 +96,7 @@ public class FriendsFragment extends Fragment {
 
                 }
             }
-        });
+        });*/
 
         pDialog = new ProgressDialog(this.getActivity());
         pDialog.setMessage("Loading....");
@@ -130,6 +113,8 @@ public class FriendsFragment extends Fragment {
             }
         });
     }
+
+
 
     private void getFriendsList() {
         OnTaskCompleted onTaskCompleted;
@@ -212,9 +197,9 @@ public class FriendsFragment extends Fragment {
             public void onTaskCompleted(Object object) {
                 if(object!=null){
                     invitationNum.clear();
-                    invitationNum.addAll((ArrayList<String>)object);
+                    invitationNum.addAll((ArrayList<String>) object);
                 }
-                invitationNumTv.setText(invitationNum.size()+"장");
+                invitationNumTv.setText(invitationNum.size() + "장");
             }
         };
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
@@ -223,14 +208,98 @@ public class FriendsFragment extends Fragment {
 
     }
 
+    private void getFriendSentCode(){
+        String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+        String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+        new UserInfoGetTask(new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(Object object) {
+                if(object!=null){
+                    User user = (User)object;
+                    sentInvitations.clear();
+                    ArrayList<String> friendSent = new ArrayList<String>();
+                    for(int i = 0 ; i < user.getInvitation_sent().size() ; ++i){
+                        friendSent.add(user.getInvitation_sent().get(i));
+                    }
+                    sentInvitations.addAll(friendSent);
+                    updateFriendskList();
+                }
+            }
+        }, user_id, token).execute();
+    }
+
+    private void getDummyFriendReceiveList(){
+
+    }
+
+    private void getDummyFriendSendList(){
+
+
+    }
+
+    private void getDummyFriendSentCode(){
+        sentInvitations.clear();
+        sentInvitations.add("878101");
+        sentInvitations.add("418009");
+    }
+
+    private void getDummyFriendList(){
+        User user1 = new User();
+        User user2 = new User();
+        User user3 = new User();
+        User user4 = new User();
+
+        user1.setUserId("areumy");
+        user1.setName("이아름");
+        user1.setBookmarks(new ArrayList<String>());
+
+        user2.setUserId("waniwani");
+        user2.setName("전창완");
+        user2.setBookmarks(new ArrayList<String>());
+
+        user3.setUserId("soojin_ji");
+        user3.setName("지수진");
+        user3.setBookmarks(new ArrayList<String>());
+
+        user4.setUserId("sejinlee");
+        user4.setName("이세진");
+        user4.setBookmarks(new ArrayList<String>());
+
+        friends.clear();
+        friends.add(new Friend(user1, Friend.FRIEND.FRIEND));
+        friends.add(new Friend(user2, Friend.FRIEND.FRIEND));
+        friends.add(new Friend(user3, Friend.FRIEND.FRIEND));
+        friends.add(new Friend(user4, Friend.FRIEND.FRIEND));
+
+    }
+
+
     @Override
     public void onResume(){
         super.onResume();
-        getFriendsReceiveList();
-        getFriendsSentList();
+        //getFriendsReceiveList();
+        //getFriendsSentList();
         getFriendsList();
-        getInvitation();
+        //getInvitation();
 
+        //getDummyFriendSentCode();
+        //getDummyFriendList();
+
+        getFriendSentCode();
+        if(friendList!=null){
+            for(int i = 0 ; i < friendAdatper.getGroupCount() ; ++i){
+                friendList.expandGroup(i);
+            }
+
+            friendList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                @Override
+                public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                    return true;
+                }
+            });
+
+
+        }
     }
 
 }

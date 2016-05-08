@@ -42,7 +42,7 @@ public class CategoryGetTask extends AsyncTask<Void, Void, ArrayList<Category>> 
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
-            ResponseEntity<Category[]> response = restTemplate.exchange(RESTAPIManager.category_url, HttpMethod.GET, new HttpEntity(headers), Category[].class);
+            ResponseEntity<Category[]> response = restTemplate.exchange(RESTAPIManager.category_all_url, HttpMethod.GET, new HttpEntity(headers), Category[].class);
             categories = new ArrayList<>();
             categories.addAll(Arrays.asList(response.getBody()));
             return categories;

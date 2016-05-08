@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -39,8 +40,7 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
     private LinearLayout login_root_layout;
     private EditText user_id_edit;
     private EditText user_pwd_edit;
-    private ImageButton login_btn;
-    private TextView login_tv;
+    private Button login_btn;
     private SharedPreferences sharedPreferences;
     private TextView pwd_forget_tv;
 
@@ -63,23 +63,26 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
         });
         user_id_edit = (EditText)findViewById(R.id.user_id_edit);
         user_pwd_edit = (EditText)findViewById(R.id.user_pwd_edit);
-        user_id_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
-        user_pwd_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+        user_id_edit.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+        user_pwd_edit.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
 
 
         user_id_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    user_id_edit.setBackgroundResource(R.drawable.register_input_done_box);
-                    user_id_edit.setTextColor(getResources().getColor(R.color.main_color_25));
 
                     if(user_id_edit.getText().toString().equals("")){
+                        user_id_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                        user_id_edit.setTextColor(getResources().getColor(R.color.white));
                         user_id_edit.setError("Please Enter User Id");
+                    } else {
+                        user_id_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
+                        user_id_edit.setTextColor(getResources().getColor(R.color.white_33));
                     }
                 } else {
-                    user_id_edit.setBackgroundResource(R.drawable.register_edit_text_selector);
-                    user_id_edit.setTextColor(getResources().getColor(R.color.sub_main_color));
+                    user_id_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
+                    user_id_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
             }
         });
@@ -87,16 +90,19 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
         user_pwd_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    user_pwd_edit.setBackgroundResource(R.drawable.register_input_done_box);
-                    user_pwd_edit.setTextColor(getResources().getColor(R.color.main_color_25));
+                if (!hasFocus) {
 
-                    if(user_pwd_edit.getText().toString().equals("")){
+                    if (user_pwd_edit.getText().toString().equals("")) {
+                        user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                        user_pwd_edit.setTextColor(getResources().getColor(R.color.white));
                         user_pwd_edit.setError("Please Enter Password");
+                    } else {
+                        user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
+                        user_pwd_edit.setTextColor(getResources().getColor(R.color.white_33));
                     }
                 } else {
-                    user_pwd_edit.setBackgroundResource(R.drawable.register_edit_text_selector);
-                    user_pwd_edit.setTextColor(getResources().getColor(R.color.sub_main_color));
+                    user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
+                    user_pwd_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
             }
         });
@@ -107,7 +113,7 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
         } else {
             user = new User();
         }
-        login_btn = (ImageButton)findViewById(R.id.login_btn);
+        login_btn = (Button)findViewById(R.id.login_btn);
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,8 +123,6 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
             }
         });
 
-        login_tv = (TextView) findViewById(R.id.login_tv);
-        login_tv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
 
         pwd_forget_tv = (TextView)findViewById(R.id.pwd_forget_tv);
         pwd_forget_tv.setOnClickListener(new View.OnClickListener() {

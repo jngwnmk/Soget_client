@@ -181,7 +181,6 @@ public class DiscoverFragment extends Fragment {
         if(user!=null){
             String user_id = user.getUserId();
             String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
-            //pDialog.show();
             new RecommendDiscardTask(null,user_id, bookmark_id, token).execute();
         }
     }
@@ -231,7 +230,7 @@ public class DiscoverFragment extends Fragment {
                 String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
                 long date = System.currentTimeMillis();//SettingManager.getLastDiscoverDate(getActivity().getSharedPreferences(SettingManager.LASTDISCOVER,Context.MODE_PRIVATE));
                 pDialog.show();
-                new RecommendGetTask(onTaskCompleted,user_id, token,date).execute();
+                new RecommendGetTask(onTaskCompleted,user_id, token,date,"",0).execute();
             }
 
         } catch (NullPointerException ex){

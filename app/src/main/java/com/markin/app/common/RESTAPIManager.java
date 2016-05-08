@@ -31,7 +31,12 @@ public class RESTAPIManager {
     public final static String invitation_url = user_url+"invitation/";
     public final static String invitation_use_url = invitation_url + "send/";
 
-    public final static String category_url = base_url+"category/all";
+    public final static String category_url = base_url+"category/";
+    public final static String category_all_url = category_url + "all";
+
+    public final static String like_url = bookmark_url+"like/";
+    public final static String like_cancel_url = bookmark_url+"like/";
+
 
     public final static String comment_url = bookmark_url+"comment/";
     public final static String user_search_url = user_url+"search/";

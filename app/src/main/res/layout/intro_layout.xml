@@ -60,7 +60,7 @@
             android:text="@string/intro_btn"
             android:layout_gravity="center"
             android:textSize="16.23sp"
-            android:textColor="@color/white"/>
+            android:textColor="@drawable/signup_tv_selector"/>
     </FrameLayout>
     <TextView
         android:id="@+id/intro_login_tv"

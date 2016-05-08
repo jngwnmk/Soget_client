@@ -53,6 +53,8 @@ public class Follower implements Parcelable{
     }
 
 	public Follower(Parcel in){
+
+		this();
 		readFromParcel(in);
 	}
 
@@ -95,6 +97,19 @@ public class Follower implements Parcelable{
 		this.privacy = privacy;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
+		Follower follower = (Follower) o;
 
+		return !(userId != null ? !userId.equals(follower.userId) : follower.userId != null);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return userId != null ? userId.hashCode() : 0;
+	}
 }

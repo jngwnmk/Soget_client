@@ -1,19 +1,33 @@
 package com.markin.app.view.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.markin.app.R;
+import com.markin.app.callback.OnTaskCompleted;
+import com.markin.app.common.AuthManager;
+import com.markin.app.common.SogetUtil;
+import com.markin.app.common.StaticValues;
+import com.markin.app.connector.bookmark.LikeCancelTask;
+import com.markin.app.connector.bookmark.LikeTask;
 import com.markin.app.model.Bookmark;
 import com.markin.app.model.Category;
+import com.markin.app.model.Comment;
+import com.markin.app.model.User;
+import com.markin.app.view.Activity.CommentActivity;
 
 import org.w3c.dom.Text;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -59,15 +73,140 @@ public class ArchiveAdapter extends BaseAdapter{
             archiveWrapper = (ArchiveWrapper)row.getTag();
 
         }
-        archiveWrapper.getFromNameTv();
-        archiveWrapper.getArchiveDateTv();
-        archiveWrapper.getTitleTv();
-        archiveWrapper.getUrlTv();
-        archiveWrapper.getLikeNumTv();
-        archiveWrapper.getSocketNumTv();
-        archiveWrapper.getCommentNumTv();
 
+        final Bookmark bookmark = (Bookmark)getItem(position);
+        final ArchiveWrapper finalArchiveWrapper = archiveWrapper;
+
+        archiveWrapper.getFromNameTv().setText(bookmark.getInitUserName());
+        archiveWrapper.getArchiveDateTv().setText(SogetUtil.calDurationTimeForComment(bookmark.getDate()));
+        archiveWrapper.getTitleTv().setText(bookmark.getTitle());
+
+        URL simpleURL = null;
+        try {
+            simpleURL = new URL(bookmark.getUrl());
+            archiveWrapper.getUrlTv().setText(simpleURL.getProtocol() + "//" + simpleURL.getHost());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        archiveWrapper.getLikeNumTv().setText(bookmark.getLike().size() + "");
+        try{
+            User user = AuthManager.getAuthManager().getLoginInfo(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+            if(user!=null){
+                String user_id = user.getUserId();
+                if(bookmark.getLike().contains(user_id)){
+                    archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon_feed_pressed, 0, 0, 0);
+                    archiveWrapper.getLikeNumTv().setTag(true);
+                } else {
+                    archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon, 0, 0, 0);
+                    archiveWrapper.getLikeNumTv().setTag(false);
+                }
+            }
+        } catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
+        archiveWrapper.getLikeNumTv().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if((Boolean) finalArchiveWrapper.getLikeNumTv().getTag()){
+                    likeCancel(finalArchiveWrapper, bookmark);
+                } else {
+                    like(finalArchiveWrapper,bookmark);
+                }
+            }
+        });
+
+        archiveWrapper.getSocketNumTv().setText(bookmark.getFollowers().size() + "");
+
+
+        archiveWrapper.getCommentNumTv().setText(bookmark.getComments().size() + "");
+        try{
+            User user = AuthManager.getAuthManager().getLoginInfo(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+            if(user!=null){
+                String user_id = user.getUserId();
+                Comment checkCommend = new Comment();
+                checkCommend.setUserId(user_id);
+                if(bookmark.getComments().contains(checkCommend)){
+                    archiveWrapper.getCommentNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.comment_icon_list, 0, 0, 0);
+                    archiveWrapper.getCommentNumTv().setTag(true);
+                } else {
+                    archiveWrapper.getCommentNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.comment_icon_list, 0, 0, 0);
+                    archiveWrapper.getCommentNumTv().setTag(false);
+                }
+            }
+        } catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
+
+        archiveWrapper.getCommentNumTv().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openComment(bookmark.getId(), bookmark.getComments().size());
+            }
+        });
+
+        if(position%2==0){
+            archiveWrapper.getDivider().setBackground(mContext.getResources().getDrawable(R.drawable.line_1));
+        } else {
+            archiveWrapper.getDivider().setBackground(mContext.getResources().getDrawable(R.drawable.line_2));
+        }
         return row;
+    }
+
+    private void like(final ArchiveWrapper archiveWrapper, final Bookmark bookmark){
+        try{
+            User user = AuthManager.getAuthManager().getLoginInfo(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+            if(user!=null){
+                String user_id = user.getUserId();
+                String token = AuthManager.getAuthManager().getToken(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+                new LikeTask(new OnTaskCompleted() {
+                    @Override
+                    public void onTaskCompleted(Object object) {
+                        if((Integer)object!=-1){
+                            archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon_feed_pressed, 0, 0, 0);
+                            archiveWrapper.getLikeNumTv().setTag(true);
+                            archiveWrapper.getLikeNumTv().setText(String.valueOf((Integer) object));
+                        }
+                    }
+                },user_id, bookmark.getId(), token).execute();
+            }
+
+        } catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void likeCancel(final ArchiveWrapper archiveWrapper, final Bookmark bookmark){
+        try{
+            User user = AuthManager.getAuthManager().getLoginInfo(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+            if(user!=null){
+                String user_id = user.getUserId();
+                String token = AuthManager.getAuthManager().getToken(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+                new LikeCancelTask(new OnTaskCompleted() {
+                    @Override
+                    public void onTaskCompleted(Object object) {
+                        if((Integer)object!=-1){
+                            archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon, 0, 0, 0);
+                            archiveWrapper.getLikeNumTv().setTag(false);
+                            archiveWrapper.getLikeNumTv().setText(String.valueOf((Integer)object));
+                        }
+                    }
+                }, user_id, bookmark.getId(), token).execute();
+            }
+
+        } catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void openComment(String bookmark_id, int size){
+        Intent intent = new Intent(mContext, CommentActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle extras = new Bundle();
+        extras.putString(StaticValues.BOOKMARKID,bookmark_id);
+        extras.putInt(StaticValues.MARKINNUM, size);
+        intent.putExtras(extras);
+        mContext.startActivity(intent);
     }
 
     private class ArchiveWrapper{
@@ -80,6 +219,7 @@ public class ArchiveAdapter extends BaseAdapter{
         private TextView likeNum;
         private TextView socketNum;
         private TextView commentNum;
+        private LinearLayout divider;
 
 
         public ArchiveWrapper(View base){
@@ -107,7 +247,7 @@ public class ArchiveAdapter extends BaseAdapter{
         public TextView getArchiveDateTv() {
             if(archiveDate==null){
                 archiveDate = (TextView)base.findViewById(R.id.archive_date);
-                archiveDate.setTextColor(mContext.getResources().getColor(R.color.main_text_color));
+                archiveDate.setTextColor(mContext.getResources().getColor(R.color.charcol_text_color_33));
                 archiveDate.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
 
             }
@@ -117,7 +257,7 @@ public class ArchiveAdapter extends BaseAdapter{
         public TextView getTitleTv() {
             if(title==null){
                 title = (TextView)base.findViewById(R.id.archive_title);
-                title.setTextColor(mContext.getResources().getColor(R.color.main_text_color));
+                title.setTextColor(mContext.getResources().getColor(R.color.charcol_text_color_80));
                 title.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
 
             }
@@ -156,6 +296,14 @@ public class ArchiveAdapter extends BaseAdapter{
                 commentNum.setTextColor(mContext.getResources().getColor(R.color.main_text_color));
             }
             return commentNum;
+        }
+
+        public LinearLayout getDivider(){
+            if(divider==null){
+                divider = (LinearLayout)base.findViewById(R.id.archive_divider);
+
+            }
+            return divider;
         }
 
 

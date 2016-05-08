@@ -189,7 +189,7 @@ public class ArchiveFragment extends Fragment {
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
         String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
         pDialog.show();
-        new ArchiveMineTask(onTaskCompleted,user_id, token,page_num).execute();
+        new ArchiveMineTask(onTaskCompleted,user_id, token,"",page_num).execute();
     }
 
     @Override

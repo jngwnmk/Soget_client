@@ -3,12 +3,14 @@ package com.markin.app.view.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.markin.app.R;
@@ -18,6 +20,9 @@ import com.markin.app.common.StaticValues;
 import com.markin.app.connector.category.CategoryGetTask;
 import com.markin.app.model.Category;
 import com.markin.app.model.User;
+import com.markin.app.view.Activity.FeedActivity;
+import com.markin.app.view.Activity.SettingActivity;
+import com.markin.app.view.Activity.WebViewActivity;
 import com.markin.app.view.Adapter.CategoryAdapter;
 
 import java.util.ArrayList;
@@ -46,6 +51,17 @@ public class CategoryFragment extends Fragment {
         categoryListView = (ListView)rootView.findViewById(R.id.category_list);
         categoryAdapter = new CategoryAdapter(getActivity(), categories);
         categoryListView.setAdapter(categoryAdapter);
+        categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(),FeedActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString(StaticValues.CATEGORY, categories.get(i).getType());
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+
 
         pDialog = new ProgressDialog(this.getActivity());
         pDialog.setMessage("Loading....");
@@ -88,10 +104,13 @@ public class CategoryFragment extends Fragment {
         for(int i = 0 ; i < categories.size() ; ++i) {
             categorySet.add(categories.get(i).getType());
         }
-        SharedPreferences prefs = getActivity().getSharedPreferences(StaticValues.PREFERENCE.CATEGORY.NAME, getActivity().MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putStringSet(StaticValues.PREFERENCE.CATEGORY.TITLE, categorySet);
-        editor.commit();
+        if(getActivity()!=null){
+            SharedPreferences prefs = getActivity().getSharedPreferences(StaticValues.PREFERENCE.CATEGORY.NAME, getActivity().MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putStringSet(StaticValues.PREFERENCE.CATEGORY.TITLE, categorySet);
+            editor.commit();
+        }
+
     }
 
 }

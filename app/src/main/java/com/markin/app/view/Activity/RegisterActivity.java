@@ -1,5 +1,6 @@
 package com.markin.app.view.Activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -8,8 +9,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -32,7 +35,7 @@ import java.util.regex.Pattern;
 /**
  * Created by wonmook on 2015-03-15.
  */
-public class RegisterActivity extends ActionBarActivity implements OnTaskCompleted {
+public class RegisterActivity extends Activity implements OnTaskCompleted {
 
     private LinearLayout register_root_layout;
     private EditText invitation_code_edit;
@@ -40,8 +43,7 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
     private EditText user_id_edit;
     private EditText user_email_edit;
     private EditText user_pwd_edit;
-    private ImageButton register_btn;
-    private TextView register_tv;
+    private Button register_btn;
     private TextView register_info_tv;
     private TextView register_condition_tv;
 
@@ -63,65 +65,69 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
             }
         });
         invitation_code_edit = (EditText)findViewById(R.id.invitation_code_edit);
-        invitation_code_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+        invitation_code_edit.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
         invitation_code_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    invitation_code_edit.setBackgroundResource(R.drawable.register_input_done_box);
-                    invitation_code_edit.setTextColor(getResources().getColor(R.color.main_color_25));
+                if (!hasFocus) {
 
-                    if(!invitation_code_edit.getText().toString().equals("")){
+                    if (!invitation_code_edit.getText().toString().equals("")) {
                         new InvitationCodeCheckTask(new OnTaskCompleted() {
                             @Override
                             public void onTaskCompleted(Object object) {
-                                if(object!=null){
-                                    Boolean result = (Boolean)object;
-                                    if(!result){
+                                if (object != null) {
+                                    Boolean result = (Boolean) object;
+                                    if (!result) {
+                                        invitation_code_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                                        invitation_code_edit.setTextColor(getResources().getColor(R.color.white));
                                         invitation_code_edit.setError("Invalid Invitation Code");
+                                    } else {
+                                        invitation_code_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
+                                        invitation_code_edit.setTextColor(getResources().getColor(R.color.white_33));
                                     }
 
                                 }
                             }
                         }, invitation_code_edit.getText().toString()).execute();
                     } else {
+                        invitation_code_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                        invitation_code_edit.setTextColor(getResources().getColor(R.color.white));
                         invitation_code_edit.setError("Please Enter Invitation Code");
                     }
                 } else {
-                    invitation_code_edit.setBackgroundResource(R.drawable.register_edit_text_selector);
-                    invitation_code_edit.setTextColor(getResources().getColor(R.color.sub_main_color));
+                    invitation_code_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
+                    invitation_code_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
             }
         });
 
         user_name_edit = (EditText)findViewById(R.id.user_name_edit);
-        user_name_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+        user_name_edit.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
         user_name_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    user_name_edit.setBackgroundResource(R.drawable.register_input_done_box);
-                    user_name_edit.setTextColor(getResources().getColor(R.color.main_color_25));
-
                     if (user_name_edit.getText().toString().equals("")) {
+                        user_name_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                        user_name_edit.setTextColor(getResources().getColor(R.color.white));
                         user_name_edit.setError("Please Enter Your Name");
+                    } else {
+                        user_name_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
+                        user_name_edit.setTextColor(getResources().getColor(R.color.white_33));
+
                     }
                 } else {
-                    user_name_edit.setBackgroundResource(R.drawable.register_edit_text_selector);
-                    user_name_edit.setTextColor(getResources().getColor(R.color.sub_main_color));
+                    user_name_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
+                    user_name_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
             }
         });
         user_id_edit = (EditText)findViewById(R.id.user_id_edit);
-        user_id_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+        user_id_edit.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
         user_id_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-
-                    user_id_edit.setBackgroundResource(R.drawable.register_input_done_box);
-                    user_id_edit.setTextColor(getResources().getColor(R.color.main_color_25));
-
 
                     if (!user_id_edit.getText().toString().equals("")) {
                         new UserCheckIdDuplicateTask(new OnTaskCompleted() {
@@ -130,19 +136,25 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
                                 if (object != null) {
                                     Boolean result = (Boolean) object;
                                     if (!result) {
+                                        user_id_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                                        user_id_edit.setTextColor(getResources().getColor(R.color.white));
                                         user_id_edit.setError("Duplicated User Id");
+                                    } else {
+                                        user_id_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
+                                        user_id_edit.setTextColor(getResources().getColor(R.color.white_33));
                                     }
 
                                 }
-
                             }
                         }, user_id_edit.getText().toString()).execute();
                     } else {
+                        user_id_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                        user_id_edit.setTextColor(getResources().getColor(R.color.white));
                         user_id_edit.setError("Please Enter User Id");
                     }
                 } else {
-                    user_id_edit.setBackgroundResource(R.drawable.register_edit_text_selector);
-                    user_id_edit.setTextColor(getResources().getColor(R.color.sub_main_color));
+                    user_id_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
+                    user_id_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
             }
         });
@@ -150,51 +162,64 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
         user_email_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    user_email_edit.setBackgroundResource(R.drawable.register_input_done_box);
-                    user_email_edit.setTextColor(getResources().getColor(R.color.main_color_25));
+                if (!hasFocus) {
 
                     if (user_email_edit.getText().toString().equals("")) {
+                        user_email_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                        user_email_edit.setTextColor(getResources().getColor(R.color.white));
                         user_email_edit.setError("Please Enter Email");
+                    } else {
+                        user_email_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
+                        user_email_edit.setTextColor(getResources().getColor(R.color.white_33));
                     }
+
+
                 } else {
-                    user_email_edit.setBackgroundResource(R.drawable.register_edit_text_selector);
-                    user_email_edit.setTextColor(getResources().getColor(R.color.sub_main_color));
+                    user_email_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
+                    user_email_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
 
             }
         });
-        user_email_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+        user_email_edit.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
         user_pwd_edit = (EditText)findViewById(R.id.user_pwd_edit);
         user_pwd_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    user_pwd_edit.setBackgroundResource(R.drawable.register_input_done_box);
-                    user_pwd_edit.setTextColor(getResources().getColor(R.color.main_color_25));
+                if (!hasFocus) {
 
                     if (user_pwd_edit.getText().toString().equals("")) {
+                        user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                        user_pwd_edit.setTextColor(getResources().getColor(R.color.white));
                         user_pwd_edit.setError("Please Enter Password");
+                    } else {
+                        user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
+                        user_pwd_edit.setTextColor(getResources().getColor(R.color.white_33));
                     }
+
+
                 } else {
-                    user_pwd_edit.setBackgroundResource(R.drawable.register_edit_text_selector);
-                    user_pwd_edit.setTextColor(getResources().getColor(R.color.sub_main_color));
+                    user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
+                    user_pwd_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
 
             }
         });
-        user_pwd_edit.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+        user_pwd_edit.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
 
         register_info_tv = (TextView)findViewById(R.id.register_info_tv);
-        register_info_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Medium.otf"));
+        register_info_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Regular.otf"));
 
-        register_tv = (TextView)findViewById(R.id.register_tv);
-        register_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-SemiBold.otf"));
+        //register_tv = (TextView)findViewById(R.id.register_tv);
+        //register_tv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
 
-        register_btn = (ImageButton)findViewById(R.id.register_btn);
+        register_btn = (Button)findViewById(R.id.register_btn);
+        register_btn.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 String invitation_code = invitation_code_edit.getText().toString();
                 String user_name = user_name_edit.getText().toString();
                 String user_id = user_id_edit.getText().toString();
@@ -242,7 +267,7 @@ public class RegisterActivity extends ActionBarActivity implements OnTaskComplet
         });
 
         register_condition_tv = (TextView)findViewById(R.id.register_condition_tv);
-        register_condition_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Bold.otf"));
+        register_condition_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Regular.otf"));
 
     }
 

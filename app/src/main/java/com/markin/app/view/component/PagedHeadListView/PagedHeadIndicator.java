@@ -66,6 +66,12 @@ public class PagedHeadIndicator extends AbstractPagedHeadIndicator {
         recalculateIndicatorWidth();
     }
 
+    @Override
+    public void removePage() {
+        pageCount--;
+        recalculateIndicatorWidth();
+    }
+
     /**
      * Recalculates indicator width each time a new page is added to the pager
      */

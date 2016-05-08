@@ -1,8 +1,11 @@
 package com.markin.app.connector.bookmark;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.RESTAPIManager;
 import com.markin.app.model.Bookmark;
@@ -26,7 +29,8 @@ public class BookmarkAddTask extends AsyncTask<Void, Void, Bookmark> {
     private String bookmark_id;
     private Bookmark ref_bookmark;
     ResponseEntity<Bookmark> response;
-    public BookmarkAddTask(OnTaskCompleted listener, String user_id, String bookmark_id, Bookmark ref_bookmark, String token){
+    private Context context;
+    public BookmarkAddTask(Context context, OnTaskCompleted listener, String user_id, String bookmark_id, Bookmark ref_bookmark, String token){
         this.listener = listener;
         this.user_id = user_id;
         this.bookmark_id = bookmark_id;
@@ -49,6 +53,8 @@ public class BookmarkAddTask extends AsyncTask<Void, Void, Bookmark> {
 
         } catch (Exception e){
             Log.e("BookmarkAddTask", e.getMessage(), e);
+            Toast.makeText(context, context.getResources().getString(R.string.bookmark_duplicate), Toast.LENGTH_SHORT).show();
+
         }
         return null;
     }

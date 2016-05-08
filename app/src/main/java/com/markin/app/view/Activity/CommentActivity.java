@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,7 +29,8 @@ import java.util.ArrayList;
 /**
  * Created by wonmook on 2015-04-01.
  */
-public class CommentActivity extends ActionBarActivity{
+public class CommentActivity extends AppCompatActivity{
+    private TextView   titleTv = null;
     private ImageButton backBtn =null;
     private LinearLayout headerBoarder = null;
     private EditText commentEt = null;
@@ -49,6 +51,9 @@ public class CommentActivity extends ActionBarActivity{
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading....");
+
+        titleTv = (TextView)findViewById(R.id.comment_title_tv);
+        titleTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
         bookmark_id = getIntent().getExtras().getString(StaticValues.BOOKMARKID);
         markin_num = getIntent().getExtras().getInt(StaticValues.MARKINNUM,0);
         initLayout();

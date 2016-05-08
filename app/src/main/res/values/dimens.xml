@@ -5,7 +5,9 @@
 
     <!--Header-->
     <dimen name="header_prev_left_padding">26.3dp</dimen>
+    <dimen name="header_prev_top_padding">10dp</dimen>
     <dimen name="header_title_text_size">18sp</dimen>
+
 
     <!--Category-->
     <dimen name="category_row_height">215dp</dimen>
@@ -17,20 +19,30 @@
     <dimen name="category_img_height">138dp</dimen>
     <dimen name="category_title_padding_top">7.7dp</dimen>
     <dimen name="category_title_padding_left">7.7dp</dimen>
+    <dimen name="category_archive_count_padding_right">38.3dp</dimen>
 
     <dimen name="category_title_text_size">18sp</dimen>
     <dimen name="category_desc_text_size">16sp</dimen>
     <dimen name="category_author_text_size">12sp</dimen>
     <dimen name="category_by_text_size">8sp</dimen>
+    <dimen name="category_archive_count_text_size">14.7sp</dimen>
 
     <!--Feed-->
     <dimen name="feed_header_height">380dp</dimen>
     <dimen name="feed_archive_row_height">140dp</dimen>
-    <dimen name="feed_archive_row_padding_top">24.7dp</dimen>
+    <dimen name="feed_archive_row_padding_top">22.3dp</dimen>
     <dimen name="feed_archive_row_padding_left">38.3dp</dimen>
     <dimen name="feed_archive_row_padding_right">38.3dp</dimen>
     <dimen name="feed_archive_row_between_margin">13.3dp</dimen>
     <dimen name="feed_archive_top_height">124dp</dimen>
+    <dimen name="feed_archive_user_name_text_size">12sp</dimen>
+    <dimen name="feed_archive_date_text_size">12sp</dimen>
+    <dimen name="feed_archive_via_text_size">9sp</dimen>
+    <dimen name="feed_archive_title_text_size">20sp</dimen>
+    <dimen name="feed_archive_url_text_size">12sp</dimen>
+    <dimen name="feed_archive_like_text_size">14.7sp</dimen>
+    <dimen name="feed_archive_socket_text_size">14.7sp</dimen>
+    <dimen name="feed_archive_comment_text_size">14.7sp</dimen>
 
     <dimen name="default_header_height">200dp</dimen>
     <dimen name="indicator_height">8dp</dimen>
@@ -74,8 +86,11 @@
     <dimen name="comment_item_content_text_size">15.3sp</dimen>
 
     <!--Pop up-->
-    <dimen name="popup_left_padding">30dp</dimen>
-    <dimen name="popup_right_padding">30dp</dimen>
+    <dimen name="popup_left_padding">20.7dp</dimen>
+    <dimen name="popup_right_padding">20.7dp</dimen>
+    <dimen name="popup_cmd_padding_top">10dp</dimen>
+    <dimen name="popup_cmd_padding_bottom">10dp</dimen>
+
     <dimen name="popup_just_add_size">16sp</dimen>
     <dimen name="popup_complete_size">16sp</dimen>
     <dimen name="popup_comment_size">14.7sp</dimen>
@@ -93,4 +108,24 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
+
+    <!--Friend-->
+    <dimen name="friend_connecting_list_height">232dp</dimen>
+    <dimen name="friend_list_header_height">36dp</dimen>
+    <dimen name="friend_list_header_text_size">13.3sp</dimen>
+    <dimen name="friend_list_header_left_padding">19dp</dimen>
+
+    <!--Signup-->
+    <dimen name="signup_btn_text_size">17.3sp</dimen>
+    <dimen name="signup_info_text_size">14sp</dimen>
+    <dimen name="signup_input_text_size">14sp</dimen>
+    <dimen name="signup_input_bottom_padding">10.7dp</dimen>
+    <dimen name="signup_input_margin_top">37.3dp</dimen>
+    <dimen name="signup_input_width">245.3dp</dimen>
+
+    <!--Login-->
+    <dimen name="login_input_id_margin_top">85.3dp</dimen>
+    <dimen name="login_input_margin_top">37.3dp</dimen>
+    <dimen name="login_btn_margin_top">42.7dp</dimen>
+    <dimen name="login_input_width">245.3dp</dimen>
 </resources>

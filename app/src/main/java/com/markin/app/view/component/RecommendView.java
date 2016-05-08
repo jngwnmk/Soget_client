@@ -11,12 +11,14 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.markin.app.R;
 import com.markin.app.view.Adapter.RecommendViewPagerAdapter;
+import com.markin.app.view.Fragment.RecommendFragment;
 import com.markin.app.view.component.PagedHeadListView.AbstractPagedHeadIndicator;
 import com.markin.app.view.component.PagedHeadListView.PagedHeadIndicator;
 import com.markin.app.view.component.PagedHeadListView.PagedHeadIndicatorNumber;
@@ -33,6 +35,9 @@ import com.markin.app.view.component.PagedHeadListView.utils.PageTransformerType
  * Created by wonmook on 2016. 4. 19..
  */
 public class RecommendView extends FrameLayout{
+
+
+    public final static float RATIO_SCALE = 0.7f;
 
     private static String TAG = "RecommendView";
     private View headerView;
@@ -54,6 +59,7 @@ public class RecommendView extends FrameLayout{
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             requestDisallowInterceptTouchEvent(true);
+
             return false;
         }
     };
@@ -85,7 +91,7 @@ public class RecommendView extends FrameLayout{
             indicatorBgColor = a.getColor(R.styleable.PagedHeadListView_indicatorBgColor, getResources().getColor(R.color.white));
             indicatorColor = a.getColor(R.styleable.PagedHeadListView_indicatorColor, getResources().getColor(R.color.black));
             indicatorType = a.getInt(R.styleable.PagedHeadListView_indicatorType, IndicatorTypes.NUMBER.ordinal());
-            pageTransformer = a.getInt(R.styleable.PagedHeadListView_pageTransformer, PageTransformerTypes.DEPTH.ordinal());
+            pageTransformer = a.getInt(R.styleable.PagedHeadListView_pageTransformer, PageTransformerTypes.NORMAL.ordinal());
 
             a.recycle();
         }
@@ -98,11 +104,16 @@ public class RecommendView extends FrameLayout{
         headerView = View.inflate(getContext(), R.layout.paged_header, null);
 
         mPager = (ViewPager) headerView.findViewById(R.id.headerViewPager);
-        int marginPx = getResources().getDimensionPixelSize(R.dimen.page_margin);
-        //mPager.setPageMargin(-marginPx);
-        mPager.setPadding(marginPx, 0, marginPx, 0);
+        //int marginPx = getResources().getDimensionPixelSize(R.dimen.page_margin);
+        //mPager.setPadding(marginPx, 0, marginPx, 0);
+        //mPager.setClipToPadding(false);
+        //mPager.setPageMargin(marginPx);
+
         mPager.setClipToPadding(false);
-        mPager.setPageMargin(marginPx);
+        mPager.setPageMargin(24);
+        mPager.setPadding(68, 28, 68, 28);
+        mPager.setOffscreenPageLimit(3);
+
 
         FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
         headerViewPagerAdapter = new RecommendViewPagerAdapter(fragmentManager);
@@ -118,31 +129,60 @@ public class RecommendView extends FrameLayout{
         }
 
         addView(headerView);
-        /*switch (indicatorType) {
-            case 0:
-                addView(headerView);
-                break;
-            case 1:
-                addView(indicator);
-                addView(headerView);
-                break;
-            case 2:
-                addView(headerView);
-                addView(indicator);
-                break;
-            case 3:
-                addView(indicator);
-                addView(headerView);
-                break;
-        }*/
-
         mPager.setAdapter(headerViewPagerAdapter);
         mPager.setOnPageChangeListener(indicator);
+        /*mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.i("", "onPageScrolled: " + position);
+
+                RecommendFragment currentFragment = (RecommendFragment) ((RecommendViewPagerAdapter) mPager.getAdapter()).getItem(position);
+
+
+                float scale = 1 - (positionOffset * RATIO_SCALE);
+
+                // Just a shortcut to findViewById(R.id.image).setScale(scale);
+                currentFragment.scaleImage(scale);
+
+
+                if (position + 1 < mPager.getAdapter().getCount()) {
+                    currentFragment = (RecommendFragment) ((RecommendViewPagerAdapter) mPager.getAdapter()).getItem(position + 1);
+                    scale = positionOffset * RATIO_SCALE + (1 - RATIO_SCALE);
+                    currentFragment.scaleImage(scale);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.i("", "onPageSelected: " + position);
+                //currentPageTv.setText(String.valueOf(position + 1));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                Log.i("", "onPageScrollStateChanged: " + state);
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    RecommendFragment fragment = (RecommendFragment) ((RecommendViewPagerAdapter) mPager.getAdapter()).getItem(mPager.getCurrentItem());
+                    fragment.scaleImage(1);
+                    if (mPager.getCurrentItem() > 0) {
+                        fragment = (RecommendFragment) ((RecommendViewPagerAdapter) mPager.getAdapter()).getItem(mPager.getCurrentItem() - 1);
+                        fragment.scaleImage(1 - RATIO_SCALE);
+                    }
+
+                    if (mPager.getCurrentItem() + 1 < mPager.getAdapter().getCount()) {
+                        fragment = (RecommendFragment) ((RecommendViewPagerAdapter) mPager.getAdapter()).getItem(mPager.getCurrentItem() + 1);
+                        fragment.scaleImage(1 - RATIO_SCALE);
+                    }
+                }
+
+            }
+        });
 
         if (disableVerticalTouchOnHeader)
-            mPager.setOnTouchListener(touchListenerForHeaderIntercept);
+            mPager.setOnTouchListener(touchListenerForHeaderIntercept);*/
 
-        setHeaderPageTransformer(PageTransformerTypes.values()[pageTransformer]);
+        //setHeaderPageTransformer(PageTransformerTypes.values()[pageTransformer]);
+
     }
 
     public void setHeaderPageTransformer(PageTransformerTypes pageTransformerType) {
@@ -160,9 +200,12 @@ public class RecommendView extends FrameLayout{
         }
         else if (pageTransformerType.equals(PageTransformerTypes.ACCORDION)) {
             mPager.setPageTransformer(true, new AccordionPageTransformer());
-        }
-        else
+        } else if (pageTransformerType.equals(PageTransformerTypes.DEPTH)){
             mPager.setPageTransformer(true, new DepthPageTransformer());
+        } else if(pageTransformerType.equals(PageTransformerTypes.NORMAL)){
+            mPager.setPageTransformer(false, null);
+        }
+
     }
 
     /**
@@ -187,6 +230,12 @@ public class RecommendView extends FrameLayout{
     public void addFragmentToHeader(Fragment fragmentToAdd) {
         indicator.addPage();
         headerViewPagerAdapter.addFragment(fragmentToAdd);
+    }
+
+    public void removeFragmentFromHeader(String bookmark_id){
+        indicator.removePage();
+        headerViewPagerAdapter.removeFragment(bookmark_id);
+
     }
 
     public void setHeaderOffScreenPageLimit(int offScreenPageLimit){
@@ -216,4 +265,23 @@ public class RecommendView extends FrameLayout{
         headerView.setLayoutParams(headerViewParams);
     }
 
+    public void showNumberIndicator(){
+        if(indicator.getVisibility()!=View.VISIBLE){
+            indicator.setVisibility(View.VISIBLE);
+            //mPager.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 750));
+
+        }
+    }
+
+    public void hideNumberIndicator(){
+        if(indicator.getVisibility()!=View.GONE){
+            indicator.setVisibility(View.GONE);
+            //mPager.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 900));
+        }
+
+    }
+
+    public int getPageCount(){
+        return mPager.getAdapter().getCount();
+    }
 }

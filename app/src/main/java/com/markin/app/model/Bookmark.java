@@ -24,6 +24,7 @@ public class Bookmark implements Parcelable{
     private List<Comment> comments;
     private List<String> tags;
     private List<String> category;
+    private List<String> like;
     private String markinId;
 
 
@@ -49,6 +50,7 @@ public class Bookmark implements Parcelable{
 
 
     public Bookmark(String id, String title, String url, String img_url, String description, String initUserId, String initUserName, String initUserNickName, List<Follower> followers, long date, boolean privacy, List<Comment> comments, List<String> tags, List<String> category) {
+
         this.id = id;
         this.title = title;
         this.url = url;
@@ -84,6 +86,7 @@ public class Bookmark implements Parcelable{
     }
 
     public Bookmark(Parcel in){
+        this();
         readFromParcel(in);
     }
 
@@ -102,10 +105,10 @@ public class Bookmark implements Parcelable{
         parcel.writeString(initUserId);
         parcel.writeString(initUserName);
         parcel.writeString(initUserNickName);
-        parcel.writeList(followers);
+        parcel.writeTypedList(followers);
         parcel.writeLong(date);
         parcel.writeByte((byte) (privacy ? 1 : 0));
-        parcel.writeList(comments);
+        parcel.writeTypedList(comments);
         parcel.writeList(tags);
         parcel.writeList(category);
         parcel.writeString(markinId);
@@ -121,10 +124,10 @@ public class Bookmark implements Parcelable{
         initUserId = in.readString();
         initUserName = in.readString();
         initUserNickName = in.readString();
-        followers = in.readArrayList(null);
+        in.readTypedList(followers, Follower.CREATOR);
         date = in.readLong();
         privacy = in.readByte() != 0;
-        comments = in.readArrayList(null);
+        in.readTypedList(comments, Comment.CREATOR);
         tags = in.readArrayList(null);
         category = in.readArrayList(null);
         markinId = in.readString();
@@ -296,7 +299,13 @@ public class Bookmark implements Parcelable{
         this.markinId = markinId;
     }
 
+    public List<String> getLike() {
+        return like;
+    }
 
+    public void setLike(List<String> like) {
+        this.like = like;
+    }
 }
 
 

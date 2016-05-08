@@ -2,63 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@color/white"
+android:background="@drawable/signup_background"
 android:orientation="vertical"
 android:gravity="center_horizontal"
 android:id="@+id/login_root_layout">
 
 <EditText
-    android:layout_width="wrap_content"
+    android:layout_width="@dimen/login_input_width"
     android:layout_height="wrap_content"
-    android:background="@drawable/register_edit_text_selector"
+    android:background="@color/transparent"
     android:id="@+id/user_id_edit"
     android:hint="@string/login_id_hint"
-    android:paddingLeft="13.33dp"
-    android:paddingTop="18dp"
-    android:paddingBottom="18dp"
-    android:layout_marginTop="73dp"
+    android:drawableBottom="@drawable/line_default"
+    android:drawablePadding="@dimen/signup_input_bottom_padding"
+    android:layout_marginTop="@dimen/login_input_id_margin_top"
     android:singleLine="true"
     android:textColor="@color/register_edit_color_selector"
-    android:textSize="13.91sp" />
+    android:textSize="@dimen/signup_info_text_size"
+    android:textCursorDrawable="@drawable/color_cursor"/>
 
 <EditText
-    android:layout_width="wrap_content"
+    android:layout_width="@dimen/login_input_width"
     android:layout_height="wrap_content"
     android:inputType="textPassword"
     android:hint="@string/login_pwd_hint"
-    android:background="@drawable/register_edit_text_selector"
+    android:background="@color/transparent"
     android:id="@+id/user_pwd_edit"
-    android:paddingLeft="13.33dp"
-    android:paddingTop="18dp"
-    android:paddingBottom="18dp"
-
-    android:layout_marginTop="5.67dp"
+    android:drawableBottom="@drawable/line_default"
+    android:drawablePadding="@dimen/signup_input_bottom_padding"
+    android:layout_marginTop="@dimen/login_input_margin_top"
     android:textColor="@color/register_edit_color_selector"
-
     android:singleLine="true"
-    android:textSize="13.91sp" />
+    android:textSize="13.91sp"
+    android:textCursorDrawable="@drawable/color_cursor"/>
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="37dp">
-        <ImageButton
+        android:layout_marginTop="@dimen/login_btn_margin_top">
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/login_btn"
-            android:background="@color/transparent"
-            android:src="@drawable/register_btn_selector"
-            android:layout_gravity="center"
-            />
-        <TextView
-            android:id="@+id/login_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@drawable/register_btn_selector"
             android:text="@string/login_btn"
-            android:layout_gravity="center"
-            android:textSize="16.23sp"
-            android:textColor="@color/white"/>
+            android:textColor="@drawable/register_btn_text_selector"
+            />
     </FrameLayout>
 
 
@@ -66,8 +56,8 @@ android:id="@+id/login_root_layout">
     android:id="@+id/pwd_forget_tv"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:textColor="@color/main_color"
-    android:textSize="11.01sp"
+    android:textColor="@color/white"
+    android:textSize="11.3sp"
     android:text="@string/login_forget_pwd"
     android:layout_gravity="bottom"
     android:gravity="center_horizontal|bottom"

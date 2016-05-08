@@ -11,9 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.markin.app.R;
+import com.markin.app.callback.OnTaskCompleted;
+import com.markin.app.common.AuthManager;
 import com.markin.app.common.SogetUtil;
+import com.markin.app.connector.category.CategoryArchiveCountTask;
+import com.markin.app.connector.category.CategoryFeedCountTask;
+import com.markin.app.connector.recommend.RecommendGetTask;
 import com.markin.app.model.Category;
 import com.markin.app.model.Comment;
+import com.markin.app.model.User;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -74,6 +80,42 @@ public class CategoryAdapter extends BaseAdapter{
                     .fit().centerCrop()
                     .into(categoryWrapper.getBackgroundView());
 
+        try{
+            User user = AuthManager.getAuthManager().getLoginInfo(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+            if(user!=null){
+                String user_id = user.getUserId();
+                String token = AuthManager.getAuthManager().getToken(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+                long date = System.currentTimeMillis();
+                if(!"".equals(item.getType())){
+                    final CategoryWrapper finalCategoryWrapper = categoryWrapper;
+                    new CategoryArchiveCountTask(new OnTaskCompleted() {
+                        @Override
+                        public void onTaskCompleted(Object object) {
+                            finalCategoryWrapper.getArchiveCountView().setText(""+object);
+                        }
+                    }, user_id, item.getType(), token).execute();
+
+                    new CategoryFeedCountTask(new OnTaskCompleted() {
+                        @Override
+                        public void onTaskCompleted(Object object) {
+                            if((Integer)object == 0){
+                                finalCategoryWrapper.getFeedIndicatorView().setVisibility(View.INVISIBLE);
+                            } else {
+                                finalCategoryWrapper.getFeedIndicatorView().setVisibility(View.VISIBLE);
+
+                            }
+                        }
+                    }, user_id, date,item.getType(), token).execute();
+                }
+
+
+            }
+
+        } catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
+
+
         return row;
     }
 
@@ -83,6 +125,8 @@ public class CategoryAdapter extends BaseAdapter{
         private TextView desc;
         private TextView author;
         private ImageView backgroundView;
+        private ImageView feedIndicatorView;
+        private TextView  archiveCountView;
 
 
         public CategoryWrapper(View base){
@@ -118,6 +162,22 @@ public class CategoryAdapter extends BaseAdapter{
                 backgroundView = (ImageView)base.findViewById(R.id.category_frame);
             }
             return backgroundView;
+        }
+
+        public ImageView getFeedIndicatorView(){
+            if(feedIndicatorView==null){
+                feedIndicatorView = (ImageView)base.findViewById(R.id.category_feed_indicator);
+            }
+            return feedIndicatorView;
+        }
+
+        public TextView getArchiveCountView(){
+            if(archiveCountView==null){
+                archiveCountView = (TextView)base.findViewById(R.id.archive_count);
+                archiveCountView.setTextColor(mContext.getResources().getColor(R.color.category_text_charcol));
+
+            }
+            return archiveCountView;
         }
     }
 }

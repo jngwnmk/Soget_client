@@ -14,6 +14,7 @@ public class StaticValues {
     public static String PHONENUM = "phonenum";
     public static String CONDITION ="condition";
     public static String PRIVACY = "privacy";
+    public static String CATEGORY = "category";
 
     public static class PREFERENCE {
         public static class CATEGORY{

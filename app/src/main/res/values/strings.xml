@@ -11,7 +11,7 @@
     <string name="login_btn">로그인</string>
 
     <!--가입하기 화면 strings -->
-    <string name="invitation_code_hint">초대번호</string>
+    <string name="invitation_code_hint">코드번호</string>
     <string name="register_label">가입하기</string>
     <string name="user_name">이름</string>
     <string name="user_name_hint">이름</string>
@@ -20,9 +20,9 @@
     <string name="user_email">이메일</string>
     <string name="user_email_hint">이메일</string>
     <string name="user_pwd">비밀번호</string>
-    <string name="user_pwd_hint">비밀번호(6자 이상)</string>
+    <string name="user_pwd_hint">비밀번호</string>
     <string name="register_btn">가입하기</string>
-    <string name="register_condition">버튼을 누름과 동시에 동의하신 것으로 간주됩니다.</string>
+    <string name="register_condition">가입과 동시에 동의하신 것으로 간주됩니다.</string>
     <string name="register_condition_1"><u>이용약관 및 개인정보 처리방침</u></string>
 
     <!--로그인 화면 strings -->
@@ -46,7 +46,7 @@
 
     <!-- friends 화면 -->
     <string name="invitation_user">사용하기</string>
-    <string name="invitation">초대장</string>
+    <string name="invitation">함께 모을 친구 초대하기</string>
     <string name="accept_btn">추가</string>
     <string name="waiting_btn">대기 중</string>
     <string name="friend_title">FRIENDS</string>
@@ -90,9 +90,10 @@
     <string name="kakao_send_btn">카카오톡으로 보내기</string>
 
     <!--Add bookmark Dialog-->
-    <string name="popup_confirm">완료</string>
-    <string name="popup_just_add">그냥 담기기</string>
+    <string name="popup_add">담기</string>
+    <string name="popup_cancel">취소</string>
     <string name="popup_hint">어떤 점이 좋았는지 친구들에게도 얘기해주세요.</string>
+    <string name="bookmark_duplicate">이미 북마킹 하였습니다.</string>
 
     <!-- KaKao Talk-->
     <string name="kakao_app_key">2b01b8aa193b65aff676ab8f63e9b5e7</string>

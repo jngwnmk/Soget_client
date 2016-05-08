@@ -157,6 +157,8 @@ public class BookmarkAdapter extends BaseAdapter{
         }
 
 
+        //Set num of like
+
 
         //Set num of get
         bookmarkWrapper.getGet_nums().setText(item.getFollowers().size()+" "+mContext.getString(R.string.archive_row_num_get));

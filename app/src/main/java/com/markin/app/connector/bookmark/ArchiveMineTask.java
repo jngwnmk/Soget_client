@@ -27,12 +27,14 @@ public class ArchiveMineTask extends AsyncTask<Void, Void, ArrayList<Bookmark>> 
     private ArrayList<Bookmark> bookmarks;
     private String token ;
     private String user_id;
+    private String category;
     private int page_num;
-    public ArchiveMineTask(OnTaskCompleted listener, String user_id, String token, int page_num){
+    public ArchiveMineTask(OnTaskCompleted listener, String user_id, String token, String category, int page_num){
         this.listener = listener;
         this.user_id = user_id;
         this.token = token;
         this.page_num = page_num;
+        this.category = category;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class ArchiveMineTask extends AsyncTask<Void, Void, ArrayList<Bookmark>> 
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             ResponseEntity<Bookmark[]> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
-            response = restTemplate.exchange(RESTAPIManager.bookmark_url +  user_id + "/"+page_num, HttpMethod.GET, new HttpEntity(headers), Bookmark[].class);
+            response = restTemplate.exchange(RESTAPIManager.bookmark_url +  user_id +"/"+category +"/"+page_num, HttpMethod.GET, new HttpEntity(headers), Bookmark[].class);
             //Bookmark[] bookmark = (Bookmark[])(response.getBody().getContent());
             bookmarks = new ArrayList<Bookmark>();
             bookmarks.addAll(Arrays.asList(response.getBody()));

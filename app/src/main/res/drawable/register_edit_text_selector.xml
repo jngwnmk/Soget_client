@@ -1,9 +1,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_focused="false"
-        android:drawable="@drawable/register_input_to_do_box" />
+        android:drawable="@drawable/line_default" />
     <item
         android:state_focused="true"
-        android:drawable="@drawable/register_input_doing_box" />
+        android:drawable="@drawable/line_highlight"
+        />
 
 </selector>

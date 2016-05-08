@@ -29,6 +29,7 @@ public abstract class AbstractPagedHeadIndicator extends FrameLayout implements 
 
     public abstract void init();
     public abstract void addPage();
+    public abstract void removePage();
     public abstract void setBgColor(int bgColor);
     public abstract void setColor(int indicatorColor);
 }
