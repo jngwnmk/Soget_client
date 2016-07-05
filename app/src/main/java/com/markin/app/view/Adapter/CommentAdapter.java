@@ -60,8 +60,13 @@ public class CommentAdapter extends BaseAdapter{
         //Set title
         Comment item = (Comment)getItem(position);
         commentWrapper.getCommentTv().setText(item.getContent());
-        commentWrapper.getUserInfoTv().setText(item.getUserName()+"("+item.getUserId()+")");
+        commentWrapper.getUserInfoTv().setText(item.getUserName()+" ("+item.getUserId()+")");
         commentWrapper.getDateTv().setText(SogetUtil.calDurationTimeForComment(item.getDate()));
+        if("YES".equals(item.getComma())){
+            commentWrapper.getCommentTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.comment_quote, 0, 0, 0);
+        } else {
+            commentWrapper.getCommentTv().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
 
         return row;
     }

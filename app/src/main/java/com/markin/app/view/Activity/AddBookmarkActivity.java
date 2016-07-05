@@ -52,7 +52,7 @@ public class AddBookmarkActivity extends FragmentActivity implements AddBookmark
     private ArrayList<Category> categories = new ArrayList<>();
     private TextView  cancelTv;
     private TextView  addTv;
-    private String    currentCategory = "Listening";
+    private String    currentCategory = "READING";
     private String    url = "";
     private boolean   isMakeBookmark = true;
     private Bookmark refBookmark = null;
@@ -134,6 +134,13 @@ public class AddBookmarkActivity extends FragmentActivity implements AddBookmark
                             String comment = ((AddBookmarkBodyFirstFragment)addBookmarkPageAdapter.getItem(0)).getCommentEt().getText().toString();
                             if(!"".equals(comment)){
                                 addComment(((Bookmark)object).getId(),comment);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Add completed!!!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent();
+                                intent.putExtra("bookmarkId", ((Bookmark)object).getId());
+                                setResult(ADDBOOKMARK_SUCCESS, intent);
+                                finish();
+
                             }
                         }
                     }
@@ -167,6 +174,12 @@ public class AddBookmarkActivity extends FragmentActivity implements AddBookmark
                             if(!"".equals(comment)){
                                 addComment(((Bookmark)object).getId(),comment);
 
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Add completed!!!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent();
+                                intent.putExtra("bookmarkId", ((Bookmark)object).getId());
+                                setResult(ADDBOOKMARK_SUCCESS, intent);
+                                finish();
                             }
                         }
                     }
@@ -195,6 +208,7 @@ public class AddBookmarkActivity extends FragmentActivity implements AddBookmark
         Comment comment = new Comment();
         comment.setContent(commentStr);
         comment.setUserId(user_id);
+        comment.setComma("YES");
 
 
         new CommentAddTask(onTaskCompleted,bookmarkId, comment, token).execute();

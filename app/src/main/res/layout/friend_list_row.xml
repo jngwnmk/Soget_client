@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/friend_list_background">
@@ -18,16 +22,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/friend_name"
             android:text="Name"
-            android:textSize="13.91sp"
+            android:textSize="@dimen/friend_name_text_size"
             android:textColor="@drawable/friend_name_tv_selector"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/num_bookmark"
-            android:text="MarkIn"
-            android:textSize="9.86sp"
+            android:text="Socket"
+            android:textSize="@dimen/friend_socket_num_text_size"
             android:textColor="@drawable/friend_markin_num_tv_selector"
-            android:layout_marginTop="6.33dp" />
+            android:layout_marginTop="5dp" />
     </LinearLayout>
 
 
@@ -45,4 +49,10 @@
         android:layout_gravity="center_vertical"/>
 
 
+
+</LinearLayout>
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@drawable/line_grey"></LinearLayout>
 </LinearLayout>

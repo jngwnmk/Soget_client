@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
+import com.markin.app.common.StaticValues;
 import com.markin.app.connector.invitation.InvitationCodeCheckTask;
 import com.markin.app.connector.user.UserCheckIdDuplicateTask;
 import com.markin.app.connector.user.UserLoginTask;
@@ -43,6 +44,7 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
     private EditText user_id_edit;
     private EditText user_email_edit;
     private EditText user_pwd_edit;
+    private EditText user_pwd_check_edit;
     private Button register_btn;
     private TextView register_info_tv;
     private TextView register_condition_tv;
@@ -54,6 +56,14 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
         setContentView(R.layout.register_layout);
 
         setLayout();
+
+        Intent receiveIntent = getIntent();
+        if(receiveIntent!=null){
+            String invitation_num = receiveIntent.getStringExtra(StaticValues.INVITATIONNUM);
+            if(invitation_num!=null && !invitation_num.equals("")){
+                invitation_code_edit.setText(invitation_num);
+            }
+        }
     }
 
     private void setLayout(){
@@ -82,6 +92,7 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                                         invitation_code_edit.setTextColor(getResources().getColor(R.color.white));
                                         invitation_code_edit.setError("Invalid Invitation Code");
                                     } else {
+                                        invitation_code_edit.setError(null);
                                         invitation_code_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
                                         invitation_code_edit.setTextColor(getResources().getColor(R.color.white_33));
                                     }
@@ -95,6 +106,7 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                         invitation_code_edit.setError("Please Enter Invitation Code");
                     }
                 } else {
+                    //invitation_code_edit.setError(null);
                     invitation_code_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
                     invitation_code_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
@@ -112,12 +124,14 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                         user_name_edit.setTextColor(getResources().getColor(R.color.white));
                         user_name_edit.setError("Please Enter Your Name");
                     } else {
+                        user_name_edit.setError(null);
                         user_name_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
                         user_name_edit.setTextColor(getResources().getColor(R.color.white_33));
 
                     }
                 } else {
-                    user_name_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
+                    //user_name_edit.setError(null);
+                    user_name_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.line_highlight);
                     user_name_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
             }
@@ -140,6 +154,7 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                                         user_id_edit.setTextColor(getResources().getColor(R.color.white));
                                         user_id_edit.setError("Duplicated User Id");
                                     } else {
+                                        user_id_edit.setError(null);
                                         user_id_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
                                         user_id_edit.setTextColor(getResources().getColor(R.color.white_33));
                                     }
@@ -153,6 +168,7 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                         user_id_edit.setError("Please Enter User Id");
                     }
                 } else {
+                    //user_id_edit.setError(null);
                     user_id_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
                     user_id_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
@@ -165,23 +181,26 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                 if (!hasFocus) {
 
                     if (user_email_edit.getText().toString().equals("")) {
-                        user_email_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                        user_email_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.line_default);
                         user_email_edit.setTextColor(getResources().getColor(R.color.white));
                         user_email_edit.setError("Please Enter Email");
                     } else {
-                        user_email_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
+                        user_email_edit.setError(null);
+                        user_email_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.line_done);
                         user_email_edit.setTextColor(getResources().getColor(R.color.white_33));
                     }
 
 
                 } else {
-                    user_email_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
+                    //user_email_edit.setError(null);
+                    user_email_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.line_highlight);
                     user_email_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
 
             }
         });
         user_email_edit.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
         user_pwd_edit = (EditText)findViewById(R.id.user_pwd_edit);
         user_pwd_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -189,23 +208,52 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                 if (!hasFocus) {
 
                     if (user_pwd_edit.getText().toString().equals("")) {
-                        user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_default);
+                        user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.line_default);
                         user_pwd_edit.setTextColor(getResources().getColor(R.color.white));
                         user_pwd_edit.setError("Please Enter Password");
                     } else {
-                        user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
+                        user_pwd_edit.setError(null);
+                        user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.line_done);
                         user_pwd_edit.setTextColor(getResources().getColor(R.color.white_33));
                     }
 
 
                 } else {
-                    user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_highlight);
+                    //user_pwd_edit.setError(null);
+                    user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.line_highlight);
                     user_pwd_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
                 }
 
             }
         });
         user_pwd_edit.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
+        user_pwd_check_edit = (EditText)findViewById(R.id.user_pwd_check_edit);
+        user_pwd_check_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+
+                    if (user_pwd_check_edit.getText().toString().equals("")) {
+                        user_pwd_check_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.line_default);
+                        user_pwd_check_edit.setTextColor(getResources().getColor(R.color.white));
+                        user_pwd_check_edit.setError("Please Confirm Password");
+                    } else {
+                        user_pwd_check_edit.setError(null);
+                        user_pwd_check_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.line_done);
+                        user_pwd_check_edit.setTextColor(getResources().getColor(R.color.white_33));
+                    }
+
+
+                } else {
+                    //user_pwd_check_edit.setError(null);
+                    user_pwd_check_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.line_highlight);
+                    user_pwd_check_edit.setTextColor(getResources().getColor(R.color.sub_text_color_80));
+                }
+            }
+        });
+        user_pwd_check_edit.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
 
         register_info_tv = (TextView)findViewById(R.id.register_info_tv);
         register_info_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Regular.otf"));
@@ -225,6 +273,7 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                 String user_id = user_id_edit.getText().toString();
                 String user_email = user_email_edit.getText().toString();
                 String user_pwd = user_pwd_edit.getText().toString();
+                String user_check_pwd = user_pwd_check_edit.getText().toString();
 
 
                 if(!isValidInvitationCode(invitation_code)){
@@ -251,6 +300,12 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                     user_pwd_edit.setError("Invalid Password");
                     return ;
                 }
+
+                if(!isEqualPassword(user_pwd, user_check_pwd)){
+                    user_pwd_check_edit.setError("Please Check Password");
+                    return ;
+                }
+
 
                 User new_user = new User();
                 new_user.setInvitationCode(invitation_code);
@@ -335,6 +390,10 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
             return true;
         }
         return false;
+    }
+
+    private boolean isEqualPassword(String pass1, String pass2){
+        return pass1.equals(pass2);
     }
 
     private void hideKeyboard(){

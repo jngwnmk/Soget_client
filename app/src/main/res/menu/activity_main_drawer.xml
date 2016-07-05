@@ -4,28 +4,25 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_socket"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Socket" />
+            android:title="SOCKET"
+            />
         <item
             android:id="@+id/nav_friend"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Friends" />
+            android:title="CONNECT" />
 
         <item
             android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Settings" />
-
+            android:title="SETTING" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="LOGOUT"/>
+        <item
+            android:id="@+id/nav_recover_trashcan"
+            android:title="RECOVER TRASHCAN"/>
+        <item
+            android:id="@+id/nav_reset_alldata"
+            android:title="RESET ALL DATA"/>
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-
-        </menu>
-    </item>
 
 </menu>

@@ -137,6 +137,8 @@ public class CategoryAdapter extends BaseAdapter{
             if(type==null){
                 type = (TextView)base.findViewById(R.id.category_type_tv);
                 type.setTextColor(mContext.getResources().getColor(R.color.category_text_charcol));
+                type.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
+
             }
             return type;
         }
@@ -144,6 +146,8 @@ public class CategoryAdapter extends BaseAdapter{
         public TextView getDescTv(){
             if(desc==null){
                 desc = (TextView)base.findViewById(R.id.category_desc_tv);
+                desc.setTextColor(mContext.getResources().getColor(R.color.white));
+                desc.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
 
             }
             return desc;
@@ -152,6 +156,9 @@ public class CategoryAdapter extends BaseAdapter{
         public TextView getAuthorTv(){
             if(author==null){
                 author = (TextView)base.findViewById(R.id.category_author_tv);
+                author.setTextColor(mContext.getResources().getColor(R.color.white));
+                author.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+
 
             }
             return author;

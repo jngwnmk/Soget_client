@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/invitation_send_background">
+
+    <ImageView
+        android:layout_marginTop="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"/>
+
+    <TextView
+        android:id="@+id/invitation_desc_tv"
+        android:layout_marginTop="22.67dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/main_color_66"
+        android:gravity="center"
+        android:text="@string/invitation_send_desc"
+        android:textSize="15.07sp"
+         />
+
+    <LinearLayout
+        android:layout_marginTop="28.67dp"
+        android:paddingLeft="27.67dp"
+        android:paddingRight="27.67dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/invitation_box"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_color"
+            android:id="@+id/invitation_sender_tv"
+            android:text="이아름(umarly)님이 모은"
+            android:textSize="13.91sp"/>
+
+        <TextView
+            android:id="@+id/invitation_sender_1_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_color"
+            android:text="@string/invitation_sms_message"
+            android:textSize="13.91sp"/>
+        <TextView
+            android:layout_marginTop="15dp"
+            android:id="@+id/invitation_code_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_color"
+            android:text="@string/invitation_code"
+            android:textSize="13.91sp"/>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        >
+        <ImageButton
+            android:id="@+id/invitation_send_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/kakao_send_btn"
+            />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/kakao_send_btn"
+            android:id="@+id/register_tv"
+            android:textSize="16.23sp"
+            android:textColor="@color/kakao_color"
+            android:gravity="center"
+            android:layout_gravity="center" />
+    </FrameLayout>
+    <TextView
+        android:layout_marginTop="12.33dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/invitation_note_tv"
+        android:textColor="@color/main_color"
+        android:textSize="9.86sp"
+        android:text="@string/invitation_note"
+        />
+
+
+</LinearLayout>

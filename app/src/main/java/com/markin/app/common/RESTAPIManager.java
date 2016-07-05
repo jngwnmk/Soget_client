@@ -28,8 +28,11 @@ public class RESTAPIManager {
     public final static String friends_accept_url = friends_url;
     public final static String friends_request_url = friends_url;
 
+
     public final static String invitation_url = user_url+"invitation/";
     public final static String invitation_use_url = invitation_url + "send/";
+    public final static String invitation_accept_url = invitation_url + "accept/";
+    public final static String invitation_check_url = invitation_url + "checkFriend/";
 
     public final static String category_url = base_url+"category/";
     public final static String category_all_url = category_url + "all";
@@ -40,6 +43,11 @@ public class RESTAPIManager {
 
     public final static String comment_url = bookmark_url+"comment/";
     public final static String user_search_url = user_url+"search/";
+
+    public final static String manage_url = base_url+"manage/";
+    public final static String manage_reset_all_data_url = manage_url+"reset";
+    public final static String manage_reset_trashcan_url = manage_url+"trashcan";
+
     private static RESTAPIManager restapiManager = new RESTAPIManager();
     private RESTAPIManager(){}
     public static RESTAPIManager getRestAPIManager() {return restapiManager;}

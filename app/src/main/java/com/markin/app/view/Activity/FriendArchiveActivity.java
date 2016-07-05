@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
+import com.markin.app.common.SogetUtil;
 import com.markin.app.common.StaticValues;
 import com.markin.app.connector.bookmark.ArchiveFriendTask;
 import com.markin.app.model.Bookmark;
@@ -57,7 +58,7 @@ public class FriendArchiveActivity extends ActionBarActivity {
         friendNameTv = (TextView)findViewById(R.id.friend_user_id_tv);
         friendNameTv.setText(friend_user_id);
         bookmarkListView = (ListView)findViewById(R.id.archive_list);
-        bookmarkAdapter = new BookmarkAdapter(getApplicationContext(),bookmarks,friend_user_id,false);
+        bookmarkAdapter = new BookmarkAdapter(FriendArchiveActivity.this,bookmarks,friend_user_id,false);
         bookmarkListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -65,14 +66,15 @@ public class FriendArchiveActivity extends ActionBarActivity {
                 //우선은 웹브라우저에서 여는 것으로 하고, 나중에 Webview의 필요성이 있으면 변경
                 //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 //startActivity(intent);
-                Intent intent = new Intent(getApplicationContext(),WebViewActivity.class);
+                Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
                 Bundle extras = new Bundle();
-                extras.putString(WebViewActivity.WEBVIEWURL,url);
-                extras.putString(StaticValues.BOOKMARKID,bookmarks.get(position).getId());
+                extras.putString(WebViewActivity.WEBVIEWURL, url);
+                extras.putString(StaticValues.BOOKMARKID, bookmarks.get(position).getId());
                 extras.putStringArrayList(StaticValues.BOOKMARKTAG, (ArrayList<String>) bookmarks.get(position).getTags());
                 extras.putBoolean(StaticValues.ISMYBOOKMARK, false);
                 intent.putExtras(extras);
                 startActivity(intent);
+                showActivityAnmination();
             }
         });
         bookmarkListView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -84,7 +86,7 @@ public class FriendArchiveActivity extends ActionBarActivity {
 
                 if (loadMore && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                     System.out.println("load more");
-                    if(!isLastPage()) {
+                    if (!isLastPage()) {
                         page_num++;
                         getFriendArchive();
                     }
@@ -108,8 +110,15 @@ public class FriendArchiveActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+
             }
         });
+    }
+
+    private void showActivityAnmination(){
+        //SogetUtil.showNewActivityAnim(this);
+        overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
     }
 
     private void updateBookmarkList(){
@@ -183,6 +192,12 @@ public class FriendArchiveActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 
     public boolean isLastPage() {

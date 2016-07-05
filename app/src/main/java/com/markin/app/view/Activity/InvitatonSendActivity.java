@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
@@ -22,24 +24,28 @@ import com.markin.app.common.StaticValues;
 import com.markin.app.connector.invitation.InvitationCodeUseTask;
 import com.markin.app.connector.user.UserInfoGetTask;
 import com.markin.app.model.User;
+import com.markin.app.view.Fragment.FriendsFragment;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by wonmook on 15. 5. 17..
  */
 public class InvitatonSendActivity extends Activity {
 
-    private TextView invitationDescTv       = null;
-    private TextView senderInfoTv           = null;
-    private TextView senderInfo1Tv          = null;
-    private TextView invitationCodeTv       = null;
-    //private TextView invitationAppTv        = null;
-    private TextView inviationNoteTv        = null;
+    private TextView    invitationTitleTv   = null;
+    private TextView    invitationDescTv    = null;
+    private TextView    invitationContentTv = null;
     private ImageButton invitationSendBtn   = null;
-    private int currentInviationNum = 0;
+    private ImageButton prevBtn = null;
+
     private String invitationCode = "";
     private String userId = "";
     private String userName = "";
     private String phoneNum = "";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +56,6 @@ public class InvitatonSendActivity extends Activity {
         if(userName.equals("")){
               getUserInfo(userId);
         }
-        currentInviationNum = getIntent().getExtras().getInt(StaticValues.INVITATIONNUM);
         invitationCode = getIntent().getExtras().getString(StaticValues.INVITATIONCODE);
         phoneNum = getIntent().getExtras().getString(StaticValues.PHONENUM);
         setLayout();
@@ -63,34 +68,39 @@ public class InvitatonSendActivity extends Activity {
             public void onTaskCompleted(Object object) {
                 if(object!=null){
                     User user = (User)object;
-                    senderInfoTv.setText(user.getName()+" ("+user.getUserId()+")님이");
+                    userName = user.getName();
+                    userId = user.getUserId();
                 }
             }
         }, user_id, token).execute();
-
     }
 
     private void setLayout(){
 
-        invitationDescTv = (TextView)findViewById(R.id.invitation_desc_tv);
-        invitationDescTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+        prevBtn = (ImageButton)findViewById(R.id.back_btn);
+        prevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
 
+            }
+        });
 
-        senderInfoTv = (TextView)findViewById(R.id.invitation_sender_tv);
-        senderInfoTv.setText(userName+" ("+userId+")님이");
-        senderInfoTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
+        invitationTitleTv = (TextView)findViewById(R.id.invitation_title_tv);
+        invitationDescTv  = (TextView)findViewById(R.id.invitation_desc_tv);
+        invitationContentTv = (TextView)findViewById(R.id.invitation_content_tv);
 
-        senderInfo1Tv = (TextView)findViewById(R.id.invitation_sender_1_tv);
-        senderInfo1Tv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
+        invitationTitleTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
+        invitationDescTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+        invitationContentTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
 
-        invitationCodeTv = (TextView)findViewById(R.id.invitation_code_tv);
-        invitationCodeTv.setText(getString(R.string.invitation_code)+" "+invitationCode);
-        invitationCodeTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
-
-        //invitationAppTv = (TextView)findViewById(R.id.invitation_app_tv);
-        //invitationAppTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
-        inviationNoteTv = (TextView)findViewById(R.id.invitation_note_tv);
-        inviationNoteTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+        String origin = invitationContentTv.getText().toString();
+        String modified = origin
+                .replace("{user_name}",userName)
+                .replace("{user_id}",userId)
+                .replace("{code}",invitationCode);
+        invitationContentTv.setText(modified);
 
         invitationSendBtn = (ImageButton)findViewById(R.id.invitation_send_btn);
         invitationSendBtn.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +116,8 @@ public class InvitatonSendActivity extends Activity {
                         if(object!=null){
                             sendKakaoTalk();
                             finish();
+                            overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+
                         }
 
                     }
@@ -120,8 +132,8 @@ public class InvitatonSendActivity extends Activity {
 
         StringBuffer message = new StringBuffer();
         message.append(userName+" ("+userId+")님이 모은");
-        message.append(getString(R.string.invitation_sms_message)+" ");
-        message.append(getString(R.string.invitation_code)+" "+invitationCode+" ");
+        message.append(getString(R.string.invitation_sms_message) + " ");
+        message.append(getString(R.string.invitation_code) + " " + invitationCode + " ");
 //        message.append(getString(R.string.invitation_app));
 
         KakaoLink kakaoLink = null;
@@ -139,6 +151,7 @@ public class InvitatonSendActivity extends Activity {
                     new AppActionBuilder()
                             .addActionInfo(AppActionInfoBuilder
                                     .createAndroidActionInfoBuilder()
+                                    .setExecuteParam(invitationCode)
                                     .build())
 
                             .build()
@@ -156,5 +169,13 @@ public class InvitatonSendActivity extends Activity {
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, null, null);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+
+    }
+
 
 }

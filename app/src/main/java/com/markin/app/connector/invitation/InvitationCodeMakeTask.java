@@ -24,6 +24,8 @@ public class InvitationCodeMakeTask extends AsyncTask<Void, Void, ArrayList<Stri
     private OnTaskCompleted listener;
     private String token ;
     private String user_id;
+    private ArrayList<String> invitations;
+
     ResponseEntity<String> response;
 
     public InvitationCodeMakeTask(OnTaskCompleted listener, String user_id, String token){
@@ -41,7 +43,9 @@ public class InvitationCodeMakeTask extends AsyncTask<Void, Void, ArrayList<Stri
             ResponseEntity<String[]> response;
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
             response = restTemplate.exchange(RESTAPIManager.invitation_url +  user_id, HttpMethod.PUT, new HttpEntity(headers), String[].class);
-            return (ArrayList<String>)Arrays.asList(response.getBody());
+            invitations = new ArrayList<String>();
+            invitations.addAll(Arrays.asList(response.getBody()));
+            return invitations;
 
         } catch (Exception e){
             Log.e("InvitationCodeGetTask", e.getMessage(), e);

@@ -97,7 +97,12 @@ public class FriendAdatper extends BaseExpandableListAdapter{
 
         }
 
-        groupTitleWrapper.getTitle().setText(groupTitles.get(groupPosition));
+        if(sentInvitations.size()==0 && groupPosition ==0){
+            groupTitleWrapper.getTitle().setVisibility(View.GONE);
+        } else{
+            groupTitleWrapper.getTitle().setVisibility(View.VISIBLE);
+            groupTitleWrapper.getTitle().setText(groupTitles.get(groupPosition));
+        }
         return row;
     }
 
@@ -126,10 +131,10 @@ public class FriendAdatper extends BaseExpandableListAdapter{
                 friendWrapper.getFriendName().setText(friend.getUserInfo().getName());
                 if(friend.getUserInfo().getBookmarks()!=null)
                 {
-                    friendWrapper.getFriendNumBookmark().setText(friend.getUserInfo().getBookmarks().size() +" MarkIn'");
+                    friendWrapper.getFriendNumBookmark().setText(friend.getUserInfo().getBookmarks().size() +" Socket");
                 }
                 else {
-                    friendWrapper.getFriendNumBookmark().setText("0 MarkIn'");
+                    friendWrapper.getFriendNumBookmark().setText("0 Socket");
                 }
 
             }

@@ -246,11 +246,6 @@ public class AddBookmarkDialog extends DialogFragment implements AdapterView.OnI
         }
     }
 
-    private Set<String> loadCategory(){
-        SharedPreferences prefs = getActivity().getSharedPreferences(StaticValues.PREFERENCE.CATEGORY.NAME, getActivity().MODE_PRIVATE);
-        Set<String> categoryTitles = prefs.getStringSet(StaticValues.PREFERENCE.CATEGORY.TITLE, new HashSet<String>());
-        return categoryTitles;
-    }
 
     private String ensure_has_protocol(String a_url)
     {

@@ -2,7 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_background_black"
+
+        >
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/back_btn"
+            android:src="@drawable/prev_icon"
+            android:background="@color/transparent"
+            android:layout_gravity="left|center_vertical"
+            android:paddingLeft="@dimen/header_prev_left_padding"
+            android:paddingRight="@dimen/header_prev_left_padding"
+            android:paddingTop="@dimen/header_prev_top_padding"
+            android:paddingBottom="@dimen/header_prev_top_padding"
+
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right|center_vertical"
+            android:paddingRight="@dimen/webview_icon_right_margin"
+            android:paddingTop="@dimen/header_prev_top_padding">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/webview_like_icon"
+                android:layout_marginRight="@dimen/webview_icon_right_margin"
+                android:id="@+id/webview_like_btn"
+                />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/webview_socket_icon"
+                android:layout_marginRight="@dimen/webview_icon_right_margin"
+                android:id="@+id/webview_socket_btn"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/webview_comment_icon"
+                android:id="@+id/webview_comment_btn"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/header"
@@ -34,7 +82,7 @@
             android:layout_gravity="right"
             android:padding="10dp" />
 
-    </LinearLayout>
+    </LinearLayout>-->
     <ProgressBar
         android:id="@+id/webview_progress"
         style="?android:attr/progressBarStyleHorizontal"

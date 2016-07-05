@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
-    android:gravity="bottom"
+    android:layout_height="@dimen/navigator_header_height"
+    android:background="@color/main_background_color"
+    android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigator_user_name_tv"
+        android:text="jngwnwmk"
+        android:textSize="@dimen/navigator_username_text_size"
+        />
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@android:drawable/sym_def_app_icon" />
-
+        android:src="@drawable/navigator_socket_icon"
+        android:layout_marginTop="@dimen/navigator_name_icon_distance"
+        />
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Android Studio"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <TextView
-        android:id="@+id/textView"
+        android:id="@+id/navigator_socket_num_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com" />
+        android:text="000"
+        android:layout_marginTop="@dimen/navigator_icon_socket_distance"
+        android:textSize="@dimen/navigator_number_of_socket"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SOCKET"
+        android:textSize="@dimen/navigator_socket_text_size"
+        android:id="@+id/navigator_socket_text"
+        />
 
 </LinearLayout>

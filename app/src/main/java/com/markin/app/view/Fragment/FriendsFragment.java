@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.markin.app.R;
@@ -23,6 +23,7 @@ import com.markin.app.connector.friend.FriendListTask;
 import com.markin.app.connector.friend.FriendReceiveListTask;
 import com.markin.app.connector.friend.FriendSentListTask;
 import com.markin.app.connector.invitation.InvitationCodeGetTask;
+import com.markin.app.connector.invitation.InvitationCodeMakeTask;
 import com.markin.app.connector.user.UserInfoGetTask;
 import com.markin.app.model.Friend;
 import com.markin.app.model.User;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
  */
 public class FriendsFragment extends Fragment {
 
-    private ImageButton invitationUseBtn = null;
+    private LinearLayout invitationUseLayout = null;
     private TextView invitationTv = null;
     private TextView invitationNumTv = null;
 
@@ -49,13 +50,13 @@ public class FriendsFragment extends Fragment {
     ArrayList<String> invitationNum = new ArrayList<String>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.friend_layout, container, false);
 
-        /*invitationUseBtn = (ImageButton)rootView.findViewById(R.id.invitation_use_btn);
-        invitationUseBtn.setOnClickListener(new View.OnClickListener() {
+        invitationUseLayout = (LinearLayout)rootView.findViewById(R.id.invitation_use_btn);
+        invitationUseLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if (invitationNum.size() != 0) {
                     Intent intent = new Intent(getActivity(), InvitatonSendActivity.class);
                     Bundle bundle = new Bundle();
@@ -63,10 +64,11 @@ public class FriendsFragment extends Fragment {
                     bundle.putInt(StaticValues.INVITATIONNUM, invitationNum.size());
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
 
                 }
             }
-        });*/
+        });
 
         invitationTv = (TextView)rootView.findViewById(R.id.invitation_tv);
         invitationTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
@@ -79,6 +81,7 @@ public class FriendsFragment extends Fragment {
         friendList = (ExpandableListView)rootView.findViewById(R.id.friend_list);
         friendAdatper = new FriendAdatper(inflater.getContext(), titles, friends, sentInvitations);
         friendList.setAdapter(friendAdatper);
+
         /*friendList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
@@ -104,14 +107,10 @@ public class FriendsFragment extends Fragment {
         return rootView;
     }
 
-    private void updateFriendskList() {
-        getActivity().runOnUiThread(new Runnable() {
+    private void updateFriendsList() {
 
-            @Override
-            public void run() {
-                friendAdatper.notifyDataSetChanged();
-            }
-        });
+        friendAdatper.notifyDataSetChanged();
+
     }
 
 
@@ -123,13 +122,13 @@ public class FriendsFragment extends Fragment {
             public void onTaskCompleted(Object object) {
                 if (object != null) {
                     Log.d("FriendsFragment", ((ArrayList<User>) object).toString());
-                    //friends.clear();
+                    friends.clear();
                     ArrayList<Friend> bothFriends = new ArrayList<Friend>();
                     for (int i = 0; i < ((ArrayList<User>) object).size(); ++i) {
                         bothFriends.add(new Friend(((ArrayList<User>) object).get(i), Friend.FRIEND.FRIEND));
                     }
                     friends.addAll(bothFriends);
-                    updateFriendskList();
+                    updateFriendsList();
                 }
 
                 pDialog.dismiss();
@@ -154,7 +153,7 @@ public class FriendsFragment extends Fragment {
                         sentFriends.add(new Friend(((ArrayList<User>) object).get(i), Friend.FRIEND.FRIENDSENT));
                     }
                     friends.addAll(sentFriends);
-                    updateFriendskList();
+                    updateFriendsList();
                 }
 
                 pDialog.dismiss();
@@ -179,7 +178,7 @@ public class FriendsFragment extends Fragment {
                         receiveFriends.add(new Friend(((ArrayList<User>) object).get(i), Friend.FRIEND.FRIENDRECEIVE));
                     }
                     friends.addAll(receiveFriends);
-                    updateFriendskList();
+                    updateFriendsList();
                 }
 
                 pDialog.dismiss();
@@ -192,18 +191,29 @@ public class FriendsFragment extends Fragment {
 
     private void getInvitation(){
         OnTaskCompleted onTaskCompleted;
+        final String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+        final String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+
         onTaskCompleted = new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(Object object) {
                 if(object!=null){
                     invitationNum.clear();
                     invitationNum.addAll((ArrayList<String>) object);
+                    if(invitationNum.size()==0){
+                        new InvitationCodeMakeTask(new OnTaskCompleted() {
+                            @Override
+                            public void onTaskCompleted(Object object) {
+                                if(object!=null){
+                                    invitationNum.clear();
+                                    invitationNum.addAll((ArrayList<String>) object);
+                                }
+                            }
+                        }, user_id, token).execute();
+                    }
                 }
-                invitationNumTv.setText(invitationNum.size() + "장");
             }
         };
-        String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
-        String token = AuthManager.getAuthManager().getToken(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
         new InvitationCodeGetTask(onTaskCompleted, user_id, token).execute();
 
     }
@@ -222,7 +232,7 @@ public class FriendsFragment extends Fragment {
                         friendSent.add(user.getInvitation_sent().get(i));
                     }
                     sentInvitations.addAll(friendSent);
-                    updateFriendskList();
+                    updateFriendsList();
                 }
             }
         }, user_id, token).execute();
@@ -280,7 +290,7 @@ public class FriendsFragment extends Fragment {
         //getFriendsReceiveList();
         //getFriendsSentList();
         getFriendsList();
-        //getInvitation();
+        getInvitation();
 
         //getDummyFriendSentCode();
         //getDummyFriendList();

@@ -1,5 +1,6 @@
 package com.markin.app.view.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.markin.app.R;
 import com.markin.app.common.AuthManager;
+import com.markin.app.common.SogetUtil;
 import com.markin.app.common.StaticValues;
 import com.markin.app.connector.bookmark.PrivacyChangeTask;
 import com.markin.app.model.Bookmark;
@@ -183,10 +185,12 @@ public class BookmarkAdapter extends BaseAdapter{
         Intent intent = new Intent(mContext, CommentActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle extras = new Bundle();
-        extras.putString(StaticValues.BOOKMARKID,bookmark_id);
+        extras.putString(StaticValues.BOOKMARKID, bookmark_id);
         extras.putInt(StaticValues.MARKINNUM, size);
         intent.putExtras(extras);
         mContext.startActivity(intent);
+        ((Activity)mContext).overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+
     }
 
 

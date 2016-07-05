@@ -1,5 +1,8 @@
 package com.markin.app.view.Activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -10,22 +13,25 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.markin.app.R;
 import com.markin.app.callback.FragmentChangeListener;
 import com.markin.app.callback.OnTaskCompleted;
-import com.markin.app.view.Fragment.AddBookmarkDialog;
+import com.markin.app.common.AuthManager;
+import com.markin.app.common.StaticValues;
+import com.markin.app.connector.friend.FriendCheckWithInvitationTask;
+import com.markin.app.connector.manage.ManageResetAllDataTask;
+import com.markin.app.connector.manage.ManageResetTrashCanDataTask;
+import com.markin.app.connector.user.UserInfoGetTask;
+import com.markin.app.model.User;
 import com.markin.app.view.Fragment.CategoryFragment;
-import com.markin.app.view.Fragment.DiscoverFragment;
-import com.markin.app.view.Fragment.FeedFragment;
 import com.markin.app.view.Fragment.FriendsFragment;
-
-import java.util.HashMap;
+import com.markin.app.view.Fragment.SettingFragment;
 
 /**
  * Created by wonmook on 2015-03-18.
@@ -42,27 +48,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
 
-        /*//Change to Archive Tab
-        FragmentManager fm = getFragmentManager();
-        TabsFragment tabsFragment =(TabsFragment) fm.findFragmentById(R.id.tabs_fragment);
-        if (tabsFragment != null)
-            tabsFragment.onTabChanged(TabsFragment.TAB_HOME);*/
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         titleTv = (TextView)findViewById(R.id.toolbar_title);
+        titleTv.setTextColor(getResources().getColor(R.color.white));
+        titleTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
 
-      /*  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -70,41 +63,91 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        setNavigationView();
 
         addBookmarkBtn = (ImageButton)findViewById(R.id.add_bookmark_btn);
         addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*android.app.FragmentManager fm = getFragmentManager();
-                AddBookmarkDialog addBookmarkDialog = new AddBookmarkDialog();
-                addBookmarkDialog.show(fm, "add_bookmark_dialog");*/
+
             }
         });
+
+        Fragment fragment = null;
+        fragment = new CategoryFragment();
+        titleTv.setText("SOCKET");
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        Intent receiveIntent = getIntent();
+        if(receiveIntent!=null){
+            final String invitation_num = receiveIntent.getStringExtra(StaticValues.INVITATIONNUM);
+            final String invitation_username = receiveIntent.getStringExtra(StaticValues.INVITATIONUSERNAME);
+            String user_id = (AuthManager.getAuthManager().getLoginInfo(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+            String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+            Log.d("InvitatioinSendActivity", user_id + "," + invitation_num);
+            if(invitation_num!=null && invitation_username!=null && !"".equals(invitation_num) && !"".equals(invitation_username)){
+                new FriendCheckWithInvitationTask(new OnTaskCompleted() {
+                    @Override
+                    public void onTaskCompleted(Object object) {
+                        if(object!=null && (Boolean)object==false){
+                            if(invitation_num!=null && !"".equals(invitation_num)){
+                                Intent addFriendIntent = new Intent(MainActivity.this, AddFriendActivity.class);
+                                addFriendIntent.putExtra(StaticValues.INVITATIONNUM, invitation_num);
+                                addFriendIntent.putExtra(StaticValues.INVITATIONUSERNAME, invitation_username);
+                                startActivity(addFriendIntent);
+                            }
+                        }
+                    }
+                }, user_id, invitation_num, token).execute();
+            }
+
+
+        }
+    }
+
+    private void setNavigationView(){
+        final User user = AuthManager.getAuthManager().getLoginInfo(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        TextView navigationUsernameTv = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navigator_user_name_tv);
+        final TextView navigationSocketNumTv = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navigator_socket_num_tv);
+        TextView navigationSocketText = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navigator_socket_text);
+
+        navigationUsernameTv.setTextColor(getResources().getColor(R.color.white));
+        navigationUsernameTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
+        navigationSocketNumTv.setTextColor(getResources().getColor(R.color.sub_text_color_80));
+        navigationSocketNumTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
+        navigationSocketText.setTextColor(getResources().getColor(R.color.white_33));
+        navigationSocketText.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-Medium.otf"));
+
+        navigationUsernameTv.setText(user.getUserId());
+
+        String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+        new UserInfoGetTask(new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(Object object) {
+                if (object!=null){
+                    User user = (User) object;
+                    navigationSocketNumTv.setText(user.getBookmarks().size()+"");
+                }
+            }
+        }, user.getUserId(), token).execute();
+
+
+
     }
 
     @Override
     protected void onResume(){
         super.onResume();
         System.out.println("onResume():MainActivity");
-
-        Fragment fragment = null;
-        fragment = new CategoryFragment();
-        titleTv.setText("Category");
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
-/*
-        Intent intent = getIntent();
-        if(intent!=null){
-            if(intent.getExtras()!=null){
-                shared_url = intent.getExtras().getString("SHARED_URL");
-            }
-        }
-        showAddDialog();
-*/
 
     }
 
@@ -137,13 +180,39 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_socket) {
             // Create a new fragment and specify the planet to show based on position
             fragment = new CategoryFragment();
-            titleTv.setText("Category");
+            titleTv.setText("SOCKET".toUpperCase());
         } else if (id == R.id.nav_friend) {
             fragment = new FriendsFragment();
-            titleTv.setText("Connect");
+            titleTv.setText("CONNECT".toUpperCase());
         } else if (id == R.id.nav_setting) {
-            fragment = new FriendsFragment();
-            titleTv.setText("Connect");
+            fragment = new SettingFragment();
+            titleTv.setText("SETTING".toUpperCase());
+        } else if (id == R.id.nav_logout){
+            AuthManager.logout(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            finish();
+            return true;
+        } else if (id == R.id.nav_recover_trashcan){
+            new ManageResetTrashCanDataTask(new OnTaskCompleted() {
+                @Override
+                public void onTaskCompleted(Object object) {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    getParent().finish();
+                }
+            }).execute();
+            return true;
+        } else if (id == R.id.nav_reset_alldata){
+            new ManageResetAllDataTask(new OnTaskCompleted() {
+                @Override
+                public void onTaskCompleted(Object object) {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    getParent().finish();
+                }
+            }).execute();
+            return true;
         }
 
         // Insert the fragment by replacing any existing fragment

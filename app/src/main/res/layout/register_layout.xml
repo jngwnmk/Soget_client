@@ -17,9 +17,10 @@
             android:drawablePadding="@dimen/signup_input_bottom_padding"
             android:id="@+id/invitation_code_edit"
             android:hint="@string/invitation_code_hint"
+            android:textColorHint="@color/register_edit_color_selector"
             android:singleLine="true"
             android:textColor="@color/register_edit_color_selector"
-            android:textSize="@dimen/signup_info_text_size"
+            android:textSize="@dimen/signup_input_text_size"
             android:textCursorDrawable="@drawable/color_cursor"/>
 
 
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="@string/user_name_hint"
+        android:textColorHint="@color/register_edit_color_selector"
         android:background="@color/transparent"
         android:drawableBottom="@drawable/line_default"
         android:id="@+id/user_name_edit"
@@ -35,7 +37,7 @@
         android:layout_marginTop="@dimen/signup_input_margin_top"
         android:singleLine="true"
         android:textColor="@color/register_edit_color_selector"
-        android:textSize="@dimen/signup_info_text_size"
+        android:textSize="@dimen/signup_input_text_size"
         android:textCursorDrawable="@drawable/color_cursor"
         />
 
@@ -43,6 +45,7 @@
         android:layout_width="@dimen/signup_input_width"
         android:layout_height="wrap_content"
         android:hint="@string/user_id_hint"
+        android:textColorHint="@color/register_edit_color_selector"
         android:id="@+id/user_id_edit"
         android:background="@color/transparent"
         android:drawableBottom="@drawable/line_default"
@@ -50,7 +53,7 @@
         android:layout_marginTop="@dimen/signup_input_margin_top"
         android:singleLine="true"
         android:textColor="@color/register_edit_color_selector"
-        android:textSize="@dimen/signup_info_text_size"
+        android:textSize="@dimen/signup_input_text_size"
         android:textCursorDrawable="@drawable/color_cursor"
          />
 
@@ -59,6 +62,7 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:hint="@string/user_email_hint"
+        android:textColorHint="@color/register_edit_color_selector"
         android:background="@color/transparent"
         android:drawableBottom="@drawable/line_default"
         android:id="@+id/user_email_edit"
@@ -66,7 +70,7 @@
         android:layout_marginTop="@dimen/signup_input_margin_top"
         android:singleLine="true"
         android:textColor="@color/register_edit_color_selector"
-        android:textSize="@dimen/signup_info_text_size"
+        android:textSize="@dimen/signup_input_text_size"
         android:textCursorDrawable="@drawable/color_cursor"
         />
 
@@ -75,6 +79,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="@string/user_pwd_hint"
+        android:textColorHint="@color/register_edit_color_selector"
         android:id="@+id/user_pwd_edit"
         android:background="@color/transparent"
         android:drawableBottom="@drawable/line_default"
@@ -82,9 +87,28 @@
         android:layout_marginTop="@dimen/signup_input_margin_top"
         android:singleLine="true"
         android:textColor="@color/register_edit_color_selector"
-        android:textSize="@dimen/signup_info_text_size"
+        android:textSize="@dimen/signup_input_text_size"
         android:textCursorDrawable="@drawable/color_cursor"
         />
+
+    <EditText
+        android:layout_width="@dimen/signup_input_width"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/user_pwd_check_hint"
+        android:textColorHint="@color/register_edit_color_selector"
+        android:id="@+id/user_pwd_check_edit"
+        android:background="@color/transparent"
+        android:drawableBottom="@drawable/line_default"
+        android:drawablePadding="@dimen/signup_input_bottom_padding"
+        android:layout_marginTop="@dimen/signup_input_margin_top"
+        android:singleLine="true"
+        android:textColor="@color/register_edit_color_selector"
+        android:textSize="@dimen/signup_input_text_size"
+        android:textCursorDrawable="@drawable/color_cursor"
+        />
+
+
     <TextView
         android:id="@+id/register_info_tv"
         android:layout_width="wrap_content"
@@ -105,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/register_btn"
-            android:background="@drawable/register_btn_selector"
+            android:background="@drawable/signup_btn_selector"
             android:text="@string/register_btn"
             android:textColor="@drawable/register_btn_text_selector"
             />

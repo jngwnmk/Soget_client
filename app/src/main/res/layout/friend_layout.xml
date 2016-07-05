@@ -13,7 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/invitation_use_btn">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,7 +22,8 @@
             android:paddingTop="21dp"
             android:paddingLeft="30.7dp"
             android:paddingRight="21dp"
-            android:paddingBottom="21.3dp">
+            android:paddingBottom="21.3dp"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -59,8 +61,7 @@
             android:id="@+id/friend_list"
             android:paddingLeft="7dp"
             android:paddingRight="7dp"
-            android:dividerHeight="0.3dp"
-            android:childDivider="@color/charcol_text_color_33">
+            >
         </ExpandableListView>
     </LinearLayout>
 </LinearLayout>

@@ -97,12 +97,6 @@ public class AddBookmarkBodyFirstFragment extends Fragment{
 
     }
 
-    private Set<String> loadCategory(){
-        SharedPreferences prefs = getActivity().getSharedPreferences(StaticValues.PREFERENCE.CATEGORY.NAME, getActivity().MODE_PRIVATE);
-        Set<String> categoryTitles = prefs.getStringSet(StaticValues.PREFERENCE.CATEGORY.TITLE, new HashSet<String>());
-        return categoryTitles;
-    }
-
     @Override
     public void onAttach(Context context){
         super.onAttach(context);

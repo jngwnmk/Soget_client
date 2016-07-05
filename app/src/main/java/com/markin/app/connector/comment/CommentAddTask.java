@@ -42,7 +42,8 @@ public class CommentAddTask extends AsyncTask<Void, Void, Comment> {
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             HttpHeaders headers = RESTAPIManager.getRestAPIManager().createHeaders(token);
             headers.setContentType(MediaType.APPLICATION_JSON);
-            response = restTemplate.exchange(RESTAPIManager.comment_url+bookmark_id, HttpMethod.POST, new HttpEntity(comment,headers), Comment.class);
+            HttpEntity request = new HttpEntity(comment, headers);
+            response = restTemplate.exchange(RESTAPIManager.comment_url+bookmark_id, HttpMethod.POST, request, Comment.class);
             return response.getBody();
 
         } catch (Exception e){

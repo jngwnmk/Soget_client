@@ -2,6 +2,8 @@ package com.markin.app.connector.bookmark;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -52,8 +54,15 @@ public class BookmarkMakeTask extends AsyncTask<Void, Void, Bookmark> {
 
         } catch (Exception e){
             Log.e("BookmarkMakeTask", e.getMessage(), e);
-            Toast.makeText(context,context.getResources().getString(R.string.bookmark_duplicate),Toast.LENGTH_SHORT).show();
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context.getApplicationContext(), context.getResources().getString(R.string.bookmark_duplicate), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
+
         return null;
     }
 

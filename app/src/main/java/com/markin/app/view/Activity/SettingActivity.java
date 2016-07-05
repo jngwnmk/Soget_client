@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
@@ -20,7 +19,6 @@ import com.markin.app.connector.invitation.InvitationCodeGetTask;
 import com.markin.app.model.User;
 
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
 
 public class SettingActivity extends ActionBarActivity {
 
@@ -39,7 +37,7 @@ public class SettingActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting_layout);
+        setContentView(R.layout.setting_layout_old);
         initLayout();
 
         setBackBtnAction();

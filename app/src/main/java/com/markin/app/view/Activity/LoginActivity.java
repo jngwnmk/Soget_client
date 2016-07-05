@@ -77,6 +77,7 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
                         user_id_edit.setTextColor(getResources().getColor(R.color.white));
                         user_id_edit.setError("Please Enter User Id");
                     } else {
+                        user_id_edit.setError(null);
                         user_id_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
                         user_id_edit.setTextColor(getResources().getColor(R.color.white_33));
                     }
@@ -97,6 +98,7 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
                         user_pwd_edit.setTextColor(getResources().getColor(R.color.white));
                         user_pwd_edit.setError("Please Enter Password");
                     } else {
+                        user_pwd_edit.setError(null);
                         user_pwd_edit.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.line_done);
                         user_pwd_edit.setTextColor(getResources().getColor(R.color.white_33));
                     }

@@ -43,52 +43,64 @@
         android:layout_weight="1"
         android:paddingLeft="@dimen/comment_left_padding"
         android:paddingRight="@dimen/comment_right_padding"
+        android:paddingTop="@dimen/comment_input_top_padding"
+        android:paddingBottom="@dimen/comment_input_bottom_padding"
         android:background="@drawable/white_background"
         android:id="@+id/comment_list"
         android:divider="@drawable/category_line">
     </ListView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/comment_divider"></LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:background="@color/white"
-        android:paddingTop="@dimen/comment_input_top_padding"
-        android:paddingBottom="@dimen/comment_input_bottom_padding"
-        android:paddingLeft="@dimen/comment_input_left_padding"
-        android:paddingRight="@dimen/comment_input_right_padding">
-        <EditText
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/comment_et"
-            android:background="@drawable/comment_editbox"
-            android:hint="@string/comment_hint"
-            android:textColor="@color/black"
-            android:textColorHint="@color/main_color_33"
-            android:textSize="@dimen/comment_input_text_size"
-            android:textCursorDrawable="@drawable/color_cursor"
-            />
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        <ImageButton
+        >
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/comment_add_btn"
-            android:background="@drawable/comment_input_btn"/>
-            <TextView
-                android:layout_width="wrap_content"
+            android:background="@drawable/comment_divider">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/comment_input_left_padding"
+            android:paddingRight="@dimen/comment_input_right_padding"
+            android:paddingTop="@dimen/comment_input_top_padding"
+            android:paddingBottom="@dimen/comment_input_bottom_padding"
+            android:gravity="center"
+            >
+            <EditText
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/complete_btn"
-                android:layout_gravity="center"
-                android:id="@+id/comment_add_btn_tv"
-                android:textColor="@color/sub_text_color"/>
-        </FrameLayout>
+                android:id="@+id/comment_et"
+                android:background="@null"
+                android:hint="@string/comment_hint"
+                android:textColor="@color/black"
+                android:textColorHint="@color/main_color_33"
+                android:textSize="@dimen/comment_input_text_size"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:autoText="false"
+                />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/comment_add_btn"
+                    android:background="@drawable/comment_input_btn"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/complete_btn"
+                    android:layout_gravity="center"
+                    android:id="@+id/comment_add_btn_tv"
+                    android:textColor="@color/sub_text_color"/>
+            </FrameLayout>
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

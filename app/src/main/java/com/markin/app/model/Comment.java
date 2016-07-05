@@ -12,7 +12,8 @@ public class Comment implements Parcelable{
     private String userName;      		//User name
     private String userId;  			//User id in Markin
     private String content;
-
+    //private boolean initial;
+    private String comma;
 
     public Comment(){
         date = 0L;
@@ -20,6 +21,7 @@ public class Comment implements Parcelable{
         userName = "";
         userId = "";
         content = "";
+        comma = "";
     }
 
     public Comment(Parcel in){
@@ -38,6 +40,7 @@ public class Comment implements Parcelable{
         parcel.writeString(userName);
         parcel.writeString(userId);
         parcel.writeString(content);
+        parcel.writeString(comma);
     }
 
     private void readFromParcel(Parcel in){
@@ -46,6 +49,7 @@ public class Comment implements Parcelable{
         userName = in.readString();
         userId = in.readString();
         content = in.readString();
+        comma = in.readString();
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -58,13 +62,14 @@ public class Comment implements Parcelable{
         }
     };
 
-    public Comment(long date, String userKeyId, String userName, String userId, String content) {
+    public Comment(long date, String userKeyId, String userName, String userId, String content, String comma) {
 
         this.date = date;
         this.userKeyId = userKeyId;
         this.userName = userName;
         this.userId = userId;
         this.content = content;
+        this.comma = comma;
     }
 
     @Override
@@ -122,4 +127,11 @@ public class Comment implements Parcelable{
         this.userName = userName;
     }
 
+    public String getComma() {
+        return comma;
+    }
+
+    public void setComma(String comma) {
+        this.comma = comma;
+    }
 }

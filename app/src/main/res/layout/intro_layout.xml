@@ -1,85 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_background">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/intro_background"
-    android:orientation="vertical">
-    <LinearLayout
+    android:background="@color/main_background_color"
+    android:gravity="bottom"
+    >
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:layout_marginTop="125.67dp">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo"
-            />
-        <TextView
-            android:id="@+id/markin_intro_logo_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="은"
-            android:layout_gravity="bottom"
-            android:textColor="@color/main_color_66"
-            android:textSize="13.91sp"/>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/markin_intro_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/intro_desc"
-        android:gravity="center_horizontal"
-        android:textColor="@color/main_color_66"
-        android:textSize="13.91sp"
-        android:lineSpacingExtra="5.8sp"
-        android:layout_marginTop="15.33dp"
-         />
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:src="@drawable/socket_logo"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="37dp">
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/intro_register_btn"
-            android:background="@color/transparent"
-            android:src="@drawable/register_btn_selector"
-            android:layout_gravity="center"
-            />
-        <TextView
-            android:id="@+id/register_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/intro_btn"
-            android:layout_gravity="center"
-            android:textSize="16.23sp"
-            android:textColor="@drawable/signup_tv_selector"/>
-    </FrameLayout>
-    <TextView
-        android:id="@+id/intro_login_tv"
+        android:paddingBottom="378.7dp"/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/intro_invitation_login"
-        android:textColor="@color/main_color"
-        android:textSize="11.01sp"
-        android:gravity="center|bottom"
-        android:layout_marginTop="30dp" />
-    <TextView
-        android:id="@+id/intro_invitation_request_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/intro_invitation_request"
-        android:gravity="center"
-        android:textSize="11.01sp"
-        android:textColor="@color/main_color"
-        android:layout_marginTop="145dp"/>
+        android:orientation="horizontal"
+        >
+        <FrameLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/intro_login_selector"
+                android:id="@+id/intro_login_btn"
+                android:text="@string/login_btn"
+                android:textColor="@drawable/register_btn_text_selector"
+                android:textSize="18sp"
+                />
+
+        </FrameLayout>
+        <FrameLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/intro_register_selector"
+                android:id="@+id/intro_register_btn"
+                android:text="@string/register_btn"
+                android:textColor="@drawable/register_btn_text_selector"
+                android:textSize="18sp"/>
+        </FrameLayout>
+    </LinearLayout>
 
 </LinearLayout>
-</FrameLayout>

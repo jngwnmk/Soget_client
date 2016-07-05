@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.kakao.helper.Logger;
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
+import com.markin.app.common.StaticValues;
 import com.markin.app.connector.user.UserLoginTask;
 import com.markin.app.model.Authorization;
 import com.markin.app.model.User;
@@ -22,14 +25,39 @@ public class SplashActivity extends Activity implements OnTaskCompleted{
 
     private User user = null;
     private String shared_url = "";
+    private String invitation_num = "";
+    private String invitation_username = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.splash_layout);
+        Intent intent = getIntent();
+        if (intent != null) {
+            Uri uri = intent.getData();
+            Log.d("INTENT", "URI : " + uri);
+
+            if (uri != null) {
+                Log.d("INTENT","scheme : " + uri.getScheme());
+                Log.d("INTENT","host : " + uri.getHost());
+                Log.d("INTENT", "path : " + uri.getPath());
+                Log.d("INTENT", "query : " + uri.getQuery());
+                invitation_num = uri.getQueryParameter(StaticValues.INVITATIONNUM);
+                invitation_username = uri.getQueryParameter(StaticValues.INVITATIONUSERNAME);
+                Log.d("INTENT", "invitation_num : " + invitation_num);
+                Log.d("INTENT", "invitation_username : " + invitation_username);
+
+            }
+        }
+
+
         if(isTutorialNeed()){
             finish();
-            startActivity(new Intent(SplashActivity.this, TutorialActivity.class));
+            Intent tutorialIntent = new Intent(SplashActivity.this, TutorialActivity.class);
+            tutorialIntent.putExtra(StaticValues.INVITATIONNUM, invitation_num);
+            startActivity(tutorialIntent);
         } else {
             autoLogin();
         }
@@ -77,7 +105,9 @@ public class SplashActivity extends Activity implements OnTaskCompleted{
         //Doesn't
         else {
             finish();
-            startActivity(new Intent(SplashActivity.this,IntroActivity.class));
+            Intent intent = new Intent(SplashActivity.this,IntroActivity.class);
+            intent.putExtra(StaticValues.INVITATIONNUM,invitation_num);
+            startActivity(intent);
         }
     }
 
@@ -89,12 +119,16 @@ public class SplashActivity extends Activity implements OnTaskCompleted{
             //Save authorization info to shared preference
             AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE), user.getUserId(), user.getPassword(), user.getName(), user.getEmail(), ((Authorization) authorization).getAccess_token());
             finish();
+
             Intent intent = new Intent(SplashActivity.this,MainActivity.class);
             Bundle extra = new Bundle();
             extra.putString("SHARED_URL",shared_url);
+            extra.putString(StaticValues.INVITATIONNUM, invitation_num);
+            extra.putString(StaticValues.INVITATIONUSERNAME, invitation_username);
             intent.putExtras(extra);
             startActivity(intent);
         } else {
+
             //Login fail
             finish();
             startActivity(new Intent(SplashActivity.this,IntroActivity.class));

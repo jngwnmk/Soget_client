@@ -17,8 +17,8 @@
     <dimen name="category_padding_bottom">15dp</dimen>
     <dimen name="category_img_width">302dp</dimen>
     <dimen name="category_img_height">138dp</dimen>
-    <dimen name="category_title_padding_top">7.7dp</dimen>
-    <dimen name="category_title_padding_left">7.7dp</dimen>
+    <dimen name="category_title_padding_top">5.0dp</dimen>
+    <dimen name="category_title_padding_left">2.7dp</dimen>
     <dimen name="category_archive_count_padding_right">38.3dp</dimen>
 
     <dimen name="category_title_text_size">18sp</dimen>
@@ -37,7 +37,7 @@
     <dimen name="feed_archive_top_height">124dp</dimen>
     <dimen name="feed_archive_user_name_text_size">12sp</dimen>
     <dimen name="feed_archive_date_text_size">12sp</dimen>
-    <dimen name="feed_archive_via_text_size">9sp</dimen>
+    <dimen name="feed_archive_via_text_size">10.5sp</dimen>
     <dimen name="feed_archive_title_text_size">20sp</dimen>
     <dimen name="feed_archive_url_text_size">12sp</dimen>
     <dimen name="feed_archive_like_text_size">14.7sp</dimen>
@@ -52,10 +52,10 @@
     <dimen name="feed_recommend_card_padding_left">23dp</dimen>
     <dimen name="feed_recommend_card_padding_right">23dp</dimen>
     <dimen name="feed_recommend_card_padding_bottom">25.3dp</dimen>
-    <dimen name="feed_recommend_card_title_margin_top">13.3dp</dimen>
-    <dimen name="feed_recommend_card_url_margin_top">5.3dp</dimen>
-    <dimen name="feed_recommend_card_desc_margin_top">12dp</dimen>
-    <dimen name="feed_recommend_card_info_margin_top">13.3dp</dimen>
+    <dimen name="feed_recommend_card_title_margin_top">10dp</dimen>
+    <dimen name="feed_recommend_card_url_margin_top">12dp</dimen>
+    <dimen name="feed_recommend_card_desc_margin_top">11dp</dimen>
+    <dimen name="feed_recommend_card_info_margin_top">20dp</dimen>
     <dimen name="feed_recommend_card_info_between_margin">13.3dp</dimen>
     <dimen name="feed_recommend_card_page_margin_top">20.3dp</dimen>
 
@@ -114,18 +114,49 @@
     <dimen name="friend_list_header_height">36dp</dimen>
     <dimen name="friend_list_header_text_size">13.3sp</dimen>
     <dimen name="friend_list_header_left_padding">19dp</dimen>
+    
+    <dimen name="friend_name_text_size">16sp</dimen>
+    <dimen name="friend_socket_num_text_size">12sp</dimen>
 
     <!--Signup-->
     <dimen name="signup_btn_text_size">17.3sp</dimen>
-    <dimen name="signup_info_text_size">14sp</dimen>
+    <dimen name="signup_info_text_size">11.3sp</dimen>
     <dimen name="signup_input_text_size">14sp</dimen>
     <dimen name="signup_input_bottom_padding">10.7dp</dimen>
-    <dimen name="signup_input_margin_top">37.3dp</dimen>
+    <dimen name="signup_input_margin_top">26.7dp</dimen>
     <dimen name="signup_input_width">245.3dp</dimen>
 
     <!--Login-->
     <dimen name="login_input_id_margin_top">85.3dp</dimen>
-    <dimen name="login_input_margin_top">37.3dp</dimen>
-    <dimen name="login_btn_margin_top">42.7dp</dimen>
+    <dimen name="login_input_margin_top">26.7dp</dimen>
+    <dimen name="login_btn_margin_top">34.7dp</dimen>
     <dimen name="login_input_width">245.3dp</dimen>
+
+    <!--Web View-->
+    <dimen name="webview_icon_right_margin">26.3dp</dimen>
+
+    <!--Navigator-->
+    <dimen name="navigator_header_height">222.3dp</dimen>
+    <dimen name="navigator_name_icon_distance">10.7dp</dimen>
+    <dimen name="navigator_icon_socket_distance">16dp</dimen>
+    <dimen name="navigator_username_text_size">17.3sp</dimen>
+    <dimen name="navigator_number_of_socket">22.7sp</dimen>
+    <dimen name="navigator_socket_text_size">9.3sp</dimen>
+
+    <!--Invitation-->
+    <dimen name="invitation_title_size">16sp</dimen>
+    <dimen name="invitation_desc_size">13.3sp</dimen>
+    <dimen name="invitation_title_margin_top">64dp</dimen>
+    <dimen name="invitation_desc_margin_top">12dp</dimen>
+    <dimen name="invitation_rectangle_margin_top">58.7dp</dimen>
+    <dimen name="invitation_content_margin_top">42.7dp</dimen>
+    <dimen name="invitation_content_width">276dp</dimen>
+    <dimen name="invitation_mail_icon_margin_top">37.3dp</dimen>
+    <dimen name="invitation_kakao_btn_margin_top">234.7dp</dimen>
+    <dimen name="invitation_kakao_btn_text_size">14.7sp</dimen>
+
+    <!--Setting-->
+    <dimen name="setting_left_padding">30.7dp</dimen>
+    <dimen name="setting_right_padding">30.7dp</dimen>
+    <dimen name="setting_text_size">16sp</dimen>
 </resources>

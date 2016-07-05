@@ -20,15 +20,16 @@
     <string name="user_email">이메일</string>
     <string name="user_email_hint">이메일</string>
     <string name="user_pwd">비밀번호</string>
-    <string name="user_pwd_hint">비밀번호</string>
+    <string name="user_pwd_hint">비밀번호 (6자리 이상)</string>
+    <string name="user_pwd_check_hint">비밀번호 확인</string>
     <string name="register_btn">가입하기</string>
-    <string name="register_condition">가입과 동시에 동의하신 것으로 간주됩니다.</string>
-    <string name="register_condition_1"><u>이용약관 및 개인정보 처리방침</u></string>
+    <string name="register_condition">가입과 동시에 동의하신 것으로 간주됩니다</string>
+    <string name="register_condition_1">이용약관 및 개인정보 처리방침</string>
 
     <!--로그인 화면 strings -->
     <string name="login_id_hint">아이디</string>
     <string name="login_pwd_hint">비밀번호</string>
-    <string name="login_forget_pwd"><u>비밀번호를 잊어버리셨나요?</u></string>
+    <string name="login_forget_pwd">비밀번호를 잊어버리셨나요?</string>
 
     <!--my get (archive) 화면 string -->
     <string name="myget_title">MY GET</string>
@@ -107,7 +108,8 @@
     <!-- Archive-->
     <string name="change_to_privacy">비공개 설정되었습니다.</string>
     <string name="change_to_public">전체공개 설정되었습니다.</string>
-
+    <string name="empty_archive_msg_1">Add Your First Socket!</string>
+    <string name="empty_archive_msg_2">마음에 드는 컨텐츠를 모으면\n친구들에게도 추천됩니다.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -115,7 +117,16 @@
 
 
     <!--Category-->
-    <string name="category_title">Category</string>
+    <string name="category_title">CATEGORY</string>
 
+    <!--Invitation-->
+    <string name="invitation_title">소켓은 친구 초대로 가입되는 서비스입니다</string>
+    <string name="invitation_desc">내가 모은 콘텐츠를 함께 나누고 모을 친구에게\n 아래의 코드번호를 전달해주세요</string>
+    <string name="invitation_content">{user_name}({user_id}) 님이 소켓에 초대합니다.소켓에 가입하면 {user_name} 님이 모은 특별한 콘텐츠를 쉽게 받아 볼 수 있습니다.  음악, 기사, 사진, 동영상 등 좋은 콘텐츠를 함께 모아보세요.\n\n\n코드번호 : {code}</string>
 
+    <!--Add Friend Dialog-->
+    <string name="add_friend_noti">알림</string>
+    <string name="add_friend_decline">거절</string>
+    <string name="add_friend_accept">승낙</string>
+    <string name="add_friend_desc">{user_name} 님과 친구를 맺고, {user_name} 님이 모은 콘텐츠를 받아보시겠습니까?</string>
 </resources>

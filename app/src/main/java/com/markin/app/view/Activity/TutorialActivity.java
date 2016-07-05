@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import com.markin.app.R;
 import com.markin.app.callback.PageMove;
 import com.markin.app.common.AuthManager;
+import com.markin.app.common.StaticValues;
 import com.markin.app.view.Fragment.TutorialOneSlide;
 import com.markin.app.view.Fragment.TutorialThreeSlide;
 import com.markin.app.view.Fragment.TutorialTwoSlide;
@@ -103,8 +104,29 @@ public class TutorialActivity extends FragmentActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putBoolean("tutorial", false);
                         editor.commit();
-                        finish();
-                        startActivity(new Intent(TutorialActivity.this, IntroActivity.class));
+
+                        Intent receiveIntent = getIntent();
+                        if(receiveIntent!=null){
+                            String invitation_num = receiveIntent.getStringExtra(StaticValues.INVITATIONNUM);
+                            if(invitation_num!=null && !invitation_num.equals("")){
+                                finish();
+
+                                Intent introIntent = new Intent(TutorialActivity.this, IntroActivity.class);
+                                introIntent.putExtra(StaticValues.INVITATIONNUM, invitation_num);
+                                startActivity(introIntent);
+
+                            } else {
+                                finish();
+
+                                Intent introIntent = new Intent(TutorialActivity.this, IntroActivity.class);
+                                startActivity(introIntent);
+                            }
+                        } else {
+                            finish();
+
+                            Intent introIntent = new Intent(TutorialActivity.this, IntroActivity.class);
+                            startActivity(introIntent);
+                        }
                     }
                 });
                 return tutorialThreeSlide;

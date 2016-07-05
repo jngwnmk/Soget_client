@@ -18,7 +18,9 @@ import com.markin.app.model.Category;
 import com.markin.app.view.Adapter.SimpleCategoryAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -48,10 +50,10 @@ public class AddBookmarkBodySecondFragment extends Fragment{
 
     }
 
-    private Set<String> loadCategory(){
+    private List<String> loadCategory(){
         SharedPreferences prefs = getActivity().getSharedPreferences(StaticValues.PREFERENCE.CATEGORY.NAME, getActivity().MODE_PRIVATE);
-        Set<String> categoryTitles = prefs.getStringSet(StaticValues.PREFERENCE.CATEGORY.TITLE, new HashSet<String>());
-        return categoryTitles;
+        String categoryTitles = prefs.getString(StaticValues.PREFERENCE.CATEGORY.TITLE, "");
+        return Arrays.asList(categoryTitles.split(","));
     }
 
     @Override

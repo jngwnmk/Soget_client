@@ -1,5 +1,6 @@
 package com.markin.app.view.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -77,6 +78,7 @@ public class ArchiveAdapter extends BaseAdapter{
         final Bookmark bookmark = (Bookmark)getItem(position);
         final ArchiveWrapper finalArchiveWrapper = archiveWrapper;
 
+        archiveWrapper.getViaTv();
         archiveWrapper.getFromNameTv().setText(bookmark.getInitUserName());
         archiveWrapper.getArchiveDateTv().setText(SogetUtil.calDurationTimeForComment(bookmark.getDate()));
         archiveWrapper.getTitleTv().setText(bookmark.getTitle());
@@ -95,10 +97,10 @@ public class ArchiveAdapter extends BaseAdapter{
             if(user!=null){
                 String user_id = user.getUserId();
                 if(bookmark.getLike().contains(user_id)){
-                    archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon_feed_pressed, 0, 0, 0);
+                    archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon_pressed, 0, 0, 0);
                     archiveWrapper.getLikeNumTv().setTag(true);
                 } else {
-                    archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon, 0, 0, 0);
+                    archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon_list, 0, 0, 0);
                     archiveWrapper.getLikeNumTv().setTag(false);
                 }
             }
@@ -108,16 +110,30 @@ public class ArchiveAdapter extends BaseAdapter{
         archiveWrapper.getLikeNumTv().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if((Boolean) finalArchiveWrapper.getLikeNumTv().getTag()){
+                if ((Boolean) finalArchiveWrapper.getLikeNumTv().getTag()) {
                     likeCancel(finalArchiveWrapper, bookmark);
                 } else {
-                    like(finalArchiveWrapper,bookmark);
+                    like(finalArchiveWrapper, bookmark);
                 }
             }
         });
 
         archiveWrapper.getSocketNumTv().setText(bookmark.getFollowers().size() + "");
-
+        try{
+            User user = AuthManager.getAuthManager().getLoginInfo(mContext.getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+            if(user!=null){
+                String user_id = user.getUserId();
+                if(bookmark.getFollowers().contains(user_id)){
+                    archiveWrapper.getSocketNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.socket_icon_pressed, 0, 0, 0);
+                    archiveWrapper.getSocketNumTv().setTag(true);
+                } else {
+                    archiveWrapper.getSocketNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.socket_icon_list, 0, 0, 0);
+                    archiveWrapper.getSocketNumTv().setTag(false);
+                }
+            }
+        } catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
 
         archiveWrapper.getCommentNumTv().setText(bookmark.getComments().size() + "");
         try{
@@ -127,7 +143,7 @@ public class ArchiveAdapter extends BaseAdapter{
                 Comment checkCommend = new Comment();
                 checkCommend.setUserId(user_id);
                 if(bookmark.getComments().contains(checkCommend)){
-                    archiveWrapper.getCommentNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.comment_icon_list, 0, 0, 0);
+                    archiveWrapper.getCommentNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.comment_icon_pressed, 0, 0, 0);
                     archiveWrapper.getCommentNumTv().setTag(true);
                 } else {
                     archiveWrapper.getCommentNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.comment_icon_list, 0, 0, 0);
@@ -163,7 +179,7 @@ public class ArchiveAdapter extends BaseAdapter{
                     @Override
                     public void onTaskCompleted(Object object) {
                         if((Integer)object!=-1){
-                            archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon_feed_pressed, 0, 0, 0);
+                            archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon_pressed, 0, 0, 0);
                             archiveWrapper.getLikeNumTv().setTag(true);
                             archiveWrapper.getLikeNumTv().setText(String.valueOf((Integer) object));
                         }
@@ -186,7 +202,7 @@ public class ArchiveAdapter extends BaseAdapter{
                     @Override
                     public void onTaskCompleted(Object object) {
                         if((Integer)object!=-1){
-                            archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon, 0, 0, 0);
+                            archiveWrapper.getLikeNumTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.like_icon_list, 0, 0, 0);
                             archiveWrapper.getLikeNumTv().setTag(false);
                             archiveWrapper.getLikeNumTv().setText(String.valueOf((Integer)object));
                         }
@@ -207,6 +223,7 @@ public class ArchiveAdapter extends BaseAdapter{
         extras.putInt(StaticValues.MARKINNUM, size);
         intent.putExtras(extras);
         mContext.startActivity(intent);
+        ((Activity) mContext).overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
     }
 
     private class ArchiveWrapper{
@@ -230,7 +247,7 @@ public class ArchiveAdapter extends BaseAdapter{
             if(via==null){
                 via = (TextView)base.findViewById(R.id.via_tv);
                 via.setTextColor(mContext.getResources().getColor(R.color.light_text_color));
-                via.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Light.otf"));
+                via.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-Regular.otf"));
 
             }
             return via;

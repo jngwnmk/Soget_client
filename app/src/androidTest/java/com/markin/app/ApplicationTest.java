@@ -20,7 +20,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
 
     public void loginTest(){
-        User user = new User();
+        /*User user = new User();
         user.setUserId("admin");
         user.setPassword("admin");
         new UserLoginTask(new OnTaskCompleted() {
@@ -41,7 +41,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 }, bookmark, token).execute();
 
             }
-        }, user).execute();
+        }, user).execute();*/
     }
 
 

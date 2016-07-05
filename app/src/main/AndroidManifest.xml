@@ -39,7 +39,8 @@
             </activity>
         <activity
             android:name="com.markin.app.view.Activity.CommentActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name="com.markin.app.view.Activity.SettingActivity"
             android:theme="@style/AppTheme">
@@ -72,6 +73,17 @@
                 <data android:scheme="@string/kakao_scheme" android:host="@string/kakaolink_host" />
             </intent-filter>
 
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="post_detail"
+                    android:scheme="selphone" />
+            </intent-filter>
+
 
         </activity>
 
@@ -82,6 +94,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
+        </activity>
+        <activity android:name=".view.Activity.AddFriendActivity"
+            android:theme="@android:style/Theme.Translucent">
+
         </activity>
 
         <activity android:name="com.markin.app.view.Activity.TutorialActivity"

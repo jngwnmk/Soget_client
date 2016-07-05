@@ -1,5 +1,10 @@
 package com.markin.app.common;
 
+import android.app.Activity;
+import android.content.Context;
+
+import com.markin.app.R;
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -96,10 +101,14 @@ public class SogetUtil {
                 }
             }
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
     }
+
+    /*public static void showNewActivityAnim(Context context){
+        ((Activity)context).overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+    }*/
+
 }

@@ -30,6 +30,7 @@
                 android:id="@+id/comment_date_tv"
                 android:textSize="@dimen/comment_item_date_text_size"
                 android:textColor="@color/charcol_text_color_33"
+
          />
 
         </LinearLayout>
@@ -41,7 +42,9 @@
             android:text="세발자전거에 실은 중국의 삶을 내려보다"
             android:layout_weight="1"
             android:layout_marginTop="6.3dp"
-            android:textSize="@dimen/comment_item_content_text_size"/>
+            android:textSize="@dimen/comment_item_content_text_size"
+            android:drawableLeft="@drawable/comment_quote"
+            android:drawablePadding="5dp"/>
 
 
     </LinearLayout>

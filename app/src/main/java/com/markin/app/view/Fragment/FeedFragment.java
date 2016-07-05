@@ -41,6 +41,9 @@ public class FeedFragment extends Fragment {
 
     private SlidingUpPanelLayout mLayout = null;
     private ListView list = null;
+    private boolean mLockListView;
+    private LayoutInflater mInflater;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class FeedFragment extends Fragment {
 
         recommendView = (RecommendView) rootView.findViewById(R.id.recommend_pager);
         recommendView.setHeaderPageTransformer(PageTransformerTypes.ZOOMOUT);
+
         list = (ListView)rootView.findViewById(R.id.list);
 
         loadRecommend();

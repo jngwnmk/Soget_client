@@ -112,7 +112,8 @@ public class RecommendView extends FrameLayout{
         mPager.setClipToPadding(false);
         mPager.setPageMargin(24);
         mPager.setPadding(68, 28, 68, 28);
-        mPager.setOffscreenPageLimit(3);
+        mPager.setOffscreenPageLimit(10);
+        //mPager.setOffscreenPageLimit(3);
 
 
         FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
@@ -230,11 +231,16 @@ public class RecommendView extends FrameLayout{
     public void addFragmentToHeader(Fragment fragmentToAdd) {
         indicator.addPage();
         headerViewPagerAdapter.addFragment(fragmentToAdd);
+        //headerViewPagerAdapter.notifyChangeInPosition(1);
+        headerViewPagerAdapter.notifyDataSetChanged();
     }
 
     public void removeFragmentFromHeader(String bookmark_id){
         indicator.removePage();
         headerViewPagerAdapter.removeFragment(bookmark_id);
+        headerViewPagerAdapter.notifyDataSetChanged();
+        //headerViewPagerAdapter.notifyChangeInPosition(1);
+
 
     }
 

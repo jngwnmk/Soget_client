@@ -1,6 +1,7 @@
 package com.markin.app.view.Fragment;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
+import com.markin.app.common.SogetUtil;
 import com.markin.app.common.StaticValues;
 import com.markin.app.connector.category.CategoryGetTask;
 import com.markin.app.model.Category;
@@ -59,6 +61,8 @@ public class CategoryFragment extends Fragment {
                 extras.putString(StaticValues.CATEGORY, categories.get(i).getType());
                 intent.putExtras(extras);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+
             }
         });
 
@@ -100,14 +104,15 @@ public class CategoryFragment extends Fragment {
     }
 
     private void saveCategory(ArrayList<Category> categories){
-        HashSet<String> categorySet = new HashSet<>();
-        for(int i = 0 ; i < categories.size() ; ++i) {
-            categorySet.add(categories.get(i).getType());
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < categories.size(); i++) {
+            sb.append(categories.get(i).getType()).append(",");
         }
         if(getActivity()!=null){
             SharedPreferences prefs = getActivity().getSharedPreferences(StaticValues.PREFERENCE.CATEGORY.NAME, getActivity().MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putStringSet(StaticValues.PREFERENCE.CATEGORY.TITLE, categorySet);
+            editor.putString(StaticValues.PREFERENCE.CATEGORY.TITLE, sb.toString());
             editor.commit();
         }
 
