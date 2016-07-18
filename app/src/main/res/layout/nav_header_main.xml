@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/navigator_header_height"
-    android:background="@color/main_background_color"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
     >
 
     <TextView
+        android:layout_marginTop="58.7dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/navigator_user_name_tv"
         android:text="jngwnwmk"
         android:textSize="@dimen/navigator_username_text_size"
         />
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,5 +35,12 @@
         android:textSize="@dimen/navigator_socket_text_size"
         android:id="@+id/navigator_socket_text"
         />
+    <ImageView
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/drawer_line"/>
+
 
 </LinearLayout>

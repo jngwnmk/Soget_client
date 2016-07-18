@@ -120,13 +120,19 @@ public class FriendAdatper extends BaseExpandableListAdapter{
         }
         if(groupPosition==0){
             String sentInvitation = (String)getChild(groupPosition, childPosition);
-            friendWrapper.getFriendName().setText("코드번호 : "+sentInvitation);
+            friendWrapper.getNameSocketLayout().setPadding(38,40,0,40);
+
+            friendWrapper.getFriendName().setText("코드번호 : " + sentInvitation);
             friendWrapper.getFriendNumBookmark().setVisibility(View.GONE);
-            friendWrapper.getFriendBtn().setVisibility(View.INVISIBLE);
+            friendWrapper.getFriendBtn().setVisibility(View.VISIBLE);
+            friendWrapper.getFriendBtn().setBackground(mContext.getResources().getDrawable(R.drawable.waiting_button));
+            friendWrapper.getFriendBtn().setText(mContext.getResources().getString(R.string.waiting_btn));
+
 
         } else if(groupPosition==1){
             final Friend friend = (Friend)getChild(groupPosition, childPosition);
             if(friend.getType().equals(Friend.FRIEND.FRIEND)){
+                friendWrapper.getNameSocketLayout().setPadding(38,25,0,25);
                 friendWrapper.getFriendBtn().setVisibility(View.INVISIBLE);
                 friendWrapper.getFriendName().setText(friend.getUserInfo().getName());
                 if(friend.getUserInfo().getBookmarks()!=null)
@@ -166,6 +172,7 @@ public class FriendAdatper extends BaseExpandableListAdapter{
 
     private class FriendWrapper{
         private View base;
+        private LinearLayout nameSocketLayout;
         private TextView friendName;
         private TextView friendNumBookmark;
         private TextView   friendBtn;
@@ -175,6 +182,13 @@ public class FriendAdatper extends BaseExpandableListAdapter{
             this.base = base;
         }
 
+        public LinearLayout getNameSocketLayout(){
+            if(nameSocketLayout==null){
+                nameSocketLayout = (LinearLayout)base.findViewById(R.id.name_socket_layout);
+
+            }
+            return nameSocketLayout;
+        }
         public TextView getFriendName() {
             if(friendName==null){
                 friendName = (TextView)base.findViewById(R.id.friend_name);
@@ -196,6 +210,7 @@ public class FriendAdatper extends BaseExpandableListAdapter{
         public TextView getFriendBtn() {
             if(friendBtn==null){
                 friendBtn = (TextView)base.findViewById(R.id.friend_btn);
+                friendBtn.setTextColor(mContext.getResources().getColor(R.color.charcol_text_color_50));
                 friendBtn.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
 
             }

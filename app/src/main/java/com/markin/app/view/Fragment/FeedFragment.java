@@ -19,6 +19,7 @@ import com.markin.app.connector.recommend.RecommendGetTask;
 import com.markin.app.model.Bookmark;
 import com.markin.app.model.User;
 import com.markin.app.view.Adapter.ArchiveAdapter;
+import com.markin.app.view.component.DottedProgressDialog;
 import com.markin.app.view.component.PagedHeadListView.PagedHeadListView;
 import com.markin.app.view.component.PagedHeadListView.utils.PageTransformerTypes;
 import com.markin.app.view.component.RecommendView;
@@ -35,7 +36,7 @@ public class FeedFragment extends Fragment {
     public static final String TAG = "FeedFragment";
     private RecommendView recommendView= null;
 
-    private ProgressDialog pDialog          = null;
+    private DottedProgressDialog pDialog          = null;
     private ArrayList<Bookmark> recommend   = null;
     private ArrayList<Bookmark> myBookmarks = null;
 
@@ -49,8 +50,8 @@ public class FeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().getTheme().applyStyle(R.style.AppTheme, true);
         View rootView = inflater.inflate(R.layout.feed_layout_alter_1, container, false);
-        pDialog = new ProgressDialog(this.getActivity());
-        pDialog.setMessage("Loading....");
+        pDialog = new DottedProgressDialog(this.getActivity());
+        //pDialog.setMessage("Loading....");
 
         recommendView = (RecommendView) rootView.findViewById(R.id.recommend_pager);
         recommendView.setHeaderPageTransformer(PageTransformerTypes.ZOOMOUT);

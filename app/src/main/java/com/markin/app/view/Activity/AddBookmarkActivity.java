@@ -84,6 +84,7 @@ public class AddBookmarkActivity extends FragmentActivity implements AddBookmark
             isMakeBookmark = false;
             intent.setExtrasClassLoader(Bookmark.class.getClassLoader());
             refBookmark = intent.getParcelableExtra("Bookmark");
+            currentCategory = refBookmark.getCategory().get(0);
 
         }
         cancelTv = (TextView)findViewById(R.id.cancel_tv);

@@ -182,6 +182,8 @@ public class CategoryAdapter extends BaseAdapter{
             if(archiveCountView==null){
                 archiveCountView = (TextView)base.findViewById(R.id.archive_count);
                 archiveCountView.setTextColor(mContext.getResources().getColor(R.color.category_text_charcol));
+                archiveCountView.setTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/Lato-Heavy.ttf"));
+
 
             }
             return archiveCountView;

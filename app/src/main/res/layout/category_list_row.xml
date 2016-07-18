@@ -3,7 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="@dimen/category_row_height"
     android:paddingTop="@dimen/category_padding_top"
-    android:paddingBottom="@dimen/category_padding_bottom"
     android:background="@color/white"
     >
     <FrameLayout
@@ -54,6 +53,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/category_title_padding_left"
         android:paddingTop="@dimen/category_title_padding_top"
+        android:paddingBottom="@dimen/category_title_padding_top"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -69,8 +69,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/new_dot"
             android:id="@+id/category_feed_indicator"
-            android:paddingTop="@dimen/category_title_padding_top"
             android:paddingLeft="@dimen/category_title_padding_left"
+            android:paddingTop="5dp"
             android:visibility="invisible"
             />
         <TextView

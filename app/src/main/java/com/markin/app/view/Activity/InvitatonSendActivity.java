@@ -70,6 +70,13 @@ public class InvitatonSendActivity extends Activity {
                     User user = (User)object;
                     userName = user.getName();
                     userId = user.getUserId();
+
+                    String origin = invitationContentTv.getText().toString();
+                    String modified = origin
+                            .replace("{user_name}",userName)
+                            .replace("{user_id}",userId)
+                            .replace("{code}",invitationCode);
+                    invitationContentTv.setText(modified);
                 }
             }
         }, user_id, token).execute();
@@ -131,7 +138,7 @@ public class InvitatonSendActivity extends Activity {
     private void sendKakaoTalk(){
 
         StringBuffer message = new StringBuffer();
-        message.append(userName+" ("+userId+")님이 모은");
+        message.append(userName+" ("+userId+")님이 발견한");
         message.append(getString(R.string.invitation_sms_message) + " ");
         message.append(getString(R.string.invitation_code) + " " + invitationCode + " ");
 //        message.append(getString(R.string.invitation_app));
@@ -151,7 +158,7 @@ public class InvitatonSendActivity extends Activity {
                     new AppActionBuilder()
                             .addActionInfo(AppActionInfoBuilder
                                     .createAndroidActionInfoBuilder()
-                                    .setExecuteParam(invitationCode)
+                                    .setExecuteParam("invitationNum=" + invitationCode + "&invitationUserName=" + userName)
                                     .build())
 
                             .build()

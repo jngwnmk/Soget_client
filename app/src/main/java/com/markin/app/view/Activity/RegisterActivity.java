@@ -30,6 +30,8 @@ import com.markin.app.connector.user.UserRegisterTask;
 import com.markin.app.model.Authorization;
 import com.markin.app.model.User;
 
+import org.w3c.dom.Text;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,7 +50,8 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
     private Button register_btn;
     private TextView register_info_tv;
     private TextView register_condition_tv;
-
+    private TextView register_privacy_tv;
+    private String invitation_username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
         Intent receiveIntent = getIntent();
         if(receiveIntent!=null){
             String invitation_num = receiveIntent.getStringExtra(StaticValues.INVITATIONNUM);
+            invitation_username = receiveIntent.getStringExtra(StaticValues.INVITATIONUSERNAME);
             if(invitation_num!=null && !invitation_num.equals("")){
                 invitation_code_edit.setText(invitation_num);
             }
@@ -276,34 +280,34 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                 String user_check_pwd = user_pwd_check_edit.getText().toString();
 
 
-                if(!isValidInvitationCode(invitation_code)){
+                if (!isValidInvitationCode(invitation_code)) {
                     invitation_code_edit.setError("Invalid Invitation Code");
-                    return ;
+                    return;
                 }
 
-                if(!isValidUserName(user_name)){
+                if (!isValidUserName(user_name)) {
                     user_name_edit.setError("Invalid User Name");
-                    return ;
+                    return;
                 }
 
-                if(!isValidUserID(user_id)){
+                if (!isValidUserID(user_id)) {
                     user_id_edit.setError("Invalid User ID");
-                    return ;
+                    return;
                 }
 
                 if (!isValidEmail(user_email)) {
                     user_email_edit.setError("Invalid Email");
-                    return ;
+                    return;
                 }
 
                 if (!isValidPassword(user_pwd)) {
                     user_pwd_edit.setError("Invalid Password");
-                    return ;
+                    return;
                 }
 
-                if(!isEqualPassword(user_pwd, user_check_pwd)){
+                if (!isEqualPassword(user_pwd, user_check_pwd)) {
                     user_pwd_check_edit.setError("Please Check Password");
-                    return ;
+                    return;
                 }
 
 
@@ -323,7 +327,27 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
 
         register_condition_tv = (TextView)findViewById(R.id.register_condition_tv);
         register_condition_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Regular.otf"));
+        register_condition_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this, ConditionActivity.class);
+                intent.putExtra(StaticValues.CONDITION, true);
+                startActivity(intent);
+                overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+            }
+        });
 
+        register_privacy_tv = (TextView)findViewById(R.id.register_privacy_tv);
+        register_privacy_tv.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/AppleSDGothicNeo-Regular.otf"));
+        register_privacy_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this, ConditionActivity.class);
+                intent.putExtra(StaticValues.PRIVACY, true);
+                startActivity(intent);
+                overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+            }
+        });
     }
 
     //validating invitation_code
@@ -433,14 +457,22 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
             new UserLoginTask(new OnTaskCompleted() {
                 @Override
                 public void onTaskCompleted(Object authorization) {
-                    AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE),((User)user).getUserId(),((User)user).getPassword(),((User)user).getName(),((User)user).getEmail(),((Authorization)authorization).getAccess_token());
+                    AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE), ((User) user).getUserId(), ((User) user).getPassword(), ((User) user).getName(), ((User) user).getEmail(), ((Authorization) authorization).getAccess_token());
                     finish();
-                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+
+                    Intent notiActivity = new Intent(RegisterActivity.this, FriendNotiActivity.class);
+                    if(!invitation_username.equals("")){
+                        notiActivity.putExtra(StaticValues.INVITATIONUSERNAME, invitation_username);
+                        startActivity(notiActivity);
+                    } else {
+                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    }
+
                 }
             }, (User)user).execute();
             Log.d("RegisterActivity", user.toString());
         } else {
-            Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
         }
 
     }

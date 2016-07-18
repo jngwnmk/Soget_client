@@ -48,7 +48,8 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        >
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,8 +61,10 @@
                 android:text="@string/invitation_content"
                 android:textColor="@color/charcol_text_color_80"
                 android:layout_marginTop="@dimen/invitation_content_margin_top"
+                android:padding="23dp"
                 android:layout_gravity="center_horizontal"
-                android:id="@+id/invitation_content_tv"/>
+                android:id="@+id/invitation_content_tv"
+                android:textSize="@dimen/invitation_content_text_size"/>
 
             <FrameLayout
                 android:layout_width="wrap_content"

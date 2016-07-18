@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ import com.markin.app.model.Friend;
 import com.markin.app.model.User;
 import com.markin.app.view.Activity.InvitatonSendActivity;
 import com.markin.app.view.Adapter.FriendAdatper;
+import com.markin.app.view.component.DottedProgressDialog;
 
 import java.util.ArrayList;
 
@@ -46,7 +49,7 @@ public class FriendsFragment extends Fragment {
     private ArrayList<Friend> friends = new ArrayList<Friend>();
     private FriendAdatper friendAdatper = null;
 
-    private ProgressDialog pDialog;
+    private DottedProgressDialog pDialog;
     ArrayList<String> invitationNum = new ArrayList<String>();
 
     @Override
@@ -101,8 +104,9 @@ public class FriendsFragment extends Fragment {
             }
         });*/
 
-        pDialog = new ProgressDialog(this.getActivity());
-        pDialog.setMessage("Loading....");
+        pDialog = new DottedProgressDialog(this.getActivity());
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        //pDialog.setMessage("Loading....");
 
         return rootView;
     }
@@ -131,7 +135,14 @@ public class FriendsFragment extends Fragment {
                     updateFriendsList();
                 }
 
-                pDialog.dismiss();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        pDialog.dismiss();
+                    }
+                };
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(runnable, 1500);
             }
         };
         String user_id = (AuthManager.getAuthManager().getLoginInfo(getActivity().getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();

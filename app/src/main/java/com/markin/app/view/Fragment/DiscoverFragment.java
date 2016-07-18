@@ -5,7 +5,9 @@ package com.markin.app.view.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -30,6 +32,7 @@ import com.markin.app.model.User;
 import com.markin.app.view.Activity.SettingActivity;
 import com.markin.app.view.Adapter.DiscoverAdapter;
 import com.markin.app.view.component.CardStackMoveListener;
+import com.markin.app.view.component.DottedProgressDialog;
 import com.markin.app.view.component.MyCardStackView;
 import com.markin.app.view.component.SwipeTouchListener;
 import com.squareup.picasso.Picasso;
@@ -45,7 +48,7 @@ public class DiscoverFragment extends Fragment {
     private MyCardStackView cardStackView = null;
     private ArrayList<Bookmark> bookmarks = new ArrayList<Bookmark>();
     private DiscoverAdapter discoverAdapter = null;
-    private ProgressDialog pDialog;
+    private DottedProgressDialog pDialog = null;
     private ImageView backgroundImg =null;
     private TextView cardNumTextView = null;
     private TextView totalCardNumTextView = null;
@@ -110,7 +113,7 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void cardAdd() {
                 //addBookmark(bookmarks.get(currentIndex));
-                showAddDialog(bookmarks.get(currentIndex).getUrl(),bookmarks.get(currentIndex));
+                showAddDialog(bookmarks.get(currentIndex).getUrl(), bookmarks.get(currentIndex));
                 treatCardAction();
 
             }
@@ -123,13 +126,13 @@ public class DiscoverFragment extends Fragment {
                 //Toast.makeText(getActivity().getApplicationContext(), "Discard!!!", Toast.LENGTH_SHORT).show();
             }
 
-            private void treatCardAction(){
+            private void treatCardAction() {
                 //SettingManager.setLastDiscoverDate(getActivity().getSharedPreferences(SettingManager.LASTDISCOVER,Context.MODE_PRIVATE),bookmarks.get(currentIndex).getDate());
                 //bookmarks.remove(0);
                 ++currentIndex;
-                cardNumTextView.setText(String.valueOf(bookmarks.size()-currentIndex));
+                cardNumTextView.setText(String.valueOf(bookmarks.size() - currentIndex));
 
-                if(bookmarks.size()!=currentIndex) {
+                if (bookmarks.size() != currentIndex) {
                     {
                         if (bookmarks.get(currentIndex).getImg_url().equals("")) {
                             Picasso.with(getActivity().getApplicationContext()).load(R.drawable.picture_no_image)
@@ -142,7 +145,7 @@ public class DiscoverFragment extends Fragment {
                         }
                     }
                 } else {
-                    Toast.makeText(getActivity(),"load more",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "load more", Toast.LENGTH_SHORT).show();
                     bookmarks.clear();
                     currentIndex = 0;
                     getDiscoverList();
@@ -151,8 +154,11 @@ public class DiscoverFragment extends Fragment {
 
             }
         });
-        pDialog = new ProgressDialog(this.getActivity());
-        pDialog.setMessage("Loading....");
+
+        pDialog = new DottedProgressDialog(this.getActivity());
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        //pDialog.setMessage("Loading....");
         getDiscoverList();
         return rootView;
     }
@@ -220,7 +226,14 @@ public class DiscoverFragment extends Fragment {
                     }
 
                 }
-                pDialog.dismiss();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        pDialog.dismiss();
+                    }
+                };
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(runnable, 1500);
             }
         };
         try{

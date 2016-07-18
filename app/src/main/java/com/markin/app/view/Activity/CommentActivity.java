@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -27,6 +29,7 @@ import com.markin.app.connector.comment.CommentGetTask;
 import com.markin.app.model.Comment;
 import com.markin.app.model.User;
 import com.markin.app.view.Adapter.CommentAdapter;
+import com.markin.app.view.component.DottedProgressDialog;
 
 import org.w3c.dom.Text;
 
@@ -47,7 +50,7 @@ public class CommentActivity extends AppCompatActivity{
     private ArrayList<Comment> comments = new ArrayList<Comment>();
     private LinearLayout commentLayout = null;
     private String bookmark_id = "";
-    private ProgressDialog pDialog;
+    private DottedProgressDialog pDialog;
     private int markin_num = 0;
     private boolean hasComment = false;
 
@@ -56,8 +59,8 @@ public class CommentActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comment_layout);
 
-        pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Loading....");
+        pDialog = new DottedProgressDialog(this);
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         titleTv = (TextView)findViewById(R.id.comment_title_tv);
         titleTv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/FrutigerLTStd-Bold.otf"));
@@ -101,7 +104,14 @@ public class CommentActivity extends AppCompatActivity{
                                 commentAdapter.notifyDataSetChanged();
                                 hasComment = checkHasComment();
                             }
-                            pDialog.dismiss();
+                            Runnable runnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    pDialog.dismiss();
+                                }
+                            };
+                            Handler mHandler = new Handler();
+                            mHandler.postDelayed(runnable, 1500);
                         }
                     };
 
@@ -143,7 +153,14 @@ public class CommentActivity extends AppCompatActivity{
                     commentAdapter.notifyDataSetChanged();
                     hasComment = checkHasComment();
                 }
-                pDialog.dismiss();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        pDialog.dismiss();
+                    }
+                };
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(runnable, 1500);
             }
         };
         String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));

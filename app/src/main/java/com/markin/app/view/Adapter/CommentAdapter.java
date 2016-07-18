@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.markin.app.R;
@@ -63,9 +64,10 @@ public class CommentAdapter extends BaseAdapter{
         commentWrapper.getUserInfoTv().setText(item.getUserName()+" ("+item.getUserId()+")");
         commentWrapper.getDateTv().setText(SogetUtil.calDurationTimeForComment(item.getDate()));
         if("YES".equals(item.getComma())){
-            commentWrapper.getCommentTv().setCompoundDrawablesWithIntrinsicBounds(R.drawable.comment_quote, 0, 0, 0);
+            commentWrapper.getCommentImg().setVisibility(View.VISIBLE);
         } else {
-            commentWrapper.getCommentTv().setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            commentWrapper.getCommentImg().setVisibility(View.GONE);
+
         }
 
         return row;
@@ -76,6 +78,7 @@ public class CommentAdapter extends BaseAdapter{
         private TextView userInfoTv;
         private TextView commentTv;
         private TextView dateTv;
+        private ImageView commentImg;
 
         public CommentWrapper(View base){
             this.base = base;
@@ -110,5 +113,15 @@ public class CommentAdapter extends BaseAdapter{
             }
             return commentTv;
         }
+
+        public ImageView getCommentImg(){
+            if(commentImg==null){
+                commentImg = (ImageView)base.findViewById(R.id.comment_quote_img);
+
+            }
+            return commentImg;
+        }
+
+
     }
 }

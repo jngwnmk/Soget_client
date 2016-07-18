@@ -1,12 +1,13 @@
 package com.markin.app.view.Fragment;
 
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,19 +18,15 @@ import android.widget.ListView;
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
-import com.markin.app.common.SogetUtil;
 import com.markin.app.common.StaticValues;
 import com.markin.app.connector.category.CategoryGetTask;
 import com.markin.app.model.Category;
 import com.markin.app.model.User;
 import com.markin.app.view.Activity.FeedActivity;
-import com.markin.app.view.Activity.SettingActivity;
-import com.markin.app.view.Activity.WebViewActivity;
 import com.markin.app.view.Adapter.CategoryAdapter;
+import com.markin.app.view.component.DottedProgressDialog;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by wonmook on 2016. 4. 12..
@@ -38,7 +35,7 @@ public class CategoryFragment extends Fragment {
     private ArrayList<Category> categories = new ArrayList<Category>();
     private ListView categoryListView = null;
     private CategoryAdapter categoryAdapter =null;
-    private ProgressDialog pDialog = null;
+    private DottedProgressDialog pDialog = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -56,7 +53,7 @@ public class CategoryFragment extends Fragment {
         categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(),FeedActivity.class);
+                Intent intent = new Intent(getActivity(), FeedActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString(StaticValues.CATEGORY, categories.get(i).getType());
                 intent.putExtras(extras);
@@ -66,9 +63,9 @@ public class CategoryFragment extends Fragment {
             }
         });
 
-
-        pDialog = new ProgressDialog(this.getActivity());
-        pDialog.setMessage("Loading....");
+        pDialog = new DottedProgressDialog(this.getActivity());
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        //pDialog.setMessage("Loading....");
         getGetegoryList();
         return rootView;
     }
@@ -85,7 +82,15 @@ public class CategoryFragment extends Fragment {
                     categoryListView.setAdapter(categoryAdapter);
                     categoryAdapter.notifyDataSetChanged();
                 }
-                pDialog.dismiss();
+
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        pDialog.dismiss();
+                    }
+                };
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(runnable, 1500);
             }
         };
 
@@ -117,5 +122,7 @@ public class CategoryFragment extends Fragment {
         }
 
     }
+
+
 
 }

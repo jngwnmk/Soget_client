@@ -9,7 +9,9 @@
     <color name="charcol_text_color">#3e454c</color>
     <color name="charcol_text_color_80">#e73e454c</color>
     <color name="charcol_text_color_66">#a83e454c</color>
+    <color name="charcol_text_color_50">#803e454c</color>
     <color name="charcol_text_color_33">#543e454c</color>
+    <color name="charcol_background_7">#0d36393a</color>
 
     <color name="main_color">#3E454C</color>
     <color name="main_color_66">#A83E454C</color>

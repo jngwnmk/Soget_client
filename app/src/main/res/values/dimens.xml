@@ -17,7 +17,7 @@
     <dimen name="category_padding_bottom">15dp</dimen>
     <dimen name="category_img_width">302dp</dimen>
     <dimen name="category_img_height">138dp</dimen>
-    <dimen name="category_title_padding_top">5.0dp</dimen>
+    <dimen name="category_title_padding_top">15.0dp</dimen>
     <dimen name="category_title_padding_left">2.7dp</dimen>
     <dimen name="category_archive_count_padding_right">38.3dp</dimen>
 
@@ -136,7 +136,7 @@
     <dimen name="webview_icon_right_margin">26.3dp</dimen>
 
     <!--Navigator-->
-    <dimen name="navigator_header_height">222.3dp</dimen>
+    <dimen name="navigator_header_height">282.3dp</dimen>
     <dimen name="navigator_name_icon_distance">10.7dp</dimen>
     <dimen name="navigator_icon_socket_distance">16dp</dimen>
     <dimen name="navigator_username_text_size">17.3sp</dimen>
@@ -151,6 +151,7 @@
     <dimen name="invitation_rectangle_margin_top">58.7dp</dimen>
     <dimen name="invitation_content_margin_top">42.7dp</dimen>
     <dimen name="invitation_content_width">276dp</dimen>
+    <dimen name="invitation_content_text_size">14.7sp</dimen>
     <dimen name="invitation_mail_icon_margin_top">37.3dp</dimen>
     <dimen name="invitation_kakao_btn_margin_top">234.7dp</dimen>
     <dimen name="invitation_kakao_btn_text_size">14.7sp</dimen>

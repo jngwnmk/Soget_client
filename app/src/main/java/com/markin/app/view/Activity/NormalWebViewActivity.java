@@ -38,6 +38,8 @@ public class NormalWebViewActivity extends Activity{
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+
             }
         });
 
@@ -92,5 +94,12 @@ public class NormalWebViewActivity extends Activity{
             progressBar.setVisibility(View.VISIBLE);
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+
     }
 }

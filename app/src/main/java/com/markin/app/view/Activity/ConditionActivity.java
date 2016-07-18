@@ -32,6 +32,8 @@ public class ConditionActivity extends Activity{
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+
             }
         });
         boolean condition = getIntent().getExtras().getBoolean(StaticValues.CONDITION,false);
@@ -65,5 +67,12 @@ public class ConditionActivity extends Activity{
             e.printStackTrace();
         }
         return data;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+
     }
 }

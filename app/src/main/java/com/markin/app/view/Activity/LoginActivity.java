@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
+import com.markin.app.connector.user.UserInfoGetTask;
 import com.markin.app.connector.user.UserLoginTask;
 import com.markin.app.model.Authorization;
 import com.markin.app.model.User;
@@ -134,6 +135,8 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
                 Intent intent = new Intent(LoginActivity.this, NormalWebViewActivity.class);
                 intent.putExtra(NormalWebViewActivity.WEBVIEWURL,"https://medium.com/@MarkIn_app/markin-01-c043b4d4f1cd");
                 startActivity(intent);
+                overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+
             }
         });
         pwd_forget_tv.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AppleSDGothicNeo-SemiBold.otf"));
@@ -173,15 +176,28 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
     public void onTaskCompleted(Object authorization) {
         //Login success
         if(authorization!=null){
-            Log.d("LoginActivity", ((Authorization)authorization).toString());
+            Log.d("LoginActivity", ((Authorization) authorization).toString());
             //Save authorization info to shared preference
-            AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE),user.getUserId(),user.getPassword(), user.getName(), user.getEmail(),((Authorization)authorization).getAccess_token());
-            finish();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            getUserInfo(user.getUserId(), ((Authorization) authorization).getAccess_token());
         } else {
             Toast.makeText(getApplicationContext(),"Wrong Login Info", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void getUserInfo(String user_id, final String token){
+        //String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+        new UserInfoGetTask(new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(Object object) {
+                if(object!=null){
+                    user = (User)object;
+                    AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE), user.getUserId(), user.getPassword(), user.getName(), user.getEmail(), token);
+                    finish();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }
+            }
+        }, user_id, token).execute();
     }
 
     @Override

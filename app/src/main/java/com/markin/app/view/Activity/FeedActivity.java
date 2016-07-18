@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +33,7 @@ import com.markin.app.model.Comment;
 import com.markin.app.model.User;
 import com.markin.app.view.Adapter.ArchiveAdapter;
 import com.markin.app.view.Fragment.RecommendFragment;
+import com.markin.app.view.component.DottedProgressDialog;
 import com.markin.app.view.component.PagedHeadListView.utils.PageTransformerTypes;
 import com.markin.app.view.component.RecommendView;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -48,7 +51,7 @@ public class FeedActivity extends AppCompatActivity{
     private static final String TAG = "FeedFragment";
 
     //Dialog
-    private ProgressDialog pDialog          = null;
+    private DottedProgressDialog pDialog          = null;
 
     //Recommend Horizontal List
     private RecommendView recommendView= null;
@@ -82,8 +85,8 @@ public class FeedActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feed_layout_alter_1);
 
-        pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Loading....");
+        pDialog = new DottedProgressDialog(this);
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         setupTitleBar();
         setupRecommendList();
@@ -294,7 +297,14 @@ public class FeedActivity extends AppCompatActivity{
 
                 }
                 recommendView.showNumberIndicator();
-                pDialog.dismiss();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        pDialog.dismiss();
+                    }
+                };
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(runnable, 1500);
             }
         };
 
@@ -334,7 +344,14 @@ public class FeedActivity extends AppCompatActivity{
                     updateBookmarkListView();
                 }
                 mLockListView = false;
-                pDialog.dismiss();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        pDialog.dismiss();
+                    }
+                };
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(runnable, 1500);
             }
         };
 

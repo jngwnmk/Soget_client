@@ -14,6 +14,7 @@ import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
 import com.markin.app.common.StaticValues;
+import com.markin.app.connector.user.UserInfoGetTask;
 import com.markin.app.connector.user.UserLoginTask;
 import com.markin.app.model.Authorization;
 import com.markin.app.model.User;
@@ -57,6 +58,7 @@ public class SplashActivity extends Activity implements OnTaskCompleted{
             finish();
             Intent tutorialIntent = new Intent(SplashActivity.this, TutorialActivity.class);
             tutorialIntent.putExtra(StaticValues.INVITATIONNUM, invitation_num);
+            tutorialIntent.putExtra(StaticValues.INVITATIONUSERNAME, invitation_username);
             startActivity(tutorialIntent);
         } else {
             autoLogin();
@@ -81,7 +83,7 @@ public class SplashActivity extends Activity implements OnTaskCompleted{
 
     private boolean isTutorialNeed(){
         SharedPreferences sharedPreferences = getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE);
-        boolean needTutorial = sharedPreferences.getBoolean("tutorial",true);
+        boolean needTutorial = sharedPreferences.getBoolean("tutorial", true);
         return needTutorial;
 
     }
@@ -106,7 +108,8 @@ public class SplashActivity extends Activity implements OnTaskCompleted{
         else {
             finish();
             Intent intent = new Intent(SplashActivity.this,IntroActivity.class);
-            intent.putExtra(StaticValues.INVITATIONNUM,invitation_num);
+            intent.putExtra(StaticValues.INVITATIONNUM, invitation_num);
+            intent.putExtra(StaticValues.INVITATIONUSERNAME, invitation_username);
             startActivity(intent);
         }
     }
@@ -117,21 +120,34 @@ public class SplashActivity extends Activity implements OnTaskCompleted{
         if(authorization!=null){
             Log.d("MainActivity", ((Authorization) authorization).toString());
             //Save authorization info to shared preference
-            AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE), user.getUserId(), user.getPassword(), user.getName(), user.getEmail(), ((Authorization) authorization).getAccess_token());
-            finish();
-
-            Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-            Bundle extra = new Bundle();
-            extra.putString("SHARED_URL",shared_url);
-            extra.putString(StaticValues.INVITATIONNUM, invitation_num);
-            extra.putString(StaticValues.INVITATIONUSERNAME, invitation_username);
-            intent.putExtras(extra);
-            startActivity(intent);
+            getUserInfo(user.getUserId(),  ((Authorization) authorization).getAccess_token());
         } else {
 
             //Login fail
             finish();
             startActivity(new Intent(SplashActivity.this,IntroActivity.class));
         }
+    }
+
+    private void getUserInfo(String user_id, final String token){
+        //String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+        new UserInfoGetTask(new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(Object object) {
+                if(object!=null){
+                    user = (User)object;
+                    AuthManager.getAuthManager().login(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE), user.getUserId(), user.getPassword(), user.getName(), user.getEmail(), token);
+                    finish();
+
+                    Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+                    Bundle extra = new Bundle();
+                    extra.putString("SHARED_URL",shared_url);
+                    extra.putString(StaticValues.INVITATIONNUM, invitation_num);
+                    extra.putString(StaticValues.INVITATIONUSERNAME, invitation_username);
+                    intent.putExtras(extra);
+                    startActivity(intent);
+                }
+            }
+        }, user_id, token).execute();
     }
 }

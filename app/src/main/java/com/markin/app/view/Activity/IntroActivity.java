@@ -29,10 +29,12 @@ public class IntroActivity extends Activity  {
         Intent receiveIntent = getIntent();
         if(receiveIntent!=null){
             String invitation_num = receiveIntent.getStringExtra(StaticValues.INVITATIONNUM);
-            if(invitation_num!=null && !invitation_num.equals("")){
+            String invitation_username = receiveIntent.getStringExtra(StaticValues.INVITATIONUSERNAME);
+            if(invitation_num!=null && !invitation_num.equals("") && invitation_username!=null && !invitation_username.equals("")){
                 finish();
                 Intent registerIntent = new Intent(IntroActivity.this, RegisterActivity.class);
                 registerIntent.putExtra(StaticValues.INVITATIONNUM, invitation_num);
+                registerIntent.putExtra(StaticValues.INVITATIONUSERNAME, invitation_username);
                 startActivity(registerIntent);
             }
         }

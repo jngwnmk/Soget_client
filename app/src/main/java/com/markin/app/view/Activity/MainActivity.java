@@ -13,7 +13,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -25,6 +29,8 @@ import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
 import com.markin.app.common.StaticValues;
 import com.markin.app.connector.friend.FriendCheckWithInvitationTask;
+import com.markin.app.connector.invitation.InvitationCodeGetTask;
+import com.markin.app.connector.invitation.InvitationCodeMakeTask;
 import com.markin.app.connector.manage.ManageResetAllDataTask;
 import com.markin.app.connector.manage.ManageResetTrashCanDataTask;
 import com.markin.app.connector.user.UserInfoGetTask;
@@ -32,6 +38,8 @@ import com.markin.app.model.User;
 import com.markin.app.view.Fragment.CategoryFragment;
 import com.markin.app.view.Fragment.FriendsFragment;
 import com.markin.app.view.Fragment.SettingFragment;
+
+import java.util.ArrayList;
 
 /**
  * Created by wonmook on 2015-03-18.
@@ -43,6 +51,8 @@ public class MainActivity extends AppCompatActivity
     public static boolean autoMarking = false;
     private TextView titleTv = null;
     private ImageButton addBookmarkBtn = null;
+    ArrayList<String> invitationNum = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -69,7 +79,16 @@ public class MainActivity extends AppCompatActivity
         addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (invitationNum.size() != 0) {
+                    Intent intent = new Intent(MainActivity.this, InvitatonSendActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(StaticValues.INVITATIONCODE, invitationNum.get(0));
+                    bundle.putInt(StaticValues.INVITATIONNUM, invitationNum.size());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
 
+                }
             }
         });
 
@@ -108,10 +127,44 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void getInvitation(){
+        OnTaskCompleted onTaskCompleted;
+        final String user_id = (AuthManager.getAuthManager().getLoginInfo(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE))).getUserId();
+        final String token = AuthManager.getAuthManager().getToken(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
+
+        onTaskCompleted = new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(Object object) {
+                if(object!=null){
+                    invitationNum.clear();
+                    invitationNum.addAll((ArrayList<String>) object);
+                    if(invitationNum.size()==0){
+                        new InvitationCodeMakeTask(new OnTaskCompleted() {
+                            @Override
+                            public void onTaskCompleted(Object object) {
+                                if(object!=null){
+                                    invitationNum.clear();
+                                    invitationNum.addAll((ArrayList<String>) object);
+                                }
+                            }
+                        }, user_id, token).execute();
+                    }
+                }
+            }
+        };
+        new InvitationCodeGetTask(onTaskCompleted, user_id, token).execute();
+
+    }
+
     private void setNavigationView(){
         final User user = AuthManager.getAuthManager().getLoginInfo(getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE));
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        int width = (int)Math.round(getResources().getDisplayMetrics().widthPixels*0.6d);
+        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) navigationView.getLayoutParams();
+        params.width = width;
+        navigationView.setLayoutParams(params);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView navigationUsernameTv = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navigator_user_name_tv);
@@ -148,6 +201,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume(){
         super.onResume();
         System.out.println("onResume():MainActivity");
+        getInvitation();
 
     }
 
