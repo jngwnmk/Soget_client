@@ -140,7 +140,7 @@ public class SettingFragment extends Fragment{
 
     private void goToSocketWeb(){
         Intent intent = new Intent(getActivity(), NormalWebViewActivity.class);
-        intent.putExtra(NormalWebViewActivity.WEBVIEWURL,"https://medium.com/@MarkIn_app/markin-01-c043b4d4f1cd");
+        intent.putExtra(NormalWebViewActivity.WEBVIEWURL,StaticValues.BLOG_URL);
         startActivity(intent);
         getActivity().overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
 

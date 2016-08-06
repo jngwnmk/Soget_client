@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.markin.app.R;
 import com.markin.app.callback.OnTaskCompleted;
 import com.markin.app.common.AuthManager;
+import com.markin.app.common.StaticValues;
 import com.markin.app.connector.user.UserInfoGetTask;
 import com.markin.app.connector.user.UserLoginTask;
 import com.markin.app.model.Authorization;
@@ -133,7 +134,7 @@ public class LoginActivity extends Activity implements OnTaskCompleted {
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "forget Password", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, NormalWebViewActivity.class);
-                intent.putExtra(NormalWebViewActivity.WEBVIEWURL,"https://medium.com/@MarkIn_app/markin-01-c043b4d4f1cd");
+                intent.putExtra(NormalWebViewActivity.WEBVIEWURL, StaticValues.BLOG_URL);
                 startActivity(intent);
                 overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
 

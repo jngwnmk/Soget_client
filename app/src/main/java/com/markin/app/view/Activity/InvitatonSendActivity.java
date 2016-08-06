@@ -156,11 +156,8 @@ public class InvitatonSendActivity extends Activity {
             kakaoTalkLinkMessageBuilder.addText(message.toString());
             kakaoTalkLinkMessageBuilder.addAppButton("앱으로 바로가기",
                     new AppActionBuilder()
-                            .addActionInfo(AppActionInfoBuilder
-                                    .createAndroidActionInfoBuilder()
-                                    .setExecuteParam("invitationNum=" + invitationCode + "&invitationUserName=" + userName)
-                                    .build())
-
+                            .addActionInfo(AppActionInfoBuilder.createAndroidActionInfoBuilder().setExecuteParam("invitationNum=" + invitationCode + "&invitationUserName=" + userName).build())
+                            .addActionInfo(AppActionInfoBuilder.createiOSActionInfoBuilder().setExecuteParam("invitationNum=" + invitationCode + "&invitationUserName=" + userName).build())
                             .build()
             );
 

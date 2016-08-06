@@ -21,6 +21,7 @@ public class StaticValues {
     public static String CATEGORY = "category";
     public static String COMMENT = "comment";
 
+    public static String BLOG_URL  ="https://medium.com/@socket_app/markin-01-c043b4d4f1cd#.fei6h9spu";
     public static class RESULTCODE{
         public static final int COMMENT = 0;
     }

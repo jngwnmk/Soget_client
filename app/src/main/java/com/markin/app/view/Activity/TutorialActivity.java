@@ -15,6 +15,7 @@ import com.markin.app.R;
 import com.markin.app.callback.PageMove;
 import com.markin.app.common.AuthManager;
 import com.markin.app.common.StaticValues;
+import com.markin.app.view.Fragment.TutorialFourSlide;
 import com.markin.app.view.Fragment.TutorialOneSlide;
 import com.markin.app.view.Fragment.TutorialThreeSlide;
 import com.markin.app.view.Fragment.TutorialTwoSlide;
@@ -23,7 +24,7 @@ import com.markin.app.view.Fragment.TutorialTwoSlide;
  * Created by wonmook on 15. 6. 12..
  */
 public class TutorialActivity extends FragmentActivity {
-    private static final int PAGE_NUM = 3;
+    private static final int PAGE_NUM = 4;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
 
@@ -34,9 +35,53 @@ public class TutorialActivity extends FragmentActivity {
 
         viewPager = (ViewPager)findViewById(R.id.tutorial_pager);
         pagerAdapter = new ScreenSlidePageAdapter(getSupportFragmentManager());
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position==3){
+                    SharedPreferences sharedPreferences = getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("tutorial", false);
+                    editor.commit();
+
+                    Intent receiveIntent = getIntent();
+                    if(receiveIntent!=null){
+                        String invitation_num = receiveIntent.getStringExtra(StaticValues.INVITATIONNUM);
+                        String invitation_username = receiveIntent.getStringExtra(StaticValues.INVITATIONUSERNAME);
+                        if(invitation_num!=null && !invitation_num.equals("") && invitation_username!=null && !invitation_username.equals("")){
+                            finish();
+
+                            Intent introIntent = new Intent(TutorialActivity.this, IntroActivity.class);
+                            introIntent.putExtra(StaticValues.INVITATIONNUM, invitation_num);
+                            introIntent.putExtra(StaticValues.INVITATIONUSERNAME, invitation_username);
+                            startActivity(introIntent);
+
+                        } else {
+                            finish();
+
+                            Intent introIntent = new Intent(TutorialActivity.this, IntroActivity.class);
+                            startActivity(introIntent);
+                        }
+                    } else {
+                        finish();
+
+                        Intent introIntent = new Intent(TutorialActivity.this, IntroActivity.class);
+                        startActivity(introIntent);
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         viewPager.setAdapter(pagerAdapter);
-
-
     }
 
     private class ScreenSlidePageAdapter extends FragmentStatePagerAdapter{
@@ -90,7 +135,7 @@ public class TutorialActivity extends FragmentActivity {
                 tutorialThreeSlide.setPageMove(new PageMove() {
                     @Override
                     public void next() {
-
+                        viewPager.setCurrentItem(3);
                     }
 
                     @Override
@@ -100,38 +145,13 @@ public class TutorialActivity extends FragmentActivity {
 
                     @Override
                     public void complete() {
-                        SharedPreferences sharedPreferences = getSharedPreferences(AuthManager.LOGIN_PREF, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("tutorial", false);
-                        editor.commit();
 
-                        Intent receiveIntent = getIntent();
-                        if(receiveIntent!=null){
-                            String invitation_num = receiveIntent.getStringExtra(StaticValues.INVITATIONNUM);
-                            String invitation_username = receiveIntent.getStringExtra(StaticValues.INVITATIONUSERNAME);
-                            if(invitation_num!=null && !invitation_num.equals("") && invitation_username!=null && !invitation_username.equals("")){
-                                finish();
-
-                                Intent introIntent = new Intent(TutorialActivity.this, IntroActivity.class);
-                                introIntent.putExtra(StaticValues.INVITATIONNUM, invitation_num);
-                                introIntent.putExtra(StaticValues.INVITATIONUSERNAME, invitation_username);
-                                startActivity(introIntent);
-
-                            } else {
-                                finish();
-
-                                Intent introIntent = new Intent(TutorialActivity.this, IntroActivity.class);
-                                startActivity(introIntent);
-                            }
-                        } else {
-                            finish();
-
-                            Intent introIntent = new Intent(TutorialActivity.this, IntroActivity.class);
-                            startActivity(introIntent);
-                        }
                     }
                 });
                 return tutorialThreeSlide;
+            } else if(position==3){
+                TutorialFourSlide tutorialFourSlide = new TutorialFourSlide();
+                return tutorialFourSlide;
             }
             return null;
         }

@@ -461,7 +461,7 @@ public class RegisterActivity extends Activity implements OnTaskCompleted {
                     finish();
 
                     Intent notiActivity = new Intent(RegisterActivity.this, FriendNotiActivity.class);
-                    if(!invitation_username.equals("")){
+                    if(invitation_username!=null&&!invitation_username.equals("")){
                         notiActivity.putExtra(StaticValues.INVITATIONUSERNAME, invitation_username);
                         startActivity(notiActivity);
                     } else {
